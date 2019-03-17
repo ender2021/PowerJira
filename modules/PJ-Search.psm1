@@ -60,9 +60,9 @@ function Invoke-JiraSearchIssues {
             fields = $Fields
             validateQuery = $QueryValidation
         }
-        if($Expand) {$body.Add("expand",$Expand)}
-        if($Properties) {$body.Add("properties",$Properties)}
-        if($FieldsByKeys) {$body.Add("fieldsByKeys",$true)}
+        if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand)}
+        if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
+        if($PSBoundParameters.ContainsKey("FieldsByKeys")){$body.Add("fieldsByKeys",$true)}
         
         Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body
     }

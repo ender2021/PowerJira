@@ -40,28 +40,79 @@ function Invoke-JiraCreateVersion {
             projectId = $ProjectId
             name = $Name
         }
-        if ($Description) {$body.Add("description",$Description)}
-        if ($StartDate) {$body.Add("startDate",(Format-JiraRestDateTime $StartDate))}
-        if ($ReleaseDate) {$body.Add("releaseDate",(Format-JiraRestDateTime $ReleaseDate))}
+        if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
+        if($PSBoundParameters.ContainsKey("StartDate")){$body.Add("startDate",(Format-JiraRestDateTime $StartDate))}
+        if($PSBoundParameters.ContainsKey("ReleaseDate")){$body.Add("releaseDate",(Format-JiraRestDateTime $ReleaseDate))}
 
         Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body
     }
 }
 
-function Invoke-JiraUpdateVersion($JiraConnection,$VersionId,$Name,$Description,$StartDate,$ReleaseDate,$Archived,$Released,$UnfixedIssuesTargetVersion) {
-    $functionPath = "/rest/api/2/version/$VersionId"
-    
-    $body = @{
-        id = $VersionId
-    }
-    if ($Description) {$body.Add("description",$Description)}
-    if ($StartDate) {$body.Add("startDate",$StartDate)}
-    if ($ReleaseDate) {$body.Add("releaseDate",$ReleaseDate)}
-    if ($Archived) {$body.Add("archived",$Archived)}
-    if ($Released) {$body.Add("released",$Released)}
-    if ($UnfixedIssuesTargetVersion) {$body.Add("moveUnfixedIssuesTo",$UnfixedIssuesTargetVersion)}
+#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-version-id-put
+function Invoke-JiraUpdateVersion {
+    [CmdletBinding()]
+    param (
+        # The ID of the version to update
+        [Parameter(Mandatory=$true)]
+        [int32]
+        $VersionId,
 
-    Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod PUT -Body $body
+        # The updated name of the version.  Must be unique within the project.
+        [Parameter(Mandatory=$false)]
+        [ValidateLength(1,255)]
+        [string]
+        $Name,
+
+        # A short description of the version
+        [Parameter(Mandatory=$false)]
+        [string]
+        $Description,
+
+        # The start date of the version. Will be converted to ISO 8601 format (yyyy-mm-dd). 
+        [Parameter(Mandatory=$false)]
+        [datetime]
+        $StartDate,
+
+        # The release date of the version. Will be converted to ISO 8601 format (yyyy-mm-dd). 
+        [Parameter(Mandatory=$false)]
+        [datetime]
+        $ReleaseDate,
+
+        # Indicates that the version is archived
+        [Parameter(Mandatory=$false)]
+        [bool]
+        $Archived,
+
+        # Indicates that the version is released
+        [Parameter(Mandatory=$false)]
+        [bool]
+        $Released,
+
+        # The ID of the version to move unfixed issues into
+        [Parameter(Mandatory=$false)]
+        [int32]
+        $UnfixedIssuesVersionId,
+
+        # The JiraConnection object to use for the request
+        [Parameter(Mandatory=$false)]
+        [hashtable]
+        $JiraConnection
+    )
+    process {
+        $functionPath = "/rest/api/2/version/$VersionId"
+        
+        $body = @{
+            id = $VersionId
+        }
+        if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
+        if($PSBoundParameters.ContainsKey("StartDate")){$body.Add("startDate",(Format-JiraRestDateTime $StartDate))}
+        if($PSBoundParameters.ContainsKey("ReleaseDate")){$body.Add("releaseDate",(Format-JiraRestDateTime $ReleaseDate))}
+        if($PSBoundParameters.ContainsKey("Archived")){$body.Add("archived",$Archived)}
+        if($PSBoundParameters.ContainsKey("Released")){$body.Add("released",$Released)}
+        if($PSBoundParameters.ContainsKey("UnfixedIssuesVersionId")) {$body.Add("moveUnfixedIssuesTo",$UnfixedIssuesVersionId)}
+
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "PUT" -Body $body
+    }
 }
 
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-version-id-removeAndSwap-post
@@ -69,8 +120,8 @@ function Invoke-JiraDeleteVersion($JiraConnection,$VersionId,$FixTargetVersion,$
     $functionPath = "/rest/api/2/version/$VersionId/removeAndSwap"
     
     $body = @{}
-    if ($FixTargetVersion) {$body.Add("moveFixIssuesTo",$FixTargetVersion)}
-    if ($AffectedTargetVersion) {$body.Add("moveAffectedIssuesTo",$AffectedTargetVersion)}
+    if($PSBoundParameters.ContainsKey("FixTargetVersion")){$body.Add("moveFixIssuesTo",$FixTargetVersion)}
+    if($PSBoundParameters.ContainsKey("AffectedTargetVersion")){$body.Add("moveAffectedIssuesTo",$AffectedTargetVersion)}
     
     Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body
 }
@@ -87,7 +138,7 @@ function Invoke-JiraMoveVersion($JiraConnection,$VersionId,$After,$Position) {
     $functionPath = "/rest/api/2/version/$VersionId/move"
     
     $body = @{}
-    if ($After) {$body.Add("after",$After)} else {$body.Add("position",$Position)}
+    if($PSBoundParameters.ContainsKey("After")){$body.Add("after",$After)} else {$body.Add("position",$Position)}
 
     Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body
 }

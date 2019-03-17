@@ -7,13 +7,13 @@ Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \Credentials.psm1) -Forc
 #open a new Jira session
 Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
 
- $proj = Invoke-JiraGetProject "JPT" @("projectKeys")
- #$proj
-   $newVersion = Invoke-JiraCreateVersion -ProjectId $proj.id -Name "Test Version 6" -StartDate (Get-Date "2019-03-18")
-   $newVersion
+#$proj = Invoke-JiraGetProject "JPT" @("projectKeys")
+#$proj
+#$newVersion = Invoke-JiraCreateVersion -ProjectId $proj.id -Name "Test Version 6" -StartDate (Get-Date "2019-03-18")
+#$newVersion
 
 #Invoke-JiraGetProjectVersions -ProjectIdOrKey "GROPGDIS" -Expand @("operations")
-#Invoke-JiraUpdateVersion -VersionId 10480 -Description "Successful update!" -StartDate (Get-Date -Format "o")
+Invoke-JiraUpdateVersion -VersionId 10485 -Archived $false
 #$test1 = Invoke-JiraGetVersion -VersionId 10480
 #Invoke-JiraMoveVersion -VersionId 10482 -After $test1.self
 #Invoke-JiraMergeVersion -SourceVersionId 10480 -TargetVersionId 10482
