@@ -17,8 +17,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -ApiToken $JiraCredentials.
 #Invoke-JiraMergeVersion -SourceVersionId 10480 -TargetVersionId 10482
 #Invoke-JiraGetVersionRelatedIssueCounts -VersionId 10482
 #Invoke-JiraGetVersionUnresolvedIssueCount -VersionId
-$results = Invoke-JiraSearchIssues -JQL "project = GROPGDIS" -MaxResults 10
-$results.issues
+#$results = Invoke-JiraSearchIssues -JQL "project = GROPGDIS" -MaxResults 10
+#$results.issues
+Invoke-JiraGetIssue -IssueKey "GROPGDIS-749"
+
 
 
 #close the Jira session
