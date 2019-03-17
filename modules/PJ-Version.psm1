@@ -1,17 +1,51 @@
 # https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-version-post
-function Invoke-JiraCreateVersion($JiraConnection,$ProjectId,$Name,$Description,$StartDate,$ReleaseDate,$Archived) {
-    $functionPath = "/rest/api/2/version"
-    
-    $body = @{
-        name = $Name
-        projectId = $ProjectId
-    }
-    if ($Description) {$body.Add("description",$Description)}
-    if ($StartDate) {$body.Add("startDate",$StartDate)}
-    if ($ReleaseDate) {$body.Add("releaseDate",$ReleaseDate)}
-    if ($Archived) {$body.Add("archived",$Archived)}
+function Invoke-JiraCreateVersion {
+    [CmdletBinding()]
+    param (
+        # The ID of the project where the version will be created
+        [Parameter(Mandatory=$true)]
+        [int32]
+        $ProjectId,
 
-    Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body
+        # The name of the version to create.  Must be unique within the project.
+        [Parameter(Mandatory=$true)]
+        [ValidateLength(1,255)]
+        [string]
+        $Name,
+
+        # A short description of the version
+        [Parameter(Mandatory=$false)]
+        [string]
+        $Description,
+
+        # The start date of the version. Will be converted to ISO 8601 format (yyyy-mm-dd). 
+        [Parameter(Mandatory=$false)]
+        [datetime]
+        $StartDate,
+
+        # The release date of the version. Will be converted to ISO 8601 format (yyyy-mm-dd). 
+        [Parameter(Mandatory=$false)]
+        [datetime]
+        $ReleaseDate,
+
+        # The JiraConnection object to use for the request
+        [Parameter(Mandatory=$false)]
+        [hashtable]
+        $JiraConnection
+    )
+    process {
+        $functionPath = "/rest/api/2/version"
+    
+        $body = @{
+            projectId = $ProjectId
+            name = $Name
+        }
+        if ($Description) {$body.Add("description",$Description)}
+        if ($StartDate) {$body.Add("startDate",(Format-JiraRestDateTime $StartDate))}
+        if ($ReleaseDate) {$body.Add("releaseDate",(Format-JiraRestDateTime $ReleaseDate))}
+
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body
+    }
 }
 
 function Invoke-JiraUpdateVersion($JiraConnection,$VersionId,$Name,$Description,$StartDate,$ReleaseDate,$Archived,$Released,$UnfixedIssuesTargetVersion) {

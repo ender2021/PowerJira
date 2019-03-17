@@ -8,9 +8,9 @@ Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \Credentials.psm1) -Forc
 Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
 
  $proj = Invoke-JiraGetProject "JPT" @("projectKeys")
- $proj
-#   $newVersion = Invoke-JiraCreateVersion -ProjectId $proj.id -Name "Test Version 3"
-#   $newVersion
+ #$proj
+   $newVersion = Invoke-JiraCreateVersion -ProjectId $proj.id -Name "Test Version 6" -StartDate (Get-Date "2019-03-18")
+   $newVersion
 
 #Invoke-JiraGetProjectVersions -ProjectIdOrKey "GROPGDIS" -Expand @("operations")
 #Invoke-JiraUpdateVersion -VersionId 10480 -Description "Successful update!" -StartDate (Get-Date -Format "o")

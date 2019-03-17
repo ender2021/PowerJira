@@ -1,3 +1,16 @@
+function Format-JiraRestDateTime {
+    [CmdletBinding(DefaultParameterSetName="DefaultParams")]
+    param (
+        # Teh DateTime to format
+        [Parameter(Mandatory=$true)]
+        [datetime]
+        $DateTime
+    )
+    process {
+        Get-Date -Date $DateTime -Format "o"
+    }
+}
+
 function Format-JiraExpandGet {
     [CmdletBinding(DefaultParameterSetName="DefaultParams")]
     param (

@@ -22,9 +22,7 @@
 			"# The JiraConnection object to use for the request",
         	"[Parameter(Mandatory=\\$false)]",
             "[hashtable]",
-			"\\$JiraConnection,",
-			"",
-			""
+			"\\$JiraConnection"
 		],
 		"description": "Insert the default JiraConnection parameter for Invoke-Jira* functions"
 	}
