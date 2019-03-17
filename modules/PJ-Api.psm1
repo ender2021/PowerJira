@@ -2,7 +2,7 @@ function Format-JiraApiFunctionAddress($Address) {
     (&{If($Address.StartsWith("/")) {$Address.Substring(1)} else {$Address}})
 }
 
-function Invoke-JiraRestRequest($JiraConnection=$Global:JA_JiraSession,$FunctionAddress,$HttpMethod,$Headers=@{},$Body) {
+function Invoke-JiraRestRequest($JiraConnection=$Global:PJ_JiraSession,$FunctionAddress,$HttpMethod,$Headers=@{},$Body) {
     
     $sendHeaders = @{}
     $sendHeaders += $JiraConnection.AuthHeader
@@ -38,11 +38,11 @@ function New-JiraConnection($UserName,$ApiToken,$HostName) {
 }
 
 function Open-JiraSession($UserName,$ApiToken,$HostName) {
-    $Global:JA_JiraSession = New-JiraConnection -UserName $UserName -ApiToken $ApiToken -HostName $HostName
+    $Global:PJ_JiraSession = New-JiraConnection -UserName $UserName -ApiToken $ApiToken -HostName $HostName
 }
 
 function Close-JiraSession() {
-    Remove-Variable JA_JiraSession -Scope Global
+    Remove-Variable PJ_JiraSession -Scope Global
 }
 
 Export-ModuleMember -Function * -Variable *

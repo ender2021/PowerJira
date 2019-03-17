@@ -7,8 +7,9 @@ Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \Credentials.psm1) -Forc
 #open a new Jira session
 Open-JiraSession -UserName $JiraCredentials.UserName -ApiToken $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
 
-$versions = Invoke-JiraGetProjectVersions -ProjectKey GROPGDIS
-$versions
+$proj = Invoke-JiraGetProject -ProjectKey "JPT"
+$newVersion = Invoke-JiraCreateVersion -ProjectId $proj.id -Name "Test Version"
+$newVersion
 
 #close the Jira session
 Close-JiraSession
