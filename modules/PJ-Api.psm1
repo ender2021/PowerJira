@@ -1,3 +1,25 @@
+function Format-JiraExpandGet {
+    [CmdletBinding(DefaultParameterSetName="DefaultParams")]
+    param (
+        # The constructed GET function path
+        [Parameter(Mandatory=$true)]
+        [string]
+        $FunctionPath,
+
+        # The string array of properties to expand
+        [Parameter(Mandatory=$true)]
+        [AllowNull()]
+        [AllowEmptyCollection()]
+        [string[]]
+        $Expand
+    )
+    process {
+        $return = $FunctionPath
+        if (($null -ne $Expand) -and ($Expand.Count -gt 0)) {$return += '?expand=' + ($Expand -join ",")}
+        $return
+    }
+}
+
 function Invoke-JiraRestRequest {
     [CmdletBinding(DefaultParameterSetName="RestRequest")]
     param (
