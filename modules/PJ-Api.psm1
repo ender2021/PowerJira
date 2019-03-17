@@ -1,7 +1,3 @@
-function Format-JiraApiFunctionAddress($Address) {
-    (&{If($Address.StartsWith("/")) {$Address.Substring(1)} else {$Address}})
-}
-
 function Invoke-JiraRestRequest {
     [CmdletBinding(DefaultParameterSetName="RestRequest")]
     Param (
@@ -14,7 +10,7 @@ function Invoke-JiraRestRequest {
         # The URI path of function to invoke (do not include host name)
         [Parameter(Mandatory=$true)]
         [string]
-        $FunctionAddress,
+        $FunctionPath,
 
         # The HTTP method to use for the request
         [Parameter(Mandatory=$true)]
@@ -39,16 +35,16 @@ function Invoke-JiraRestRequest {
     $sendHeaders = @{}
     $sendHeaders += $JiraConnection.AuthHeader
     $sendHeaders += $Headers
-
-    #define url
+    
+    #define uri
     $hostname = $JiraConnection.HostName
-    $function = Format-JiraApiFunctionAddress($FunctionAddress)
-    $url = "$hostname/$function"
+    $function = If($FunctionPath.StartsWith("/")) {$FunctionPath.Substring(1)} else {$FunctionPath}
+    $uri = "$hostname/$function"
 
     if ($Body) {
-        Invoke-RestMethod -Uri $url -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body (ConvertTo-Json $Body -Compress)
+        Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body (ConvertTo-Json $Body -Compress)
     } else {
-        Invoke-RestMethod -Uri $url -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders
+        Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders
     }
 }
 

@@ -3,7 +3,7 @@ function Invoke-JiraGetIssue($JiraConnection,$IssueKey,$IssueId) {
     $param = if($IssueKey) { $IssueKey } else { $IssueId }
     $functionPath = "/rest/api/2/issue/$param"
 
-    Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionAddress $functionPath -HttpMethod "GET"
+    Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET"
 }
 
 Export-ModuleMember -Function * -Variable *

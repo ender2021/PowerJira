@@ -10,7 +10,7 @@ function Invoke-JiraSearchIssues($JiraConnection,$JQL,$StartAt=0,$MaxResults=50,
         validateQuery = $Validate
     }
     
-    Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionAddress $functionPath -HttpMethod "POST" -Body $body
+    Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body
 }
 
 Export-ModuleMember -Function * -Variable *

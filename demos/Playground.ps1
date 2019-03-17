@@ -21,7 +21,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -ApiToken $JiraCredentials.
 #Invoke-JiraGetVersionUnresolvedIssueCount -VersionId
 #$results = Invoke-JiraSearchIssues -JQL "project = GROPGDIS" -MaxResults 10
 #$results.issues
-#Invoke-JiraGetIssue -IssueKey GROPGDIS-749
+Invoke-JiraGetIssue -IssueKey GROPGDIS-749
 
 
 
