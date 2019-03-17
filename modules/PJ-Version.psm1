@@ -54,4 +54,30 @@ function Invoke-JiraDeleteVersion($JiraConnection,$VersionId,$FixTargetVersion,$
     }
 }
 
+#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-version-id-get
+function Invoke-JiraGetVersion($JiraConnection,$VersionId) {
+    $functionPath = "/rest/api/2/version/$VersionId"
+    
+    if($JiraConnection) {
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionAddress $functionPath -HttpMethod GET
+    } else {
+        Invoke-JiraRestRequest -FunctionAddress $functionPath -HttpMethod GET
+    }
+}
+
+#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-version-id-move-post
+
+function Invoke-JiraMoveVersion($JiraConnection,$VersionId,$After,$Position) {
+    $functionPath = "/rest/api/2/version/$VersionId/move"
+    
+    $body = @{}
+    if ($After) {$body.Add("after",$After)} else {$body.Add("position",$Position)}
+
+    if($JiraConnection) {
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionAddress $functionPath -HttpMethod POST -Body $body
+    } else {
+        Invoke-JiraRestRequest -FunctionAddress $functionPath -HttpMethod POST -Body $body
+    }
+}
+
 Export-ModuleMember -Function * -Variable *
