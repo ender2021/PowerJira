@@ -1,6 +1,6 @@
 function Invoke-JiraRestRequest {
     [CmdletBinding(DefaultParameterSetName="RestRequest")]
-    Param (
+    param (
         # The Jira Connection to use, if a session is not active.  The hashtable must have AuthHeader and HostName properties.
         [Parameter(Mandatory=$true)]
         [AllowNull()]
@@ -28,29 +28,47 @@ function Invoke-JiraRestRequest {
         [hashtable]
         $Body
     )
+    process {
+        if($null -eq $JiraConnection) { $JiraConnection = $Global:PJ_JiraSession }
+        if($null -eq $JiraConnection) {throw "No JiraConnection object provided, and no JiraSession open."}
 
-    if($JiraConnection -eq $null) { $JiraConnection = $Global:PJ_JiraSession }
-    if($JiraConnection -eq $null) {throw "No JiraConnection object provided, and no JiraSession open."}
+        $sendHeaders = @{}
+        $sendHeaders += $JiraConnection.AuthHeader
+        $sendHeaders += $Headers
+        
+        #define uri
+        $hostname = $JiraConnection.HostName
+        $function = If($FunctionPath.StartsWith("/")) {$FunctionPath.Substring(1)} else {$FunctionPath}
+        $uri = "$hostname/$function"
 
-    $sendHeaders = @{}
-    $sendHeaders += $JiraConnection.AuthHeader
-    $sendHeaders += $Headers
-    
-    #define uri
-    $hostname = $JiraConnection.HostName
-    $function = If($FunctionPath.StartsWith("/")) {$FunctionPath.Substring(1)} else {$FunctionPath}
-    $uri = "$hostname/$function"
-
-    if ($Body) {
-        Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body (ConvertTo-Json $Body -Compress)
-    } else {
-        Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders
+        if ($Body) {
+            Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body (ConvertTo-Json $Body -Compress)
+        } else {
+            Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders
+        }
     }
 }
 
-function New-JiraConnection($UserName,$ApiToken,$HostName) {
+function New-JiraConnection {
+    [CmdletBinding(DefaultParameterSetName="PlainText")]
+    param (
+        # The Jira username of the user performing actions
+        [Parameter(Mandatory=$true)]
+        [string]
+        $UserName,
+
+        # The Jira password (or API Token) of the user performing actions
+        [Parameter(Mandatory=$true)]
+        [string]
+        $Password,
+
+        # The hostname of the Jira instance to interact with (e.g. https://yourjirasite.atlassian.net/)
+        [Parameter(Mandatory=$true)]
+        [string]
+        $HostName
+    )
     # create the unencoded string
-    $credentialsText = "$UserName`:$ApiToken"
+    $credentialsText = "$UserName`:$Password"
 
     # encode the string in base64
     $credentialsBytes = [System.Text.Encoding]::UTF8.GetBytes($credentialsText)
@@ -65,12 +83,33 @@ function New-JiraConnection($UserName,$ApiToken,$HostName) {
     }    
 }
 
-function Open-JiraSession($UserName,$ApiToken,$HostName) {
-    $Global:PJ_JiraSession = New-JiraConnection -UserName $UserName -ApiToken $ApiToken -HostName $HostName
+function Open-JiraSession {
+    [CmdletBinding(DefaultParameterSetName="PlainText")]
+    param (
+        # The Jira username of the user performing actions
+        [Parameter(Mandatory=$true)]
+        [string]
+        $UserName,
+
+        # The Jira password (or API Token) of the user performing actions
+        [Parameter(Mandatory=$true)]
+        [string]
+        $Password,
+
+        # The hostname of the Jira instance to interact with (e.g. https://yourjirasite.atlassian.net/)
+        [Parameter(Mandatory=$true)]
+        [string]
+        $HostName
+    )
+    process {
+        $Global:PJ_JiraSession = New-JiraConnection -UserName $UserName -Password $Password -HostName $HostName
+    }
 }
 
 function Close-JiraSession() {
-    Remove-Variable PJ_JiraSession -Scope Global
+    process {
+        Remove-Variable PJ_JiraSession -Scope Global
+    }
 }
 
 Export-ModuleMember -Function * -Variable *
