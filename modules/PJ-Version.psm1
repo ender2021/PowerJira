@@ -79,6 +79,7 @@ function Invoke-JiraMoveVersion($JiraConnection,$VersionId,$After,$Position) {
     }
 }
 
+#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-version-id-mergeto-moveIssuesTo-put
 function Invoke-JiraMergeVersion($JiraConnection,$SourceVersionId,$TargetVersionId) {
     $functionPath = "/rest/api/2/version/$SourceVersionId/mergeto/$TargetVersionId"
     
@@ -86,6 +87,28 @@ function Invoke-JiraMergeVersion($JiraConnection,$SourceVersionId,$TargetVersion
         Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionAddress $functionPath -HttpMethod PUT
     } else {
         Invoke-JiraRestRequest -FunctionAddress $functionPath -HttpMethod PUT
+    }
+}
+
+#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-version-id-relatedIssueCounts-get
+function Invoke-JiraGetVersionRelatedIssueCounts($JiraConnection,$VersionId) {
+    $functionPath = "/rest/api/2/version/$VersionId/relatedIssueCounts"
+    
+    if($JiraConnection) {
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionAddress $functionPath -HttpMethod GET
+    } else {
+        Invoke-JiraRestRequest -FunctionAddress $functionPath -HttpMethod GET
+    }
+}
+
+#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-version-id-unresolvedIssueCount-get
+function Invoke-JiraGetVersionUnresolvedIssueCount($JiraConnection,$VersionId) {
+    $functionPath = "/rest/api/2/version/$VersionId/unresolvedIssueCount"
+    
+    if($JiraConnection) {
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionAddress $functionPath -HttpMethod GET
+    } else {
+        Invoke-JiraRestRequest -FunctionAddress $functionPath -HttpMethod GET
     }
 }
 

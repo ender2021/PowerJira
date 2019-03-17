@@ -14,7 +14,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -ApiToken $JiraCredentials.
 #Invoke-JiraUpdateVersion -VersionId 10480 -Description "Successful update!" -StartDate (Get-Date -Format "o")
 #$test1 = Invoke-JiraGetVersion -VersionId 10480
 #Invoke-JiraMoveVersion -VersionId 10482 -After $test1.self
-Invoke-JiraMergeVersion -SourceVersionId 10480 -TargetVersionId 10482
+#Invoke-JiraMergeVersion -SourceVersionId 10480 -TargetVersionId 10482
+#Invoke-JiraGetVersionRelatedIssueCounts -VersionId 10482
+Invoke-JiraGetVersionUnresolvedIssueCount -VersionId 10482
 
 #close the Jira session
 Close-JiraSession
