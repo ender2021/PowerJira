@@ -2,8 +2,40 @@ function Format-JiraApiFunctionAddress($Address) {
     (&{If($Address.StartsWith("/")) {$Address.Substring(1)} else {$Address}})
 }
 
-function Invoke-JiraRestRequest($JiraConnection=$Global:PJ_JiraSession,$FunctionAddress,$HttpMethod,$Headers=@{},$Body) {
-    
+function Invoke-JiraRestRequest {
+    [CmdletBinding(DefaultParameterSetName="RestRequest")]
+    Param (
+        # The Jira Connection to use, if a session is not active.  The hashtable must have AuthHeader and HostName properties.
+        [Parameter(Mandatory=$true)]
+        [AllowNull()]
+        [hashtable]
+        $JiraConnection,
+
+        # The URI path of function to invoke (do not include host name)
+        [Parameter(Mandatory=$true)]
+        [string]
+        $FunctionAddress,
+
+        # The HTTP method to use for the request
+        [Parameter(Mandatory=$true)]
+        [ValidateSet("GET","POST","PUT","PATCH","DELETE")]
+        [string]
+        $HttpMethod,
+
+        # Addtional headers to be added to the request (Auth and Content Type are included automatically)
+        [Parameter(Mandatory=$false)]
+        [hashtable]
+        $Headers=@{},
+
+        # The body of the request.  Will be serialized to json.
+        [Parameter(Mandatory=$false)]
+        [hashtable]
+        $Body
+    )
+
+    if($JiraConnection -eq $null) { $JiraConnection = $Global:PJ_JiraSession }
+    if($JiraConnection -eq $null) {throw "No JiraConnection object provided, and no JiraSession open."}
+
     $sendHeaders = @{}
     $sendHeaders += $JiraConnection.AuthHeader
     $sendHeaders += $Headers
