@@ -66,7 +66,6 @@ function Invoke-JiraGetVersion($JiraConnection,$VersionId) {
 }
 
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-version-id-move-post
-
 function Invoke-JiraMoveVersion($JiraConnection,$VersionId,$After,$Position) {
     $functionPath = "/rest/api/2/version/$VersionId/move"
     
@@ -77,6 +76,16 @@ function Invoke-JiraMoveVersion($JiraConnection,$VersionId,$After,$Position) {
         Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionAddress $functionPath -HttpMethod POST -Body $body
     } else {
         Invoke-JiraRestRequest -FunctionAddress $functionPath -HttpMethod POST -Body $body
+    }
+}
+
+function Invoke-JiraMergeVersion($JiraConnection,$SourceVersionId,$TargetVersionId) {
+    $functionPath = "/rest/api/2/version/$SourceVersionId/mergeto/$TargetVersionId"
+    
+    if($JiraConnection) {
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionAddress $functionPath -HttpMethod PUT
+    } else {
+        Invoke-JiraRestRequest -FunctionAddress $functionPath -HttpMethod PUT
     }
 }
 
