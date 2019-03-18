@@ -7,7 +7,7 @@ Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \Credentials.psm1) -Forc
 #open a new Jira session
 Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
 
-#$proj = Invoke-JiraGetProject "JPT" @("projectKeys")
+#$proj = Invoke-JiraGetProject "JPT"
 #$proj
 
 #$meta = Invoke-JiraGetIssueCreateMetadata -ProjectKeys @("JPT") -ExpandFields
@@ -16,7 +16,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$newVersion = Invoke-JiraCreateVersion -ProjectId $proj.id -Name "Test Version 6" -StartDate (Get-Date "2019-03-18")
 #$newVersion
 
-#Invoke-JiraGetProjectVersions -ProjectIdOrKey "JPT" -Expand @("operations")
+#Invoke-JiraGetProjectVersions -ProjectIdOrKey "JPT" -ExpandOperations
 #Invoke-JiraUpdateVersion -VersionId 10485 -Archived $false
 #$test1 = Invoke-JiraGetVersion -VersionId 10484
 #Invoke-JiraDeleteVersion -VersionId 10485
@@ -24,9 +24,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraMergeVersion -SourceVersionId 10480 -TargetVersionId 10482
 #Invoke-JiraGetVersionRelatedIssueCounts -VersionId 10482
 #Invoke-JiraGetVersionUnresolvedIssueCount -VersionId 10482
-#$results = Invoke-JiraSearchIssues -JQL "project = GROPGDIS" -MaxResults 10
-#$results.issues
-#Invoke-JiraGetIssue GROPGDIS-749
+#$results = Invoke-JiraSearchIssues -JQL "project = GROPGDIS" -MaxResults 1 -ExpandTransitions -ExpandOperations
+#$results.issues[0]
+Invoke-JiraGetIssue GROPGDIS-749 -ExpandOperations
 
 # $fields = @{
 #   issuetype = @{id=10001} #task
@@ -36,8 +36,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 # Invoke-JiraCreateIssue -Fields $fields
 
-$user = Invoke-JiraGetCurrentUser -ExpandGroups
-$user.groups
+#$user = Invoke-JiraGetCurrentUser -ExpandGroups
+#$user.groups
 
 #close the Jira session
 Close-JiraSession

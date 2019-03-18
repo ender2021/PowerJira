@@ -34,10 +34,45 @@ function Invoke-JiraSearchIssues {
         [string]
         $QueryValidation="strict",
 
-        # Parameter help description
+        # Returns field values rendered in HTML format.
         [Parameter(Mandatory=$false)]
-        [string[]]
-        $Expand,
+        [Switch]
+        $ExpandRenderedFields,
+
+        # Returns the display name of each field.
+        [Parameter(Mandatory=$false)]
+        [Switch]
+        $ExpandNames,
+
+        # Returns the schema describing a field type.
+        [Parameter(Mandatory=$false)]
+        [Switch]
+        $ExpandSchema,
+
+        # Returns all possible transitions for the issue.
+        [Parameter(Mandatory=$false)]
+        [Switch]
+        $ExpandTransitions,
+
+        # Returns all possible operations for the issue.
+        [Parameter(Mandatory=$false)]
+        [Switch]
+        $ExpandOperations,
+
+        # Returns information about how each field can be edited.
+        [Parameter(Mandatory=$false)]
+        [Switch]
+        $ExpandEditMetadata,
+
+        # Returns a list of recent updates to an issue, sorted by date, starting from the most recent.
+        [Parameter(Mandatory=$false)]
+        [Switch]
+        $ExpandChangelog,
+
+        # Instead of fields, returns versionedRepresentations a JSON array containing each version of a field's value, with the highest numbered item representing the most recent version.
+        [Parameter(Mandatory=$false)]
+        [Switch]
+        $ExpandVersionedRepresentations,
 
         # A comma-separated list of up to 5 issue properties to include in the results.
         [Parameter(Mandatory=$false)]
@@ -53,6 +88,15 @@ function Invoke-JiraSearchIssues {
     process {
         $functionPath = "/rest/api/2/search"
 
+        $expand = @()
+        if($PSBoundParameters.ContainsKey("ExpandRenderedFields")){$expand += "renderedFields"} 
+        if($PSBoundParameters.ContainsKey("ExpandNames")){$expand += "names"}
+        if($PSBoundParameters.ContainsKey("ExpandSchema")){$expand += "schema"}
+        if($PSBoundParameters.ContainsKey("ExpandTransitions")){$expand += "transitions"}
+        if($PSBoundParameters.ContainsKey("ExpandOperations")){$expand += "operations"}
+        if($PSBoundParameters.ContainsKey("ExpandEditMetadata")){$expand += "editmeta"}
+        if($PSBoundParameters.ContainsKey("ExpandVersionedRepresentations")){$expand += "versionedRepresentations"}
+        
         $body = @{
             jql = $JQL
             startAt = $StartAt
@@ -60,6 +104,7 @@ function Invoke-JiraSearchIssues {
             fields = $Fields
             validateQuery = $QueryValidation
         }
+        if($expand.Count -gt 0) {$body.Add("expand",$expand)}
         if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
         if($PSBoundParameters.ContainsKey("FieldsByKeys")){$body.Add("fieldsByKeys",$true)}

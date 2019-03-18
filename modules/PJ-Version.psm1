@@ -28,6 +28,11 @@ function Invoke-JiraCreateVersion {
         [datetime]
         $ReleaseDate,
 
+        # Returns all possible operations for the issue.
+        [Parameter(Mandatory=$false)]
+        [Switch]
+        $ExpandOperations,
+        
         # The JiraConnection object to use for the request
         [Parameter(Mandatory=$false)]
         [hashtable]
@@ -43,6 +48,7 @@ function Invoke-JiraCreateVersion {
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("StartDate")){$body.Add("startDate",(Format-JiraRestDateTime $StartDate))}
         if($PSBoundParameters.ContainsKey("ReleaseDate")){$body.Add("releaseDate",(Format-JiraRestDateTime $ReleaseDate))}
+        if($PSBoundParameters.ContainsKey("ExpandOperations")){$body.Add("expand","operations")}
 
         Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body
     }
@@ -93,6 +99,18 @@ function Invoke-JiraUpdateVersion {
         [int32]
         $UnfixedIssuesVersionId,
 
+        # Returns all possible operations for the issue.
+        [Parameter(Mandatory=$false)]
+        [Switch]
+        $ExpandOperations,
+        
+        # Returns the count of issues in this version for each of the status categories to do,
+        # in progress, done, and unmapped. The unmapped property contains a count of issues with
+        # a status other than to do, in progress, and done.
+        [Parameter(Mandatory=$false)]
+        [Switch]
+        $ExpandIssuesStatusCount,
+        
         # The JiraConnection object to use for the request
         [Parameter(Mandatory=$false)]
         [hashtable]
@@ -101,9 +119,14 @@ function Invoke-JiraUpdateVersion {
     process {
         $functionPath = "/rest/api/2/version/$VersionId"
         
+        $expand = @()
+        if($PSBoundParameters.ContainsKey("ExpandOperations")){$expand += "operations"}
+        if($PSBoundParameters.ContainsKey("ExpandIssuesStatusCount")){$expand += "issuesstatus"}
+        
         $body = @{
             id = $VersionId
         }
+        if($expand.Count -gt 0) {$body.Add("expand",$expand -join ",")}
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("StartDate")){$body.Add("startDate",(Format-JiraRestDateTime $StartDate))}
         if($PSBoundParameters.ContainsKey("ReleaseDate")){$body.Add("releaseDate",(Format-JiraRestDateTime $ReleaseDate))}
@@ -159,6 +182,18 @@ function Invoke-JiraGetVersion {
         [int32]
         $VersionId,
 
+        # Returns all possible operations for the issue.
+        [Parameter(Mandatory=$false)]
+        [Switch]
+        $ExpandOperations,
+
+        # Returns the count of issues in this version for each of the status categories to do,
+        # in progress, done, and unmapped. The unmapped property contains a count of issues with
+        # a status other than to do, in progress, and done.
+        [Parameter(Mandatory=$false)]
+        [Switch]
+        $ExpandIssuesStatusCount,
+
         # The JiraConnection object to use for the request
         [Parameter(Mandatory=$false)]
         [hashtable]
@@ -167,7 +202,14 @@ function Invoke-JiraGetVersion {
     process {
         $functionPath = "/rest/api/2/version/$VersionId"
         
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET"
+        $expand = @()
+        if($PSBoundParameters.ContainsKey("ExpandOperations")){$expand += "operations"}
+        if($PSBoundParameters.ContainsKey("ExpandIssuesStatusCount")){$expand += "issuesstatus"}
+        
+        $body = @{}
+        if($expand.Count -gt 0) {$body.Add("expand",$expand -join ",")}
+        
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
     }
 }
 

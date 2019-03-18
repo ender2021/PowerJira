@@ -7,10 +7,10 @@ function Invoke-JiraGetProjectVersions {
         [string]
         $ProjectIdOrKey,
 
-        # Use expand to include additional information in the response.
+        # Returns all possible operations for the issue.
         [Parameter(Mandatory=$false)]
-        [string[]]
-        $Expand,
+        [Switch]
+        $ExpandOperations,
         
         # The JiraConnection object to use for the request
         [Parameter(Mandatory=$false)]
@@ -21,7 +21,7 @@ function Invoke-JiraGetProjectVersions {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/versions"
 
         $body = @{}
-        if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
+        if($PSBoundParameters.ContainsKey("ExpandOperations")){$body.Add("expand","operations")}
 
         Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
     }
@@ -36,10 +36,10 @@ function Invoke-JiraGetProject {
         [string]
         $ProjectIdOrKey,
 
-        # Use expand to include additional information in the response.
+        # All project keys associated with the project.
         [Parameter(Mandatory=$false)]
         [string[]]
-        $Expand,
+        $ExpandProjectKeys,
         
         # The JiraConnection object to use for the request
         [Parameter(Mandatory=$false)]
@@ -49,7 +49,7 @@ function Invoke-JiraGetProject {
     $functionPath = "/rest/api/2/project/$ProjectIdOrKey"
     
     $body = @{}
-    if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
+    if($PSBoundParameters.ContainsKey("ExpandProjectKeys")){$body.Add("expand","projectKeys")}
 
     Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
 }
