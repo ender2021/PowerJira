@@ -10,8 +10,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$proj = Invoke-JiraGetProject "JPT" @("projectKeys")
 #$proj
 
-$meta = Invoke-JiraGetIssueCreateMetadata -ProjectKeys @("JPT") -ExpandFields
-$meta.projects[0].issuetypes[0].fields
+#$meta = Invoke-JiraGetIssueCreateMetadata -ProjectKeys @("JPT") -ExpandFields
+#$meta.projects[0].issuetypes[0].fields
 
 #$newVersion = Invoke-JiraCreateVersion -ProjectId $proj.id -Name "Test Version 6" -StartDate (Get-Date "2019-03-18")
 #$newVersion
@@ -35,6 +35,9 @@ $meta.projects[0].issuetypes[0].fields
 # }
 
 # Invoke-JiraCreateIssue -Fields $fields
+
+$user = Invoke-JiraGetCurrentUser -ExpandGroups
+$user.groups
 
 #close the Jira session
 Close-JiraSession

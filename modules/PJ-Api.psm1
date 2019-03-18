@@ -54,7 +54,7 @@ function Invoke-JiraRestRequest {
         $function = If($FunctionPath.StartsWith("/")) {$FunctionPath.Substring(1)} else {$FunctionPath}
         $uri = "$hostname/$function"
 
-        if ($Body) {
+        if (($null -ne $Body) -and ($Body.Count -gt 0)) {
             $b = if($HttpMethod -eq "GET") {$Body} else {ConvertTo-Json $Body -Compress}
             Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body $b
         } else {

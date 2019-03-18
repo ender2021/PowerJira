@@ -3,5 +3,6 @@ Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \modules\PJ-Project.psm1
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \modules\PJ-Version.psm1) -Force
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \modules\PJ-Search.psm1) -Force
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \modules\PJ-Issue.psm1) -Force
+Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \modules\PJ-User.psm1) -Force
 
 Export-ModuleMember -Function * -Variable *
