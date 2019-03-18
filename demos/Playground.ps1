@@ -19,10 +19,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraMoveVersion -VersionId 10484 -Position "First"
 #Invoke-JiraMergeVersion -SourceVersionId 10480 -TargetVersionId 10482
 #Invoke-JiraGetVersionRelatedIssueCounts -VersionId 10482
-Invoke-JiraGetVersionUnresolvedIssueCount -VersionId 10482
+#Invoke-JiraGetVersionUnresolvedIssueCount -VersionId 10482
 #$results = Invoke-JiraSearchIssues -JQL "project = GROPGDIS" -MaxResults 10
 #$results.issues
-#Invoke-JiraGetIssue -IssueKey GROPGDIS-749
+Invoke-JiraGetIssue GROPGDIS-749
 
 
 
