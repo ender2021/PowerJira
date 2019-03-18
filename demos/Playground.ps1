@@ -26,15 +26,29 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetVersionUnresolvedIssueCount -VersionId 10482
 #$results = Invoke-JiraSearchIssues -JQL "project = GROPGDIS" -MaxResults 1 -ExpandTransitions -ExpandOperations
 #$results.issues[0]
-Invoke-JiraGetIssue GROPGDIS-749 -ExpandOperations
+#Invoke-JiraGetIssue GROPGDIS-749 -ExpandOperations
 
-# $fields = @{
+# $createFields = @{
 #   issuetype = @{id=10001} #task
 #   summary = "PJ Test Issue 1"
 #   project = @{id=13324}
+#   reporter = @{id=(Invoke-JiraGetCurrentUser).accountId}
 # }
 
-# Invoke-JiraCreateIssue -Fields $fields
+# Invoke-JiraCreateIssue -Fields $createFields
+
+# $updateFields = @{
+#   issuetype = @{id=10001} #task
+#   summary = "PJ Test Issue 1"
+#   project = @{id=13324}
+#   reporter = @{id=(Invoke-JiraGetCurrentUser).accountId}
+# }
+
+#(Invoke-JiraGetIssue JPT-1 -ExpandTransitions).transitions
+
+#Invoke-JiraEditIssue JPT-1
+#(Invoke-JiraGetIssueEditMetadata JPT-1).fields
+Invoke-JiraTransitionIssue JPT-1 71
 
 #$user = Invoke-JiraGetCurrentUser -ExpandGroups
 #$user.groups
