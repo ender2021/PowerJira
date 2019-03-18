@@ -12,13 +12,14 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$newVersion = Invoke-JiraCreateVersion -ProjectId $proj.id -Name "Test Version 6" -StartDate (Get-Date "2019-03-18")
 #$newVersion
 
-#Invoke-JiraGetProjectVersions -ProjectIdOrKey "GROPGDIS" -Expand @("operations")
-Invoke-JiraUpdateVersion -VersionId 10485 -Archived $false
-#$test1 = Invoke-JiraGetVersion -VersionId 10480
-#Invoke-JiraMoveVersion -VersionId 10482 -After $test1.self
+#Invoke-JiraGetProjectVersions -ProjectIdOrKey "JPT" -Expand @("operations")
+#Invoke-JiraUpdateVersion -VersionId 10485 -Archived $false
+#$test1 = Invoke-JiraGetVersion -VersionId 10484
+#Invoke-JiraDeleteVersion -VersionId 10485
+#Invoke-JiraMoveVersion -VersionId 10484 -Position "First"
 #Invoke-JiraMergeVersion -SourceVersionId 10480 -TargetVersionId 10482
 #Invoke-JiraGetVersionRelatedIssueCounts -VersionId 10482
-#Invoke-JiraGetVersionUnresolvedIssueCount -VersionId
+Invoke-JiraGetVersionUnresolvedIssueCount -VersionId 10482
 #$results = Invoke-JiraSearchIssues -JQL "project = GROPGDIS" -MaxResults 10
 #$results.issues
 #Invoke-JiraGetIssue -IssueKey GROPGDIS-749
