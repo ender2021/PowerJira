@@ -25,5 +25,13 @@
 			"\\$JiraConnection"
 		],
 		"description": "Insert the default JiraConnection parameter for Invoke-Jira* functions"
+	},
+	"Parameter Checker": {
+		"scope":"powershell",
+		"prefix":"checkparam",
+		"body" : [
+			"if(\\$PSBoundParameters.ContainsKey(\"${1}\")){\\$body.Add(\"${2}\",\\$${1})}"
+		],
+		"description": "Snippet for adding an item to a hashtable if a named function parameter is set"
 	}
 }

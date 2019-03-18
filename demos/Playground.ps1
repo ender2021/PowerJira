@@ -9,6 +9,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #$proj = Invoke-JiraGetProject "JPT" @("projectKeys")
 #$proj
+
+$meta = Invoke-JiraGetIssueCreateMetadata -ProjectKeys @("JPT") -ExpandFields
+$meta.projects[0].issuetypes[0].fields
+
 #$newVersion = Invoke-JiraCreateVersion -ProjectId $proj.id -Name "Test Version 6" -StartDate (Get-Date "2019-03-18")
 #$newVersion
 
@@ -22,9 +26,15 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetVersionUnresolvedIssueCount -VersionId 10482
 #$results = Invoke-JiraSearchIssues -JQL "project = GROPGDIS" -MaxResults 10
 #$results.issues
-Invoke-JiraGetIssue GROPGDIS-749
+#Invoke-JiraGetIssue GROPGDIS-749
 
+# $fields = @{
+#   issuetype = @{id=10001} #task
+#   summary = "PJ Test Issue 1"
+#   project = @{id=13324}
+# }
 
+# Invoke-JiraCreateIssue -Fields $fields
 
 #close the Jira session
 Close-JiraSession

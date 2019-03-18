@@ -1,35 +1,13 @@
 function Format-JiraRestDateTime {
     [CmdletBinding(DefaultParameterSetName="DefaultParams")]
     param (
-        # Teh DateTime to format
+        # The DateTime to format
         [Parameter(Mandatory=$true)]
         [datetime]
         $DateTime
     )
     process {
         Get-Date -Date $DateTime -Format "o"
-    }
-}
-
-function Format-JiraExpandGet {
-    [CmdletBinding(DefaultParameterSetName="DefaultParams")]
-    param (
-        # The constructed GET function path
-        [Parameter(Mandatory=$true)]
-        [string]
-        $FunctionPath,
-
-        # The string array of properties to expand
-        [Parameter(Mandatory=$true)]
-        [AllowNull()]
-        [AllowEmptyCollection()]
-        [string[]]
-        $Expand
-    )
-    process {
-        $return = $FunctionPath
-        if (($null -ne $Expand) -and ($Expand.Count -gt 0)) {$return += '?expand=' + ($Expand -join ",")}
-        $return
     }
 }
 
@@ -77,7 +55,8 @@ function Invoke-JiraRestRequest {
         $uri = "$hostname/$function"
 
         if ($Body) {
-            Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body (ConvertTo-Json $Body -Compress)
+            $b = if($HttpMethod -eq "GET") {$Body} else {ConvertTo-Json $Body -Compress}
+            Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body $b
         } else {
             Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders
         }

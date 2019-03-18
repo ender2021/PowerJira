@@ -18,9 +18,12 @@ function Invoke-JiraGetProjectVersions {
         $JiraConnection
     )
     process {
-        $functionPath = Format-JiraExpandGet "/rest/api/2/project/$ProjectIdOrKey/versions" $Expand
+        $functionPath = "/rest/api/2/project/$ProjectIdOrKey/versions"
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET"
+        $body = @{}
+        if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
+
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
     }
 }
 
@@ -43,9 +46,12 @@ function Invoke-JiraGetProject {
         [hashtable]
         $JiraConnection
     )
-    $functionPath = Format-JiraExpandGet "/rest/api/2/project/$ProjectIdOrKey" $Expand
+    $functionPath = "/rest/api/2/project/$ProjectIdOrKey"
     
-    Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET"   
+    $body = @{}
+    if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
+
+    Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
 }
 
 Export-ModuleMember -Function * -Variable *
