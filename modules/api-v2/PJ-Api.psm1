@@ -62,6 +62,8 @@ function Invoke-JiraRestRequest {
         if (($null -ne $Body) -and ($Body.Count -gt 0)) {
             $b = if($HttpMethod -eq "GET") {$Body} else {ConvertTo-Json $Body -Compress}
             Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body $b
+        } elseif ($PSBoundParameters.ContainsKey("LiteralBody")) {
+            Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body $LiteralBody            
         } else {
             Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders
         }
