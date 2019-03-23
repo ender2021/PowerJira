@@ -15,6 +15,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET COMPONENT
 #Invoke-JiraGetComponent 10379
 
+#UPDATE COMPONENT
+#Invoke-JiraUpdateComponent 10379 -DefaultAssignee "UNASSIGNED"
+
+
 #end tests
 
 #close the Jira session
