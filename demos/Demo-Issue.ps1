@@ -62,6 +62,20 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET ISSUE TRANSITIONS
 #(Invoke-JiraGetIssueTransitions JPT-1).TRANSITIONS
 
+#BULK ISSUE CREATE
+# $issues = @()
+# for ($i=1;$i -lt 4;$i++) {
+#     $issues += @{
+#         fields = @{
+#             issuetype = @{id=10001} #task
+#             summary = "PJ Test Issue Bulk Create $i"
+#             project = @{id=13324}
+#             reporter = @{id=(Invoke-JiraGetCurrentUser).accountId}
+#         }
+#     }
+# }
+# Invoke-JiraCreateIssueBulk $issues
+
 #end tests
 
 #close the Jira session
