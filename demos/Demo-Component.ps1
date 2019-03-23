@@ -12,6 +12,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #CREATE COMPONENT
 #Invoke-JiraCreateComponent JPT "Test Component 3" "This one has a description" (Invoke-JiraGetCurrentUser).accountId "COMPONENT_LEAD"
 
+#GET COMPONENT
+#Invoke-JiraGetComponent 10379
+
 #end tests
 
 #close the Jira session
