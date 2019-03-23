@@ -1,8 +1,7 @@
-Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \modules\PJ-Api.psm1) -Force
-Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \modules\PJ-Project.psm1) -Force
-Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \modules\PJ-Version.psm1) -Force
-Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \modules\PJ-Search.psm1) -Force
-Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \modules\PJ-Issue.psm1) -Force
-Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \modules\PJ-User.psm1) -Force
+$modulesFolder = "$PSScriptRoot\modules\api-v2"
+foreach ($module in Get-Childitem $modulesFolder -Name -Filter "*.psm1")
+{
+    Import-Module $modulesFolder\$module -Force
+}
 
 Export-ModuleMember -Function * -Variable *
