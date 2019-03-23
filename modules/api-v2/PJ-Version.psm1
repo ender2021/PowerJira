@@ -127,6 +127,7 @@ function Invoke-JiraUpdateVersion {
             id = $VersionId
         }
         if($expand.Count -gt 0) {$body.Add("expand",$expand -join ",")}
+        if($PSBoundParameters.ContainsKey("Name")){$body.Add("name",$Name)}
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("StartDate")){$body.Add("startDate",(Format-JiraRestDateTime $StartDate))}
         if($PSBoundParameters.ContainsKey("ReleaseDate")){$body.Add("releaseDate",(Format-JiraRestDateTime $ReleaseDate))}
