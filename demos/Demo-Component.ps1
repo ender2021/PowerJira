@@ -18,6 +18,13 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #UPDATE COMPONENT
 #Invoke-JiraUpdateComponent 10379 -DefaultAssignee "UNASSIGNED"
 
+#DELETE COMPONENT
+$comp = Invoke-JiraCreateComponent JPT "To be deleted"
+$comp
+Read-Host -Prompt "Press any key to continue or CTRL+C to quit"
+Invoke-JiraEditIssue JPT-1 @{components=@(@{id=$comp.id})}
+Read-Host -Prompt "Press any key to continue or CTRL+C to quit"
+Invoke-JiraDeleteComponent $comp.id 10379
 
 #end tests
 
