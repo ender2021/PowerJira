@@ -47,6 +47,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraAssignIssue JPT-1 -Unassign
 #Invoke-JiraAssignIssue JPT-1 -ProjectDefault
 
+#ADD COMMENT
+#Invoke-JiraAddComment JPT-1 "This is another comment from Powershell!"
+
 #end tests
 
 #close the Jira session
