@@ -1,5 +1,5 @@
 function Format-JiraRestDateTime {
-    [CmdletBinding(DefaultParameterSetName="DefaultParams")]
+    [CmdletBinding()]
     param (
         # The DateTime to format
         [Parameter(Mandatory=$true)]
@@ -12,34 +12,39 @@ function Format-JiraRestDateTime {
 }
 
 function Invoke-JiraRestRequest {
-    [CmdletBinding(DefaultParameterSetName="RestRequest")]
+    [CmdletBinding(DefaultParameterSetName="JsonBody")]
     param (
         # The Jira Connection to use, if a session is not active.  The hashtable must have AuthHeader and HostName properties.
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory)]
         [AllowNull()]
         [hashtable]
         $JiraConnection,
 
         # The URI path of function to invoke (do not include host name)
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory)]
         [string]
         $FunctionPath,
 
         # The HTTP method to use for the request
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory)]
         [ValidateSet("GET","POST","PUT","PATCH","DELETE")]
         [string]
         $HttpMethod,
 
         # Addtional headers to be added to the request (Auth and Content Type are included automatically)
-        [Parameter(Mandatory=$false)]
+        [Parameter()]
         [hashtable]
         $Headers=@{},
 
         # The body of the request.  Will be serialized to json.
-        [Parameter(Mandatory=$false)]
+        [Parameter(ParameterSetName="JsonBody")]
         [hashtable]
-        $Body
+        $Body,
+
+        # Allows passing a raw string for the body of the request
+        [Parameter(ParameterSetName="SimpleBody")]
+        [string]
+        $LiteralBody
     )
     process {
         if($null -eq $JiraConnection) { $JiraConnection = $Global:PJ_JiraSession }
@@ -67,12 +72,12 @@ function New-JiraConnection {
     [CmdletBinding(DefaultParameterSetName="PlainText")]
     param (
         # The Jira username of the user performing actions
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$true,ParameterSetName="PlainText")]
         [string]
         $UserName,
 
         # The Jira password (or API Token) of the user performing actions
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$true,ParameterSetName="PlainText")]
         [string]
         $Password,
 
@@ -101,12 +106,12 @@ function Open-JiraSession {
     [CmdletBinding(DefaultParameterSetName="PlainText")]
     param (
         # The Jira username of the user performing actions
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$true,ParameterSetName="PlainText")]
         [string]
         $UserName,
 
         # The Jira password (or API Token) of the user performing actions
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$true,ParameterSetName="PlainText")]
         [string]
         $Password,
 
