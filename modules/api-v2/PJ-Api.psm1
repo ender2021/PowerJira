@@ -41,6 +41,11 @@ function Invoke-JiraRestRequest {
         [hashtable]
         $Body,
 
+        # Use to configure how deep the body hashtable is
+        [Parameter(ParameterSetName="JsonBody")]
+        [int32]
+        $BodyDepth=4,
+
         # Allows passing a raw string for the body of the request
         [Parameter(ParameterSetName="SimpleBody")]
         [string]
@@ -60,7 +65,7 @@ function Invoke-JiraRestRequest {
         $uri = "$hostname/$function"
 
         if (($null -ne $Body) -and ($Body.Count -gt 0)) {
-            $b = if($HttpMethod -eq "GET") {$Body} else {ConvertTo-Json $Body -Compress}
+            $b = if(($HttpMethod -eq "GET") -or ($HttpMethod -eq "DELETE")) {$Body} else {ConvertTo-Json $Body -Compress -Depth $BodyDepth}
             Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body $b
         } elseif ($PSBoundParameters.ContainsKey("LiteralBody")) {
             Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body $LiteralBody            
