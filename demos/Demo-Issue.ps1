@@ -54,7 +54,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraAddWorklog JPT-1 "2h" "Time formats are a real bastard"
 
 #ADD WATCHER
-#Invoke-JiraAddWatcher JPT-1 "557058:6af86a88-d849-4258-b7e7-0d310a2eb87e" #josh
+#Invoke-JiraAddWatcher JPT-1 
 
 #GET ISSUE WATCHERS
 #(Invoke-JiraGetIssueWatchers JPT-1).watchers
