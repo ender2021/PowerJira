@@ -42,6 +42,11 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #TRANSITION ISSUE
 #Invoke-JiraTransitionIssue JPT-1 71
 
+#ASSIGN ISSUE
+#Invoke-JiraAssignIssue JPT-1 -AssigneeAccountId (Invoke-JiraGetCurrentUser).accountId
+#Invoke-JiraAssignIssue JPT-1 -Unassign
+#Invoke-JiraAssignIssue JPT-1 -ProjectDefault
+
 #end tests
 
 #close the Jira session
