@@ -44,5 +44,28 @@
 			"if(\\$PSBoundParameters.ContainsKey(\"${1}\")){\\$body.Add(\"${2}\",\\$${1})}"
 		],
 		"description": "Snippet for adding an item to a hashtable if a named function parameter is set"
-	}
+	},
+	"Invoke-Jira cmdlet": {
+		"scope":"powershell",
+		"prefix":"ijcmdlet",
+		"body" : [
+			"#",
+			"function Invoke-Jira$1 {",
+			"\t[CmdletBinding()]",
+			"\tparam (\n\n\n",
+			"\t\t# The JiraConnection object to use for the request",
+			"\t\t[Parameter()]",
+			"\t\t[hashtable]",
+			"\t\t\\$JiraConnection",
+			"\t)",
+			"\tprocess {",
+			"\t\t\\$functionPath = \"\"\n",
+			"\t\t\\$body=@{}",
+			"\t\tif(\\$PSBoundParameters.ContainsKey(\"\")){\\$body.Add(\"\",\"\")}\n",
+			"\t\tInvoke-JiraRestRequest -JiraConnection \\$JiraConnection -FunctionPath \\$functionPath -HttpMethod \"\" -Body \\$body",
+			"\t}",
+			"}",
+		],
+		"description": "Snippet for templating a new Invoke-Jira* API wrapper"
+	},
 }
