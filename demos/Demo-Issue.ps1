@@ -53,6 +53,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #ADD WORKLOG
 #Invoke-JiraAddWorklog JPT-1 "2h" "Time formats are a real bastard"
 
+#ADD WATCHER
+Invoke-JiraAddWatcher JPT-1 (Invoke-JiraGetCurrentUser).accountId
+
 #end tests
 
 #close the Jira session
