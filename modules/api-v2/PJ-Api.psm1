@@ -11,6 +11,7 @@ function Format-JiraRestDateTime {
     }
 }
 
+#NOTE: Multipart requests are only supported in PowerShell 6+
 function Invoke-JiraRestRequest {
     [CmdletBinding(DefaultParameterSetName="JsonBody")]
     param (
@@ -49,7 +50,17 @@ function Invoke-JiraRestRequest {
         # Allows passing a raw string for the body of the request
         [Parameter(ParameterSetName="SimpleBody")]
         [string]
-        $LiteralBody
+        $LiteralBody,
+
+        # Set this flag to send a multi-part request
+        [Parameter(Mandatory,ParameterSetName="Multipart")]
+        [switch]
+        $Multipart,
+
+        # The Form values for a multipart request
+        [Parameter(Mandatory,ParameterSetName="Multipart")]
+        [hashtable]
+        $Form
     )
     process {
         if($null -eq $JiraConnection) { $JiraConnection = $Global:PJ_JiraSession }
@@ -64,17 +75,22 @@ function Invoke-JiraRestRequest {
         $function = If($FunctionPath.StartsWith("/")) {$FunctionPath.Substring(1)} else {$FunctionPath}
         $uri = "$hostname/$function"
 
-        if (($null -ne $Body) -and ($Body.Count -gt 0) -and $HttpMethod -ne "DELETE") {
-            $b = if(($HttpMethod -eq "GET")) {$Body} else {ConvertTo-Json $Body -Compress -Depth $BodyDepth}
-            Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body $b
-        } elseif ($PSBoundParameters.ContainsKey("LiteralBody")) {
-            Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body $LiteralBody            
+        if ($PSBoundParameters.ContainsKey("Multipart")) {
+            $sendHeaders.Add("X-Atlassian-Token","no-check")
+            Invoke-RestMethod -Uri $uri -Method $HttpMethod -Headers $sendHeaders -Form $Form
         } else {
-            if ($HttpMethod -eq "DELETE" -and ($null -ne $Body) -and ($Body.Count -gt 0)) {
-                $qs = Format-HashtableToQueryString $Body
-                $uri += '?' + $qs
+            if (($null -ne $Body) -and ($Body.Count -gt 0) -and $HttpMethod -ne "DELETE") {
+                $b = if(($HttpMethod -eq "GET")) {$Body} else {ConvertTo-Json $Body -Compress -Depth $BodyDepth}
+                Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body $b
+            } elseif ($PSBoundParameters.ContainsKey("LiteralBody")) {
+                Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body $LiteralBody            
+            } else {
+                if ($HttpMethod -eq "DELETE" -and ($null -ne $Body) -and ($Body.Count -gt 0)) {
+                    $qs = Format-HashtableToQueryString $Body
+                    $uri += '?' + $qs
+                }
+                Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders
             }
-            Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders
         }
     }
 }
