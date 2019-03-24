@@ -13,6 +13,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$user = Invoke-JiraGetCurrentUser -ExpandGroups
 #$user.groups
 
+#FIND USERS
+#Invoke-JiraFindUsers "Mark" 2 1
+
 #end tests
 
 #close the Jira session
