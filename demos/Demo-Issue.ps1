@@ -47,9 +47,6 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraAssignIssue JPT-1 -Unassign
 #Invoke-JiraAssignIssue JPT-1 -ProjectDefault
 
-#ADD WORKLOG
-#Invoke-JiraAddWorklog JPT-1 "2h" "Time formats are a real bastard"
-
 #ADD WATCHER
 #Invoke-JiraAddWatcher JPT-1 
 
@@ -74,10 +71,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # Invoke-JiraCreateIssueBulk $issues
 
 #ADD ATTACHMENT
-$txt = Get-Item -Path (Join-Path -Path $PSScriptRoot -ChildPath \SampleAttachment1.txt)
-$png = Get-Item -Path (Join-Path -Path $PSScriptRoot -ChildPath \SampleAttachment2.png)
-Invoke-JiraAddAttachment JPT-1 $txt
-Invoke-JiraAddAttachment JPT-1 $png
+# $txt = Get-Item -Path (Join-Path -Path $PSScriptRoot -ChildPath \SampleAttachment1.txt)
+# $png = Get-Item -Path (Join-Path -Path $PSScriptRoot -ChildPath \SampleAttachment2.png)
+# Invoke-JiraAddAttachment JPT-1 $txt
+# Invoke-JiraAddAttachment JPT-1 $png
 
 #end tests
 
