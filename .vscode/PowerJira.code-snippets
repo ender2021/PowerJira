@@ -68,4 +68,12 @@
 		],
 		"description": "Snippet for templating a new Invoke-Jira* API wrapper"
 	},
+	"Module Export line": {
+		"scope":"powershell",
+		"prefix": "modexp",
+		"body": [
+			"Export-ModuleMember -Function * -Variable *"
+		],
+		"description": "Insert the the standard export all module members line"
+	},
 }

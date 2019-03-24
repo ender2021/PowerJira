@@ -11,6 +11,18 @@ function Format-JiraRestDateTime {
     }
 }
 
+function Test-Id {
+    param (
+        # The value to be tested
+        [Parameter(Mandatory)]
+        [string]
+        $Value
+    )
+    process {
+        $Value -match "^[\d\.]+$"
+    }
+}
+
 #NOTE: Multipart requests are only supported in PowerShell 6+
 function Invoke-JiraRestRequest {
     [CmdletBinding(DefaultParameterSetName="JsonBody")]
