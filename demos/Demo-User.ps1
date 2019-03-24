@@ -20,6 +20,11 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$users = Invoke-JiraFindUsers "Steven"
 #(Invoke-JiraGetUser $users[0].accountId -ExpandGroups -ExpandApplicationRoles).applicationRoles
 
+#GET USER GROUPS
+#$users = Invoke-JiraFindUsers "Melanie"
+#Invoke-JiraGetUserGroups $users[0].accountId
+
+
 #end tests
 
 #close the Jira session
