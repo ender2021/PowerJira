@@ -14,7 +14,11 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$user.groups
 
 #FIND USERS
-#Invoke-JiraFindUsers "Mark" 2 1
+#Invoke-JiraFindUsers "Mike"
+
+#GET USER
+#$users = Invoke-JiraFindUsers "Steven"
+#(Invoke-JiraGetUser $users[0].accountId -ExpandGroups -ExpandApplicationRoles).applicationRoles
 
 #end tests
 
