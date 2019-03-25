@@ -83,6 +83,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # Invoke-JiraDeleteWatcher JPT-1 $josh
 
 #GET VOTES
+#Invoke-JiraGetVotes JPT-1
+
+#ADD VOTE
+Invoke-JiraAddVote JPT-1
 Invoke-JiraGetVotes JPT-1
 
 #end tests
