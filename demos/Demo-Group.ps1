@@ -12,6 +12,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #FIND GROUPS
 #Invoke-JiraFindGroups sist @("graddiv-sist-oversight-committee") 1
 
+#FIND USERS AND GROUPS
+#$results = Invoke-JiraFindUsersAndGroups ucsb -ShowAvatar
+#$results.users.header
+
 #end tests
 
 #close the Jira session
