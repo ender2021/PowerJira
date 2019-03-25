@@ -27,7 +27,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # Invoke-JiraDeleteComponent $comp.id 10379
 
 #GET COMPONENT ISSUES COUNT
-Invoke-JiraGetComponentIssuesCount 10379
+#Invoke-JiraGetComponentIssuesCount 10379
 
 #end tests
 

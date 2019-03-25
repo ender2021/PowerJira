@@ -13,7 +13,12 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraCreateIssueLink JPT-2 "Precedent" JPT-3 @{body="this complex comment was added with an issue link";visibility=@{type="role";value="Administrators"}}
 
 #GET ISSUE LINK
-#Invoke-JiraGetIssueLink 10000
+#Invoke-JiraGetIssueLink (Invoke-JiraGetIssue JPT-1).fields.issueLinks[0].id
+
+#DELETE ISSUE LINK
+# Invoke-JiraCreateIssueLink JPT-3 "Precedent" JPT-4
+# Read-Host -Prompt "Press any key to continue or CTRL+C to quit"
+# Invoke-JiraDeleteIssueLink (Invoke-JiraGetIssue JPT-4).fields.issueLinks[0].id
 
 #end tests
 
