@@ -97,6 +97,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # Invoke-JiraDeleteVote JPT-1
 # Invoke-JiraGetVotes JPT-1
 
+#SEND ISSUE NOTIFICATION
+# $me = Invoke-JiraGetCurrentUser
+# Invoke-JiraSendIssueNotification JPT-1 "This is a test message, let me know if you get it -Justin"
+
 #end tests
 
 #close the Jira session
