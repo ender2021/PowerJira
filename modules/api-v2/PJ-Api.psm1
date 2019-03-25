@@ -95,7 +95,12 @@ function Invoke-JiraRestRequest {
                 $b = if(($HttpMethod -eq "GET")) {$Body} else {ConvertTo-Json $Body -Compress -Depth $BodyDepth}
                 Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body $b
             } elseif ($PSBoundParameters.ContainsKey("LiteralBody")) {
-                Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body $LiteralBody            
+                if(($HttpMethod -eq "GET") -or ($HttpMethod -eq "DELETE")) {
+                    $uri += '?' + $LiteralBody
+                    Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders
+                } else {
+                    Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType 'application/json' -Headers $sendHeaders -Body $LiteralBody
+                }
             } else {
                 if ($HttpMethod -eq "DELETE" -and ($null -ne $Body) -and ($Body.Count -gt 0)) {
                     $qs = Format-HashtableToQueryString $Body
