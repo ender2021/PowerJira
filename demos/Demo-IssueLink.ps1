@@ -20,6 +20,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # Read-Host -Prompt "Press any key to continue or CTRL+C to quit"
 # Invoke-JiraDeleteIssueLink (Invoke-JiraGetIssue JPT-4).fields.issueLinks[0].id
 
+#GET ISSUE LINK TYPES
+Invoke-JiraGetIssueLinkTypes
+
+
 #end tests
 
 #close the Jira session
