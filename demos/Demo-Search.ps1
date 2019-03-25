@@ -13,6 +13,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$results = Invoke-JiraSearchIssues -JQL "project = GROPGDIS" -MaxResults 1 -ExpandTransitions -ExpandOperations
 #$results.issues[0]
 
+#SEARCH (GET)
+$results = Invoke-JiraSearchIssues -JQL "project = JPT" -GET
+$results.issues | Format-List
+
 #end tests
 
 #close the Jira session
