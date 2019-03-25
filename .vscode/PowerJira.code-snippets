@@ -76,4 +76,12 @@
 		],
 		"description": "Insert the the standard export all module members line"
 	},
+	"breakpoint": {
+		"scope":"powershell",
+		"prefix": "breakpoint",
+		"body": [
+			"Read-Host -Prompt \"Press any key to continue or CTRL+C to quit\""
+		],
+		"description": "Insert a breakpoint"
+	}
 }

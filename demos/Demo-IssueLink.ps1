@@ -21,7 +21,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # Invoke-JiraDeleteIssueLink (Invoke-JiraGetIssue JPT-4).fields.issueLinks[0].id
 
 #GET ISSUE LINK TYPES
-Invoke-JiraGetIssueLinkTypes
+#Invoke-JiraGetIssueLinkTypes
 
 
 #end tests

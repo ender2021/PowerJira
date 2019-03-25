@@ -76,6 +76,13 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # Invoke-JiraAddAttachment JPT-1 $txt
 # Invoke-JiraAddAttachment JPT-1 $png
 
+#DELETE WATCHER
+# $josh = (Invoke-JiraFindUsers Josh)[0].accountId
+# Invoke-JiraAddWatcher JPT-1 $josh
+# Read-Host -Prompt "Press any key to continue or CTRL+C to quit"
+# Invoke-JiraDeleteWatcher JPT-1 $josh
+
+
 #end tests
 
 #close the Jira session
