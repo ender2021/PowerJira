@@ -10,7 +10,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #CREATE ISSUE LINK
-#Invoke-JiraCreateIssueLink JPT-1 "Blocks" JPT-2 @{body="this complex comment was added with an issue link";visibility=@{type="role";value="Administrators"}}
+#Invoke-JiraCreateIssueLink JPT-2 "Precedent" JPT-3 @{body="this complex comment was added with an issue link";visibility=@{type="role";value="Administrators"}}
+
+#GET ISSUE LINK
+#Invoke-JiraGetIssueLink 10000
 
 #end tests
 
