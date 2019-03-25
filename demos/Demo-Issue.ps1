@@ -86,8 +86,16 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetVotes JPT-1
 
 #ADD VOTE
-Invoke-JiraAddVote JPT-1
-Invoke-JiraGetVotes JPT-1
+#Invoke-JiraAddVote JPT-1
+#Invoke-JiraGetVotes JPT-1
+
+#DELETE VOTE
+# Clear-Host
+# Invoke-JiraGetVotes JPT-1
+# Invoke-JiraAddVote JPT-1
+# Invoke-JiraGetVotes JPT-1
+# Invoke-JiraDeleteVote JPT-1
+# Invoke-JiraGetVotes JPT-1
 
 #end tests
 
