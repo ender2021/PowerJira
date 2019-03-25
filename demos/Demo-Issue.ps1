@@ -82,6 +82,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # Read-Host -Prompt "Press any key to continue or CTRL+C to quit"
 # Invoke-JiraDeleteWatcher JPT-1 $josh
 
+#GET VOTES
+Invoke-JiraGetVotes JPT-1
 
 #end tests
 
