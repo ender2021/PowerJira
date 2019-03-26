@@ -17,7 +17,13 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$results.users.header
 
 #CREATE GROUP
-Invoke-JiraCreateGroup "test-group-123"
+#Invoke-JiraCreateGroup "test-group-123"
+
+#DELETE GROUP
+# $groupname = "group-to-be-deleted"
+# Invoke-JiraCreateGroup $groupname
+# Read-Host -Prompt "Press any key to continue or CTRL+C to quit"
+# Invoke-JiraDeleteGroup $groupname
 
 #end tests
 
