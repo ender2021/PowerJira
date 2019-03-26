@@ -168,4 +168,78 @@ function Invoke-JiraDeleteGroup {
     }
 }
 
+#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-group-user-post
+function Invoke-JiraAddUserToGroup {
+    [CmdletBinding()]
+    param (
+        # Name of the group to add the user to
+        [Parameter(Mandatory,Position=0)]
+        [string]
+        $Name,
+
+        # The accountID of the user to add
+        [Parameter(Mandatory,Position=1)]
+        [string]
+        $User,
+
+        # The JiraConnection object to use for the request
+        [Parameter(Position=2)]
+        [hashtable]
+        $JiraConnection
+    )
+    process {
+        $functionPath = "/rest/api/2/group/user" + '?' + "groupname=$Name"
+
+        $body=@{
+            accountId = $User
+        }
+
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body
+    }
+}
+
+#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-group-post
+function Invoke-JiraGetGroupUsers {
+    [CmdletBinding()]
+    param (
+        # Name of the group for which to get users
+        [Parameter(Mandatory,Position=0)]
+        [string]
+        $Name,
+
+        # The index of the first item to return.  The default is 0.
+        [Parameter(Position=1)]
+        [int64]
+        $StartAt=0,
+
+        # The maximum number of results to return.  This is hard-limited to 50.
+        [Parameter(Position=2)]
+        [ValidateRange(1,50)]
+        [int32]
+        $MaxResults=50,
+
+        # Set this flag to include inactive users in the results
+        [Parameter(Position=3)]
+        [switch]
+        $IncludeInactive,
+
+        # The JiraConnection object to use for the request
+        [Parameter(Position=4)]
+        [hashtable]
+        $JiraConnection
+    )
+    process {
+        $functionPath = "/rest/api/2/group/member"
+
+        $body=@{
+            groupname = $Name
+            maxResults = $MaxResults
+            startAt = $StartAt
+        }
+        if($PSBoundParameters.ContainsKey("IncludeInactive")){$body.Add("includeInactiveUsers",$true)}
+
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
+    }
+}
+
 Export-ModuleMember -Function * -Variable *
