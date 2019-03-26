@@ -93,7 +93,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #SEND ISSUE NOTIFICATION
 # $me = Invoke-JiraGetCurrentUser
-# Invoke-JiraSendIssueNotification JPT-1 "This is a test message, let me know if you get it -Justin"
+# $message = "This is a test message, let me know if you get it -Justin"
+# Invoke-JiraSendIssueNotification JPT-1 $message -Subject "SYSTEMS CHANGE NOTICE" 
 
 #end tests
 

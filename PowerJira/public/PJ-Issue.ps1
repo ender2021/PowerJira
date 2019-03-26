@@ -575,12 +575,12 @@ function Invoke-JiraSendIssueNotification {
         # The body of the email
         [Parameter(Mandatory,Position=1)]
         [string]
-        $PlainBody,
+        $HtmlBody,
 
         # The body of the email
         [Parameter(Position=2)]
         [string]
-        $HtmlBody,
+        $PlainBody,
 
         # The email subject line
         [Parameter(Position=3)]
@@ -674,15 +674,13 @@ function Invoke-JiraSendIssueNotification {
         if($PSBoundParameters.ContainsKey("RestrictPermissions")){$restrict.permissions += $RestrictPermissions}
 
         $body=@{
-            textBody = $PlainBody
+            htmlBody = $HtmlBody
             to = $to
         }
-        if($PSBoundParameters.ContainsKey("HtmlBody")){$body.Add("htmlBody",$HtmlBody)}
+        if($PSBoundParameters.ContainsKey("PlainBody")){$body.Add("textBody",$PlainBody)}
         if($PSBoundParameters.ContainsKey("Subject")){$body.Add("subject",$Subject)}
         if(($restrict.groups.Count -gt 0) -or ($restrict.permissions.Count -gt 0)) {$body.Add("restrict",$restrict)}
 
         Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body -BodyDepth 5
     }
 }
-
-Export-ModuleMember -Function * -Variable *

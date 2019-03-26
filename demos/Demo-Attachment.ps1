@@ -21,6 +21,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET ATTACHMENT METADATA
 #Invoke-JiraGetAttachmentMetadata 10000
 
+#GET JIRA ATTACHMENT SETTINGS
+#Invoke-JiraGetAttachmentSettings
+
 #end tests
 
 #close the Jira session
