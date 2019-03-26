@@ -1,5 +1,5 @@
 #import PowerJira
-Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira.psm1) -Force
+Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira\PowerJira.psm1) -Force
 
 #import the variable $JiraCredentials
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \credentials\Credentials.psm1) -Force
@@ -20,8 +20,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # $createFields = @{
 #   issuetype = @{id=10001} #task
 #   summary = "PJ Test Issue 1"
-#   project = @{id=13324}
-#   reporter = @{id=(Invoke-JiraGetCurrentUser).accountId}
+#   project = @{id=10000}
+#   #reporter = @{id=(Invoke-JiraGetCurrentUser).accountId}
 # }
 
 # Invoke-JiraCreateIssue -Fields $createFields

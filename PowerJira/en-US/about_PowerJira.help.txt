@@ -1,0 +1,14 @@
+PSTOPIC
+    about_PowerJira
+
+SHORT DESCRIPTION
+    PowerJira allows you to work with the Jira REST API through PowerShell functions
+
+LONG DESCRIPTION
+    PowerJira allows you to work with the Jira REST API through PowerShell functions
+
+    You can find API documentation here:
+        https://developer.atlassian.com/cloud/jira/platform/rest/v2/
+
+DETAILED DESCRIPTION
+    To be written...

@@ -1,5 +1,5 @@
 #import PowerJira
-Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira.psm1) -Force
+Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira\PowerJira.psm1) -Force
 
 #import the variable $JiraCredentials
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \credentials\Credentials.psm1) -Force
@@ -14,8 +14,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$results.issues[0]
 
 #SEARCH (GET)
-$results = Invoke-JiraSearchIssues -JQL "project = JPT" -GET
-$results.issues | Format-List
+# $results = Invoke-JiraSearchIssues -JQL "project = JPT" -GET
+# $results.issues | Format-List
 
 #end tests
 

@@ -1,5 +1,5 @@
 #import PowerJira
-Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira.psm1) -Force
+Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira\PowerJira.psm1) -Force
 
 #import the variable $JiraCredentials
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \credentials\Credentials.psm1) -Force
@@ -10,8 +10,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #GET PROJECT
-#$proj = Invoke-JiraGetProject "JPT"
-#$proj
+# $proj = Invoke-JiraGetProject "JPT"
+# $proj
 
 #GET PROJECT VERSIONS
 #Invoke-JiraGetProjectVersions -ProjectIdOrKey "JPT" -ExpandOperations

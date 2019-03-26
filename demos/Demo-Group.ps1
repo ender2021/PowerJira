@@ -1,5 +1,5 @@
 #import PowerJira
-Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira.psm1) -Force
+Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira\PowerJira.psm1) -Force
 
 #import the variable $JiraCredentials
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \credentials\Credentials.psm1) -Force
@@ -10,7 +10,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #FIND GROUPS
-#Invoke-JiraFindGroups sist @("graddiv-sist-oversight-committee") 1
+Invoke-JiraFindGroups test
 
 #FIND USERS AND GROUPS
 #$results = Invoke-JiraFindUsersAndGroups ucsb -ShowAvatar
@@ -32,7 +32,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetGroupUsers "perm-test-group" 0 10
 
 #REMOVE USER FROM GROUP
-Invoke-JiraRemoveUserFromGroup "perm-test-group" (Invoke-JiraGetCurrentUser).accountId
+#Invoke-JiraRemoveUserFromGroup "perm-test-group" (Invoke-JiraGetCurrentUser).accountId
 
 #end tests
 
