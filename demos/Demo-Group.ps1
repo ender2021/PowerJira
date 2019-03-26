@@ -16,6 +16,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$results = Invoke-JiraFindUsersAndGroups ucsb -ShowAvatar
 #$results.users.header
 
+#CREATE GROUP
+Invoke-JiraCreateGroup "test-group-123"
+
 #end tests
 
 #close the Jira session
