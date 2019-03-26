@@ -15,6 +15,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # Invoke-JiraAddAttachment JPT-1 $txt
 # Invoke-JiraAddAttachment JPT-1 $png
 
+#DELETE ATTACHMENT
+#Invoke-JiraDeleteAttachment 10001
+
 #end tests
 
 #close the Jira session
