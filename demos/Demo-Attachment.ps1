@@ -18,6 +18,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #DELETE ATTACHMENT
 #Invoke-JiraDeleteAttachment 10001
 
+#GET ATTACHMENT METADATA
+#Invoke-JiraGetAttachmentMetadata 10000
+
 #end tests
 
 #close the Jira session
