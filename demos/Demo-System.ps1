@@ -15,6 +15,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET ALL APPLICATION ROLES
 #Invoke-JiraGetAllApplicationRoles
 
+#GET AUDIT RECORDS
+#(Invoke-JiraGetAuditRecords "user" -From (Get-Date "3/25/2019 7:18:30 PM") -To (Get-Date) -MaxResults 5).RECORDS
+
 #end tests
 
 #close the Jira session
