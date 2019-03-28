@@ -12,6 +12,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET JIRA INSTANCE INFO
 #Invoke-JiraGetInstanceInfo
 
+#GET ALL APPLICATION ROLES
+#Invoke-JiraGetAllApplicationRoles
+
 #end tests
 
 #close the Jira session
