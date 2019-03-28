@@ -21,6 +21,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET APPLICATION ROLE
 #Invoke-JiraGetApplicationRole jira-software
 
+#GET APPLICATION PROPERTY(S)
+#Invoke-JiraGetApplicationProperty "jira.clone.prefix"
+
 #end tests
 
 #close the Jira session
