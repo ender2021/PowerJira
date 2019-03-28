@@ -1,23 +1,21 @@
-#Get public and private function definition files.
-$Public  = @( Get-ChildItem -Path $PSScriptRoot\public\*.ps1 -ErrorAction SilentlyContinue )
-$Private = @( Get-ChildItem -Path $PSScriptRoot\private\*.ps1 -ErrorAction SilentlyContinue )
+# grab functions from files
+$privateFiles = Get-ChildItem -Path $PSScriptRoot\private -Recurse -Include *.ps1 -ErrorAction SilentlyContinue
+$publicFiles = Get-ChildItem -Path $PSScriptRoot\public -Recurse -Include *.ps1 -ErrorAction SilentlyContinue
 
-#Dot source the files
-Foreach($import in @($Public + $Private))
-{
-    Try
-    {
-        . $import.fullname
-    }
-    Catch
-    {
-        Write-Error -Message "Failed to import function $($import.fullname): $_"
-    }
+if(@($privateFiles).Count -gt 0) { $privateFiles.FullName | ForEach-Object { . $_ } }
+if(@($publicFiles).Count -gt 0) { $publicFiles.FullName | ForEach-Object { . $_ } }
+
+Export-ModuleMember -Function $publicFiles.BaseName
+
+if($null -eq $global:PowerJira) {
+	$global:PowerJira = @{
+		Session = $null
+	};
 }
 
-# Here I might...
-# Read in or create an initial config file and variable
-# Export Public functions ($Public.BaseName) for WIP modules
-# Set variables visible to the module and its functions only
+$onRemove = {
+	Remove-Variable -Name PowerJira -Scope global
+}
 
-Export-ModuleMember -Function $Public.Basename
+$ExecutionContext.SessionState.Module.OnRemove += $onRemove
+Register-EngineEvent -SourceIdentifier ([System.Management.Automation.PsEngineEvent]::Exiting) -Action $onRemove

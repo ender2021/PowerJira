@@ -14,7 +14,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$meta.projects[0].issuetypes[0].fields
 
 #GET ISSUE
-#Invoke-JiraGetIssue GROPGDIS-749 -ExpandOperations
+Invoke-JiraGetIssue JPT-1 -ExpandOperations
 
 #CREATE ISSUE
 # $createFields = @{
