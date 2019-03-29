@@ -29,6 +29,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # Invoke-JiraSetApplicationProperty "jira.clone.prefix" "Copy - "
 # Invoke-JiraSetApplicationProperty "jira.clone.prefix" (Invoke-JiraGetApplicationProperty "jira.clone.prefix").defaultValue
 
+#GET ADVANCED SETTINGS
+Invoke-JiraGetAdvancedSettings
+
 #end tests
 
 #close the Jira session
