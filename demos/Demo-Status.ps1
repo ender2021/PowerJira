@@ -16,7 +16,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetStatus 10001
 
 #GET ALL STATUS CATEGORIES
-Invoke-JiraGetAllStatusCategories
+#Invoke-JiraGetAllStatusCategories
+
+#GET STATUS CATEGORY
+#Invoke-JiraGetStatusCategory 2
 
 #end tests
 
