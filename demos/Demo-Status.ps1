@@ -10,7 +10,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #GET ALL STATUSES
-Invoke-JiraGetAllStatuses
+#Invoke-JiraGetAllStatuses
+
+#GET STATUS
+#Invoke-JiraGetStatus 10001
 
 #end tests
 
