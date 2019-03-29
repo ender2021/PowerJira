@@ -16,6 +16,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET PROJECT VERSIONS
 #Invoke-JiraGetProjectVersions -ProjectIdOrKey "JPT" -ExpandOperations
 
+#GET PROJECTS
+#(Invoke-JiraGetProjects -Expand @("lead")).values
 
 #end tests
 
