@@ -12,6 +12,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET PRIORITY
 #Invoke-JiraGetPriority 2
 
+#GET PRIORITIES
+#Invoke-JiraGetPriorities
+
 #end tests
 
 #close the Jira session
