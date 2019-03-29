@@ -15,6 +15,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET STATUS
 #Invoke-JiraGetStatus 10001
 
+#GET ALL STATUS CATEGORIES
+Invoke-JiraGetAllStatusCategories
+
 #end tests
 
 #close the Jira session
