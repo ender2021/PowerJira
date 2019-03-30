@@ -13,7 +13,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetAllProjectRoles | Format-List
 
 #CREATE PROJECT ROLE
-#Invoke-JiraCreateProjectRole "new-test-role"
+#Invoke-JiraCreateProjectRole "new-test-role-delete-swap"
 #Invoke-JiraCreateProjectRole "new-test-role-2" "This one has a description!"
 
 #UPDATE PROJECT ROLE (PARTIAL)
@@ -23,7 +23,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraUpdateProjectRoleFull 10101 "new-test-role-2" "This one has a description!"
 
 #GET PROJECT ROLE
-Invoke-JiraGetProjectRole 10101
+#Invoke-JiraGetProjectRole 10102
+
+#DELETE PROJECT ROLE
+#Invoke-JiraDeleteProjectRole 10100 10102
 
 
 #end tests
