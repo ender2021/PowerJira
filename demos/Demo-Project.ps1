@@ -35,7 +35,12 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetProjectRoleForProject JPT 10002 | format-list
 
 #GET PROJECT ROLE DETAILS
-Invoke-JiraGetProjectRoleDetails JPT | Format-List
+#Invoke-JiraGetProjectRoleDetails JPT | Format-List
+
+#ADD ACTORS TO PROJECT ROLE
+#Invoke-JiraAddActorsToProjectRole JPT 10002 -Groups @("administrators")
+#(Invoke-JiraGetProjectRoleForProject JPT 10002)[0].actors
+
 
 #end tests
 
