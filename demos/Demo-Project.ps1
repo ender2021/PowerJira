@@ -34,6 +34,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET PROJECT ROLE FOR PROJECT
 #Invoke-JiraGetProjectRoleForProject JPT 10002 | format-list
 
+#GET PROJECT ROLE DETAILS
+Invoke-JiraGetProjectRoleDetails JPT | Format-List
+
 #end tests
 
 #close the Jira session
