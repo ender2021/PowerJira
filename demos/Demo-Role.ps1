@@ -10,7 +10,11 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #GET ALL PROJECT ROLES
-Invoke-JiraGetAllProjectRoles | Format-List
+#Invoke-JiraGetAllProjectRoles | Format-List
+
+#CREATE PROJECT ROLE
+#Invoke-JiraCreateProjectRole "new-test-role"
+#Invoke-JiraCreateProjectRole "new-test-role-2" "This one has a description!"
 
 #end tests
 
