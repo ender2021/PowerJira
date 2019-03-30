@@ -46,6 +46,11 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraSetActorsForProjectRole JPT 10002  @((Invoke-JiraGetCurrentUser).accountId)
 #(Invoke-JiraGetProjectRoleForProject JPT 10002)[0].actors
 
+#DELETE ACTOR FROM PROJECT ROLE
+#Invoke-JiraDeleteActorFromProjectRole JPT 10002  (Invoke-JiraGetCurrentUser).accountId
+#(Invoke-JiraGetProjectRoleForProject JPT 10002)[0].actors
+
+
 #end tests
 
 #close the Jira session
