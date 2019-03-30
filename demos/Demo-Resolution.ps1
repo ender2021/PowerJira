@@ -10,7 +10,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #GET RESOLUTIONS
-Invoke-JiraGetResolutions | format-list
+#Invoke-JiraGetResolutions | format-list
+
+#GET RESOLUTION
+#Invoke-JiraGetResolution 10001
 
 #end tests
 
