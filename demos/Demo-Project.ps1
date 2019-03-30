@@ -19,6 +19,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET PROJECTS
 #(Invoke-JiraGetProjects -Expand @("lead")).values
 
+#GET PROJECT COMPONENTS
+#Invoke-JiraGetProjectComponents JPT
+
 #end tests
 
 #close the Jira session
