@@ -10,8 +10,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #CREATE VERSION
-#$newVersion = Invoke-JiraCreateVersion -ProjectId $proj.id -Name "Test Version 6" -StartDate (Get-Date "2019-03-18")
-#$newVersion
+#Invoke-JiraCreateVersion 10000 -Name "Blargh Version 8" -StartDate (Get-Date "2019-05-18")
 
 #UPDATE VERSION
 #Invoke-JiraUpdateVersion -VersionId 10485 -Archived $false
