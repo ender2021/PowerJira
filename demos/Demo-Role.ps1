@@ -19,6 +19,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #UPDATE PROJECT ROLE (PARTIAL)
 #Invoke-JiraUpdateProjectRolePartial 10101 -Description "a new description"
 
+#UPDATE PROJECT ROLE (FULL)
+#Invoke-JiraUpdateProjectRoleFull 10101 "new-test-role-2" "This one has a description!"
 
 
 #end tests
