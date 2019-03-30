@@ -22,6 +22,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET PROJECT COMPONENTS
 #Invoke-JiraGetProjectComponents JPT
 
+#GET PROJECTS PAGINATED
+#Invoke-JiraGetProjectComponentsPaginated JPT "l;kj;ljk"
+
 #end tests
 
 #close the Jira session
