@@ -16,6 +16,11 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraCreateProjectRole "new-test-role"
 #Invoke-JiraCreateProjectRole "new-test-role-2" "This one has a description!"
 
+#UPDATE PROJECT ROLE (PARTIAL)
+#Invoke-JiraUpdateProjectRolePartial 10101 -Description "a new description"
+
+
+
 #end tests
 
 #close the Jira session
