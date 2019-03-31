@@ -10,7 +10,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #GET ISSUE SECURITY SCHEMES
-Invoke-JiraGetIssueSecuritySchemes | fl
+#Invoke-JiraGetIssueSecuritySchemes | fl
+
+#GET ISSUE SECURITY SCHEME
+#Invoke-JiraGetIssueSecurityScheme 10000
 
 #end tests
 
