@@ -12,6 +12,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET ALL PERMISSIONS
 #Invoke-JiraGetAllPermissions
 
+#GET BULK PERMISSIONS
+Invoke-JiraGetBulkPermissions -ProjectPermissions @("DELETE_OWN_WORKLOGS")
+
 #end tests
 
 #close the Jira session
