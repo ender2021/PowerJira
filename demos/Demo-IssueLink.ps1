@@ -23,6 +23,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET ISSUE LINK TYPES
 #Invoke-JiraGetIssueLinkTypes
 
+#GET REMOTE ISSUE LINKS
+#Invoke-JiraGetRemoteIssueLinks JPT-1
+
+
 
 #end tests
 
