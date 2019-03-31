@@ -28,6 +28,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #DELETE PROJECT ROLE
 #Invoke-JiraDeleteProjectRole 10100 10102
 
+#GET PROJECT ROLE DEFAULT ACTORS
+#Invoke-JiraGetProjectRoleDefaultActors 10003
+
 
 #end tests
 
