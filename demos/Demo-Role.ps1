@@ -35,6 +35,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraAddDefaultActorsToProjectRole 10002 @((Invoke-JiraGetCurrentUser).accountId)
 #Invoke-JiraAddDefaultActorsToProjectRole 10002 -Groups @("jira-administrators")
 
+#DELETE PROJECT ROLE DEFAULT ACTOR
+#Invoke-JiraGetProjectRoleDefaultActors 10002
+#Invoke-JiraDeleteDefaultActorFromProjectRole 10002 (Invoke-JiraGetCurrentUser).accountId
+#Invoke-JiraGetProjectRoleDefaultActors 10002
 
 
 #end tests
