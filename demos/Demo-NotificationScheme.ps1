@@ -12,6 +12,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET NOTIFICATION SCHEMES PAGINATED
 #(Invoke-JiraGetNotificationSchemesPaginated).values | fl
 
+#GET NOTIFICATION SCHEME
+#Invoke-JiraGetNotificationScheme 10000 -Expand @("all") | fl
+
 #end tests
 
 #close the Jira session
