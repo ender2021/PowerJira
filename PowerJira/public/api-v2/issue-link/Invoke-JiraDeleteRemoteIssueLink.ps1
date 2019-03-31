@@ -1,6 +1,7 @@
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-issue-issueIdOrKey-remotelink-linkId-delete
+#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-issue-issueIdOrKey-remotelink-delete
 function Invoke-JiraDeleteRemoteIssueLink {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="ById")]
     param (
         # The issue Id or Key
         [Parameter(Mandatory,Position=0)]
@@ -8,9 +9,14 @@ function Invoke-JiraDeleteRemoteIssueLink {
         $IssueIdOrKey,
 
         # The ID of the remote link
-        [Parameter(Mandatory,Position=1)]
+        [Parameter(Mandatory,Position=1,ParameterSetName="ById")]
         [string]
         $RemoteLinkId,
+
+        # The Global Id of the link to delete
+        [Parameter(Mandatory,Position=1,ParameterSetName="ByGlobal")]
+        [string]
+        $GlobalId,
 
         # The JiraConnection object to use for the request
         [Parameter(Position=2)]
@@ -18,8 +24,14 @@ function Invoke-JiraDeleteRemoteIssueLink {
         $JiraConnection
     )
     process {
-        $functionPath = "/rest/api/2/issue/$IssueIdOrKey/remotelink/$RemoteLinkId"
+        $functionPath = "/rest/api/2/issue/$IssueIdOrKey/remotelink"
+        if($PSBoundParameters.ContainsKey("RemoteLinkId")){$functionPath += "/$RemoteLinkId"}
+        
+        $body = @{}
+        if($PSBoundParameters.ContainsKey("GlobalId")){
+            $body.Add("globalId",$GlobalId)
+        }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "DELETE"
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "DELETE" -Body $body
     }
 }
