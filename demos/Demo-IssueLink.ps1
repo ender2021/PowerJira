@@ -38,6 +38,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #UPDATE REMOTE ISSUE LINK
 #Invoke-JiraUpdateRemoteIssueLink JPT-1 10000 $ro $globalId $app "flipparoo"
 
+#DELETE ISSUE LINK BY ID
+#Invoke-JiraDeleteRemoteIssueLink JPT-1 10000
+
 #end tests
 
 #close the Jira session
