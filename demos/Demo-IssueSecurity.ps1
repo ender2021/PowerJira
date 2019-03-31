@@ -15,6 +15,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET ISSUE SECURITY SCHEME
 #Invoke-JiraGetIssueSecurityScheme 10000
 
+#GET ISSUE SECURITY LEVEL
+#Invoke-JiraGetIssueSecurityLevel 10000
+
 #end tests
 
 #close the Jira session
