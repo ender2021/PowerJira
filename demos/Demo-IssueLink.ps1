@@ -32,7 +32,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #UPDATE ISSUE LINK TYPE
 #Invoke-JiraUpdateIssueLinkType 10102 "blamer" "blamer'd" "blame's"
 
-
+#DELETE ISSUE LINK TYPE
+#Invoke-JiraDeleteIssueLinkType 10102
+#Invoke-JiraGetIssueLinkTypes
 
 #GET REMOTE ISSUE LINKS
 #Invoke-JiraGetRemoteIssueLinks JPT-1
