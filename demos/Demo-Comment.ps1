@@ -27,6 +27,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #DELETE COMMENT
 #Invoke-JiraDeleteComment JPT-1 10001
 
+#GET COMMENT PROPERTY KEYS
+#Invoke-JiraGetCommentPropertyKeys 10000
+
 #end tests
 
 #close the Jira session
