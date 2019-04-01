@@ -33,6 +33,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #SET COMMENT PROPERTY
 #Invoke-JiraSetCommentProperty 10000 "this.is.cool" @{someProperty="text";anArray=@("one","two","three")}
 
+#GET COMMENT PROPERTY
+Invoke-JiraGetCommentProperty 10000 "this.is.cool"
+
 #end tests
 
 #close the Jira session
