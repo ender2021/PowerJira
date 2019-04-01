@@ -114,7 +114,8 @@ $createFields = @{
 #GET ISSUE PROPERTY
 #(Invoke-JiraGetIssueProperty JPT-1 "this.is.cool").value
 
-
+#DELETE ISSUE PROPERTY
+#Invoke-JiraDeleteIssueProperty JPT-1 "this.is.cool"
 
 #end tests
 
