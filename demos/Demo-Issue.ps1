@@ -17,14 +17,14 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetIssue JPT-1 -ExpandOperations
 
 #CREATE ISSUE
-# $createFields = @{
-#   issuetype = @{id=10001} #task
-#   summary = "PJ Test Issue 1"
-#   project = @{id=10000}
-#   #reporter = @{id=(Invoke-JiraGetCurrentUser).accountId}
-# }
+$createFields = @{
+  issuetype = @{id=10001} #task
+  summary = "Issue that will be deleted"
+  project = @{id=10000}
+  #reporter = @{id=(Invoke-JiraGetCurrentUser).accountId}
+}
 
-# Invoke-JiraCreateIssue -Fields $createFields
+#Invoke-JiraCreateIssue -Fields $createFields
 
 #UPDATE ISSUE
 # $updateFields = @{
@@ -35,6 +35,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # }
 
 #Invoke-JiraEditIssue JPT-1 $updateFields
+
+#DELETE ISSUE
+#Invoke-JiraDeleteIssue JPT-2
 
 #GET EDIT ISSUE METADATA
 #(Invoke-JiraGetIssueEditMetadata JPT-1).fields
