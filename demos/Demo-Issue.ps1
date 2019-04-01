@@ -111,6 +111,11 @@ $createFields = @{
 #SET ISSUE PROPERTY
 #Invoke-JiraSetIssueProperty JPT-1 "this.is.cool" @{someProperty="text";anArray=@("one","two","three")}
 
+#GET ISSUE PROPERTY
+#(Invoke-JiraGetIssueProperty JPT-1 "this.is.cool").value
+
+
+
 #end tests
 
 #close the Jira session
