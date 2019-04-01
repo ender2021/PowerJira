@@ -15,6 +15,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET COMMENTS
 #Invoke-JiraGetComments JPT-1
 
+#GET COMMENT
+#Invoke-JiraGetComment JPT-1 10000
+
 #end tests
 
 #close the Jira session
