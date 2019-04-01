@@ -14,7 +14,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$meta.projects[0].issuetypes[0].fields
 
 #GET ISSUE
-Invoke-JiraGetIssue JPT-1 -ExpandOperations
+#Invoke-JiraGetIssue JPT-1 -ExpandOperations
 
 #CREATE ISSUE
 # $createFields = @{
@@ -95,6 +95,9 @@ Invoke-JiraGetIssue JPT-1 -ExpandOperations
 # $me = Invoke-JiraGetCurrentUser
 # $message = "This is a test message, let me know if you get it -Justin"
 # Invoke-JiraSendIssueNotification JPT-1 $message -Subject "SYSTEMS CHANGE NOTICE" 
+
+#GET ISSUE PICKER SUGGESTIONS
+#(Invoke-JiraGetIssuePickerSuggestions "test").sections | fl
 
 #end tests
 
