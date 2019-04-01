@@ -34,7 +34,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraSetCommentProperty 10000 "this.is.cool" @{someProperty="text";anArray=@("one","two","three")}
 
 #GET COMMENT PROPERTY
-Invoke-JiraGetCommentProperty 10000 "this.is.cool"
+#Invoke-JiraGetCommentProperty 10000 "this.is.cool"
+
+#DELETE COMMENT PROPERTY
+#Invoke-JiraDeleteCommentProperty 10000 "this.is.cool"
 
 #end tests
 
