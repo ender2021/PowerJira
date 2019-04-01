@@ -24,6 +24,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #UPDATE COMMENT
 #Invoke-JiraUpdateComment JPT-1 10000 "This is another comment from Powershell!" -Visibility (New-JiraCommentVisibility "role" "Administrators")
 
+#DELETE COMMENT
+#Invoke-JiraDeleteComment JPT-1 10001
+
 #end tests
 
 #close the Jira session
