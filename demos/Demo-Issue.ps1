@@ -105,6 +105,12 @@ $createFields = @{
 #GET ISSUE CHANGELOGS
 #(Invoke-JiraGetIssueChangelogs JPT-1).values | fl
 
+#GET ISSUE PROPERTY KEYS
+#Invoke-JiraGetIssuePropertyKeys JPT-1
+
+#SET ISSUE PROPERTY
+#Invoke-JiraSetIssueProperty JPT-1 "this.is.cool" @{someProperty="text";anArray=@("one","two","three")}
+
 #end tests
 
 #close the Jira session
