@@ -18,6 +18,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET COMMENT
 #Invoke-JiraGetComment JPT-1 10000
 
+#GET COMMENTS BY ID
+#(Invoke-JiraGetCommentsByIds @(10000,10001,10002) -Expand @("properties")).values
+
 #end tests
 
 #close the Jira session
