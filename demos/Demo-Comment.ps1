@@ -21,6 +21,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET COMMENTS BY ID
 #(Invoke-JiraGetCommentsByIds @(10000,10001,10002) -Expand @("properties")).values
 
+#UPDATE COMMENT
+#Invoke-JiraUpdateComment JPT-1 10000 "This is another comment from Powershell!" -Visibility (New-JiraCommentVisibility "role" "Administrators")
+
 #end tests
 
 #close the Jira session
