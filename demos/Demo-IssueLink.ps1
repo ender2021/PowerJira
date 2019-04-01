@@ -26,6 +26,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET ISSUE LINK TYPE
 #Invoke-JiraGetIssueLinkType 10003
 
+#CREATE ISSUE LINK TYPE
+#Invoke-JiraCreateIssueLinkType "Blame" "Blamed by" "Blames"
+
 
 #GET REMOTE ISSUE LINKS
 #Invoke-JiraGetRemoteIssueLinks JPT-1
