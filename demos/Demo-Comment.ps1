@@ -10,7 +10,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #ADD COMMENT
-#Invoke-JiraAddComment JPT-1 "This is another comment from Powershell!"
+#Invoke-JiraAddComment JPT-1 "by the way, i'm real too"
+
+#GET COMMENTS
+#Invoke-JiraGetComments JPT-1
 
 #end tests
 
