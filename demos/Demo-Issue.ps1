@@ -102,6 +102,9 @@ $createFields = @{
 #GET ISSUE PICKER SUGGESTIONS
 #(Invoke-JiraGetIssuePickerSuggestions "test").sections | fl
 
+#GET ISSUE CHANGELOGS
+#(Invoke-JiraGetIssueChangelogs JPT-1).values | fl
+
 #end tests
 
 #close the Jira session
