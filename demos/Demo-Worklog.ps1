@@ -39,6 +39,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #SET WORKLOG PROPERTY
 #Invoke-JiraSetWorklogProperty JPT-1 10000 "someProp" @{poop="fart"}
 
+#DELETE WORKLOG PROPERTY
+#Invoke-JiraDeleteWorklogProperty JPT-1 10000 "someProp"
+
 #end tests
 
 #close the Jira session
