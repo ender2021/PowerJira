@@ -24,6 +24,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET DELETED WORKLOG IDs
 #Invoke-JiraGetDeletedWorklogIds (Format-UnixTimestamp (Get-Date "2019-01-01"))
 
+#GET WORKLOGS BY ID
+#Invoke-JiraGetWorklogsById @("10000") @("properties")
+
 #end tests
 
 #close the Jira session
