@@ -13,7 +13,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraAddWorklog JPT-1 "2h" "Time formats are a real bastard"
 
 #GET ISSUE WORKLOGS
-(Invoke-JiraGetIssueWorklogs JPT-1 ).worklogs
+#(Invoke-JiraGetIssueWorklogs JPT-1 ).worklogs
+
+#GET WORKLOG
+Invoke-JiraGetWorklog JPT-1 10000
 
 #end tests
 
