@@ -16,7 +16,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #(Invoke-JiraGetIssueWorklogs JPT-1 ).worklogs
 
 #GET WORKLOG
-#Invoke-JiraGetWorklog JPT-1 10000
+Invoke-JiraGetWorklog JPT-1 10000 -Expand @("properties")
 
 #GET WORKLOG PROPERTY KEYS
 #Invoke-JiraGetWorklogPropertyKeys JPT-1 10000
@@ -28,7 +28,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetWorklogsById @("10000") @("properties")
 
 #GET DELETED WORKLOG IDs
-Invoke-JiraGetUpdatedWorklogIds
+#Invoke-JiraGetUpdatedWorklogIds
+
+#UPDATE WORKLOG
+#Invoke-JiraUpdateWorklog JPT-1 10000 "2m" -AdditionalProperties @{someProp="fart"}
 
 #end tests
 

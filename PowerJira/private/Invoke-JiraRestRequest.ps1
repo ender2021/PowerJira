@@ -47,7 +47,13 @@ function Invoke-JiraRestRequest {
         # The Form values for a multipart request
         [Parameter(Mandatory,ParameterSetName="Multipart")]
         [hashtable]
-        $Form
+        $Form,
+
+        # Used the same as the $Body param, but these parameters will be put into the query string
+        [Parameter()]
+        [ValidateNotNull()]
+        [hashtable]
+        $QueryParams
     )
     process {
         if($null -eq $JiraConnection) { $JiraConnection = $Global:PowerJira.Session }
@@ -61,6 +67,9 @@ function Invoke-JiraRestRequest {
         $hostname = $JiraConnection.HostName
         $function = If($FunctionPath.StartsWith("/")) {$FunctionPath.Substring(1)} else {$FunctionPath}
         $uri = "$hostname/$function"
+        if($PSBoundParameters.ContainsKey("QueryParams") -and ($QueryParams.Keys.Count -gt 0)){
+            $uri += '?' + (Format-HashtableToQueryString $QueryParams)
+        }
 
         if ($PSBoundParameters.ContainsKey("Multipart")) {
             $sendHeaders.Add("X-Atlassian-Token","no-check")
