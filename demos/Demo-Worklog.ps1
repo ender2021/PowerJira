@@ -16,7 +16,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #(Invoke-JiraGetIssueWorklogs JPT-1 ).worklogs
 
 #GET WORKLOG
-(Invoke-JiraGetWorklog JPT-1 10000 -Expand @("properties")).properties
+#(Invoke-JiraGetWorklog JPT-1 10000 -Expand @("properties")).properties
 
 #GET WORKLOG PROPERTY KEYS
 #Invoke-JiraGetWorklogPropertyKeys JPT-1 10000
@@ -35,6 +35,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #GET WORKLOG PROPERTY
 #Invoke-JiraGetWorklogProperty JPT-1 10000 "someProp"
+
+#SET WORKLOG PROPERTY
+#Invoke-JiraSetWorklogProperty JPT-1 10000 "someProp" @{poop="fart"}
 
 #end tests
 
