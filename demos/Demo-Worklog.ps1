@@ -16,7 +16,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #(Invoke-JiraGetIssueWorklogs JPT-1 ).worklogs
 
 #GET WORKLOG
-Invoke-JiraGetWorklog JPT-1 10000
+#Invoke-JiraGetWorklog JPT-1 10000
+
+#GET WORKLOG PROPERTY KEYS
+#Invoke-JiraGetWorklogPropertyKeys JPT-1 10000
 
 #end tests
 
