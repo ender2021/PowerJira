@@ -12,6 +12,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #ADD WORKLOG
 #Invoke-JiraAddWorklog JPT-1 "2h" "Time formats are a real bastard"
 
+#GET ISSUE WORKLOGS
+(Invoke-JiraGetIssueWorklogs JPT-1 ).worklogs
+
 #end tests
 
 #close the Jira session
