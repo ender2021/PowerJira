@@ -1,26 +1,29 @@
+$JiraProjectExpand = @("description","issueTypes","lead","projectKeys")
+
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-project-projectIdOrKey-get
 function Invoke-JiraGetProject {
     [CmdletBinding()]
     param (
         # The project ID or project key (case sensitive).
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory,Position=0)]
         [string]
         $ProjectIdOrKey,
 
-        # All project keys associated with the project.
-        [Parameter(Mandatory=$false)]
+        # Used to expand additional attributes
+        [Parameter(Position=1)]
+        [ValidateScript({ Compare-StringArraySubset $JiraProjectExpand $_ })]
         [string[]]
-        $ExpandProjectKeys,
+        $Expand,
         
         # The JiraConnection object to use for the request
-        [Parameter(Mandatory=$false)]
+        [Parameter(Position=2)]
         [hashtable]
         $JiraConnection
     )
     $functionPath = "/rest/api/2/project/$ProjectIdOrKey"
     
-    $body = @{}
-    if($PSBoundParameters.ContainsKey("ExpandProjectKeys")){$body.Add("expand","projectKeys")}
+    $query = @{}
+    if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-    Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
+    Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -QueryParams $query
 }
