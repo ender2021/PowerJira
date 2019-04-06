@@ -52,6 +52,6 @@ function Invoke-JiraDeleteWorklog {
         if($PSBoundParameters.ContainsKey("IncreaseBy")){$query.Add("increaseBy",$IncreaseBy)}
         if($PSBoundParameters.ContainsKey("DisableNotifications")){$query.notifyUsers = $false}
         
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -QueryParams $query
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
     }
 }

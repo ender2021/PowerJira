@@ -53,7 +53,7 @@ function Invoke-JiraRestRequest {
         [Parameter()]
         [ValidateNotNull()]
         [hashtable]
-        $QueryParams
+        $Query
     )
     process {
         if($null -eq $JiraConnection) { $JiraConnection = $Global:PowerJira.Session }
@@ -67,8 +67,8 @@ function Invoke-JiraRestRequest {
         $hostname = $JiraConnection.HostName
         $function = If($FunctionPath.StartsWith("/")) {$FunctionPath.Substring(1)} else {$FunctionPath}
         $uri = "$hostname/$function"
-        if($PSBoundParameters.ContainsKey("QueryParams") -and ($QueryParams.Keys.Count -gt 0)){
-            $uri += '?' + (Format-HashtableToQueryString $QueryParams)
+        if($PSBoundParameters.ContainsKey("Query") -and ($Query.Keys.Count -gt 0)){
+            $uri += '?' + (Format-HashtableToQueryString $Query)
         }
 
         if ($PSBoundParameters.ContainsKey("Multipart")) {

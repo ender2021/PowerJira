@@ -63,7 +63,7 @@
 			"\t\t\\$verb = \"\"\n",
 			"\t\t\\$query=@{}",
 			"\t\t\\$body=@{}\n",
-			"\t\tInvoke-JiraRestRequest -JiraConnection \\$JiraConnection -FunctionPath \\$functionPath -HttpMethod $verb -QueryParams \\$query -Body \\$body",
+			"\t\tInvoke-JiraRestRequest -JiraConnection \\$JiraConnection -FunctionPath \\$functionPath -HttpMethod $verb -Query \\$query -Body \\$body",
 			"\t}",
 			"}",
 		],

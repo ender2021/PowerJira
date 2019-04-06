@@ -40,7 +40,7 @@ function Invoke-JiraGetComments {
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/comment"
         $verb = "GET"
-        
+
         $query=@{
             startAt = $StartAt
             maxResults = $MaxResults
@@ -48,6 +48,6 @@ function Invoke-JiraGetComments {
         if($PSBoundParameters.ContainsKey("OrderBy")){$query.Add("orderBy",$OrderBy)}
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -QueryParams $query
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
     }
 }

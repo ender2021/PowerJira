@@ -67,6 +67,6 @@ function Invoke-JiraGetProjectVersionsPaginated {
         if($PSBoundParameters.ContainsKey("Filter")){$body.Add("query",$Filter)}
         if($PSBoundParameters.ContainsKey("OrderBy")){$body.Add("orderBy",$OrderBy)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -QueryParams $query -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query -Body $body
     }
 }
