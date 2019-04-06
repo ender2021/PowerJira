@@ -24,6 +24,7 @@ function Invoke-JiraGetUser {
     )
     process {
         $functionPath = "/rest/api/2/user"
+        $verb = "GET"
 
         $expand = @()
         if($PSBoundParameters.ContainsKey("ExpandGroups")){$expand += "groups"}
@@ -34,6 +35,6 @@ function Invoke-JiraGetUser {
         }
         if($expand.Length -gt 0){$body.Add("expand",$expand -join ",")}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

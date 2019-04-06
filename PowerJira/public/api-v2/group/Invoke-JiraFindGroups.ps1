@@ -24,11 +24,12 @@ function Invoke-JiraFindGroups {
     )
     process {
         $functionPath = "/rest/api/2/groups/picker"
+        $verb = "GET"
 
         $body="query=$SearchTerm"
         if($Exclude.Count -gt 0) { $Exclude | ForEach-Object {$body+="&exclude=$_"}}
         if($PSBoundParameters.ContainsKey("MaxResults")){$body+="&maxResults=$MaxResults"}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -LiteralBody $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -LiteralBody $body
     }
 }

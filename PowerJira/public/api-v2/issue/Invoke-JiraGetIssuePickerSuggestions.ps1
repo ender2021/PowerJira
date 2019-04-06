@@ -39,6 +39,7 @@ function Invoke-JiraGetIssuePickerSuggestions {
     )
     process {
         $functionPath = "/rest/api/2/issue/picker"
+        $verb = "GET"
 
         $body=@{
             showSubTasks = $true
@@ -51,6 +52,6 @@ function Invoke-JiraGetIssuePickerSuggestions {
         if($PSBoundParameters.ContainsKey("HideSubTaskParent")){$body.showSubTaskParent = $false}
         if($PSBoundParameters.ContainsKey("HideSubTasks")){$body.showSubTasks = $false}
 
-      Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
+      Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

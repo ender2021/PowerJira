@@ -14,7 +14,8 @@ function Invoke-JiraGetVotes {
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/votes"
+        $verb = "GET"
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET"
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb
     }
 }

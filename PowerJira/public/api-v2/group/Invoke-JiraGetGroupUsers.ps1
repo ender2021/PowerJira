@@ -30,6 +30,7 @@ function Invoke-JiraGetGroupUsers {
     )
     process {
         $functionPath = "/rest/api/2/group/member"
+        $verb = "GET"
 
         $body=@{
             groupname = $Name
@@ -38,6 +39,6 @@ function Invoke-JiraGetGroupUsers {
         }
         if($PSBoundParameters.ContainsKey("IncludeInactive")){$body.Add("includeInactiveUsers",$true)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

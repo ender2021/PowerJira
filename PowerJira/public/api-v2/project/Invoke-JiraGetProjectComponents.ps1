@@ -14,7 +14,8 @@ function Invoke-JiraGetProjectComponents {
     )
     process {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/components"
+        $verb = "GET"
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET"
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb
     }
 }

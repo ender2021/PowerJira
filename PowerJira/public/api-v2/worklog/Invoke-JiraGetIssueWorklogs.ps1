@@ -33,6 +33,7 @@ function Invoke-JiraGetIssueWorklogs {
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/worklog"
+        $verb = "GET"
 
         $body=@{
             startAt = $StartAt
@@ -40,6 +41,6 @@ function Invoke-JiraGetIssueWorklogs {
         }
         if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

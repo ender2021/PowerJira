@@ -14,7 +14,8 @@ function Invoke-JiraGetProjectIssueSecurityLevels {
     )
     process {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/securitylevel"
+        $verb = "GET"
 
-        (Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET").levels
+        (Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb).levels
     }
 }

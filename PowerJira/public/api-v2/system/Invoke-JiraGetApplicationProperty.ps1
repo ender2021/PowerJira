@@ -24,12 +24,13 @@ function Invoke-JiraGetApplicationProperty {
     )
     process {
         $functionPath = "/rest/api/2/application-properties"
+        $verb = "GET"
 
         $body=@{}
         if($PSBoundParameters.ContainsKey("Key")){$body.Add("key",$Key)}
         if($PSBoundParameters.ContainsKey("KeyFilter")){$body.Add("keyFilter",$KeyFilter)}
         if($PSBoundParameters.ContainsKey("PermissionLevel")){$body.Add("permissionLevel",$PermissionLevel)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

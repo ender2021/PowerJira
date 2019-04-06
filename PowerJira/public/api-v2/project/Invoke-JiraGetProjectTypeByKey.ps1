@@ -21,7 +21,8 @@ function Invoke-JiraGetProjectTypeByKey {
     process {
         $functionPath = "/rest/api/2/project/type/$Key"
         if($PSBoundParameters.ContainsKey("Accessible")){$functionPath += "/accessible"}
+        $verb = "GET"
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET"
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb
     }
 }

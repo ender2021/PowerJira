@@ -14,11 +14,12 @@ function Invoke-JiraGetValidProjectName {
     )
     process {
         $functionPath = "/rest/api/2/projectvalidate/validProjectName"
+        $verb = "GET"
 
         $query=@{
             name = $Name
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -QueryParams $query
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -QueryParams $query
     }
 }

@@ -22,10 +22,11 @@ function Invoke-JiraGetProjectPermissionScheme {
     )
     process {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/permissionscheme"
+        $verb = "GET"
 
         $query = @{}
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -QueryParams $query
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -QueryParams $query
     }
 }

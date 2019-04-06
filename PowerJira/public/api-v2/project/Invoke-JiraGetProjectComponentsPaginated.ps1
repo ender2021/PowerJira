@@ -37,6 +37,7 @@ function Invoke-JiraGetProjectComponentsPaginated {
     )
     process {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/component"
+        $verb = "GET"
 
         $body = @{
             startAt = $StartAt
@@ -45,6 +46,6 @@ function Invoke-JiraGetProjectComponentsPaginated {
         if($PSBoundParameters.ContainsKey("Filter")){$body.Add("query",$Filter)}
         if($PSBoundParameters.ContainsKey("OrderBy")){$body.Add("orderBy",$OrderBy)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

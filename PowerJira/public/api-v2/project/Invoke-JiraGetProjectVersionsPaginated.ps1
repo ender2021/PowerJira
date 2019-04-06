@@ -54,6 +54,7 @@ function Invoke-JiraGetProjectVersionsPaginated {
     )
     process {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/version"
+        $verb = "GET"
 
         $body = @{
             startAt = $StartAt
@@ -64,6 +65,6 @@ function Invoke-JiraGetProjectVersionsPaginated {
         if($PSBoundParameters.ContainsKey("OrderBy")){$body.Add("orderBy",$OrderBy)}
         if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

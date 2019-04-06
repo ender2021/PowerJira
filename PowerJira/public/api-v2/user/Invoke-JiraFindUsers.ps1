@@ -25,6 +25,7 @@ function Invoke-JiraFindUsers {
     )
     process {
         $functionPath = "/rest/api/2/user/search"
+        $verb = "GET"
 
         $body=@{
             query = $SearchTerm
@@ -32,6 +33,6 @@ function Invoke-JiraFindUsers {
             maxResults = $MaxResults
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

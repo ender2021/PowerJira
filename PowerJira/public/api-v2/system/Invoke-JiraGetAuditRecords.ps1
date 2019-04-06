@@ -38,6 +38,7 @@ function Invoke-JiraGetAuditRecords {
     )
     process {
         $functionPath = "/rest/api/2/auditing/record"
+        $verb = "GET"
 
         $body=@{}
         if($PSBoundParameters.ContainsKey("Filter")){$body.Add("filter",$Filter)}
@@ -48,6 +49,6 @@ function Invoke-JiraGetAuditRecords {
             $body.Add("to",(Format-JiraRestDateTime $To -Simple))
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

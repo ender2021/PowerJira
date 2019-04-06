@@ -9,7 +9,8 @@ function Invoke-JiraGetIssueSecuritySchemes {
     )
     process {
         $functionPath = "/rest/api/2/issuesecurityschemes"
+        $verb = "GET"
 
-        (Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET").issueSecuritySchemes
+        (Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb).issueSecuritySchemes
     }
 }

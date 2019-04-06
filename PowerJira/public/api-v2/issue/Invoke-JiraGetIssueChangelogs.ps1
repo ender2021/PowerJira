@@ -25,12 +25,13 @@ function Invoke-JiraGetIssueChangelogs {
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/changelog"
+        $verb = "GET"
 
         $body=@{
             startAt = $StartAt
             maxResults = $MaxResults
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

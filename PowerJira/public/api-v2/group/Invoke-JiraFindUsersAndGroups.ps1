@@ -59,6 +59,7 @@ function Invoke-JiraFindUsersAndGroups {
     )
     process {
         $functionPath = "/rest/api/2/groupuserpicker"
+        $verb = "GET"
 
         $body="query=$SearchTerm"
         if($PSBoundParameters.ContainsKey("CustomFieldId")){
@@ -73,6 +74,6 @@ function Invoke-JiraFindUsersAndGroups {
         }
         if($PSBoundParameters.ContainsKey("ExcludeConnectAddons")){$body+="excludeConnectAddons=true"}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -LiteralBody $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -LiteralBody $body
     }
 }

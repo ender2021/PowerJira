@@ -9,7 +9,8 @@ function Invoke-JiraGetAdvancedSettings {
     )
     process {
         $functionPath = "/rest/api/2/application-properties/advanced-settings"
+        $verb = "GET"
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET"
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb
     }
 }
