@@ -39,14 +39,15 @@ function Invoke-JiraGetComments {
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/comment"
-
-        $body=@{
+        $verb = "GET"
+        
+        $query=@{
             startAt = $StartAt
             maxResults = $MaxResults
         }
-        if($PSBoundParameters.ContainsKey("OrderBy")){$body.Add("orderBy",$OrderBy)}
-        if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
+        if($PSBoundParameters.ContainsKey("OrderBy")){$query.Add("orderBy",$OrderBy)}
+        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -QueryParams $query
     }
 }
