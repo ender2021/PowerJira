@@ -52,7 +52,10 @@ function Invoke-JiraUpdateComment {
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/comment/$CommentId"
-        if($PSBoundParameters.ContainsKey("Expand")){$functionPath += "?expand" + $Expand -join ","}
+        $verb = "PUT"
+
+        $query = @{}
+        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
         $body=@{
             body = $CommentBody
@@ -62,6 +65,6 @@ function Invoke-JiraUpdateComment {
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
         if($PSBoundParameters.ContainsKey("AdditionalProperties")){$body += $AdditionalProperties}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "PUT" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -QueryParams $query -Body $body
     }
 }
