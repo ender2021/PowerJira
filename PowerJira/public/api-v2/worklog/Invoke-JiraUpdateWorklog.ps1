@@ -79,6 +79,7 @@ function Invoke-JiraUpdateWorklog {
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/worklog/$WorklogId"
+        $verb = "PUT"
 
         $query = @{
             adjustEstimate = $AdjustMethod
@@ -97,6 +98,6 @@ function Invoke-JiraUpdateWorklog {
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
         if($PSBoundParameters.ContainsKey("AdditionalProperties")){$body += $AdditionalProperties}
         
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "PUT" -Body $body -QueryParams $query
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body -QueryParams $query
     }
 }

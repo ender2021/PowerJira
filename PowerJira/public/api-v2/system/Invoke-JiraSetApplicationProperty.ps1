@@ -19,12 +19,13 @@ function Invoke-JiraSetApplicationProperty {
     )
     process {
         $functionPath = "/rest/api/2/application-properties/$PropertyId"
+        $verb = "PUT"
 
         $body=@{
             id = $PropertyId
             value = $Value
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "PUT" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

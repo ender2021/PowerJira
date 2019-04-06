@@ -45,6 +45,7 @@ function Invoke-JiraUpdateRemoteIssueLink {
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/remotelink/$RemoteLinkId"
+        $verb = "PUT"
 
         $body=@{
             object = $RemoteObject
@@ -54,6 +55,6 @@ function Invoke-JiraUpdateRemoteIssueLink {
         if($PSBoundParameters.ContainsKey("Application")){$body.Add("application",$Application)}
         if($PSBoundParameters.ContainsKey("AdditionalProperties")){$body += $AdditionalProperties}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "PUT" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

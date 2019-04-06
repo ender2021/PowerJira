@@ -25,9 +25,10 @@ function Invoke-JiraSetProjectProperty {
     )
     process {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/properties/$PropertyKey"
+        $verb = "PUT"
 
         $body=$Value
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "PUT" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

@@ -34,6 +34,7 @@ function Invoke-JiraSetActorsForProjectRole {
     )
     process {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/role/$RoleId"
+        $verb = "PUT"
 
         $body = @{
             categorisedActors = @{}
@@ -41,6 +42,6 @@ function Invoke-JiraSetActorsForProjectRole {
         if($PSBoundParameters.ContainsKey("Users")){$body.categorisedActors.Add("atlassian-user-role-actor",$Users)}
         if($PSBoundParameters.ContainsKey("Groups")){$body.categorisedActors.Add("atlassian-group-role-actor",$Groups)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "PUT" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

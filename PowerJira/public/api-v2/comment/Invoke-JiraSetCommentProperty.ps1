@@ -26,9 +26,10 @@ function Invoke-JiraSetCommentProperty {
     )
     process {
         $functionPath = "/rest/api/2/comment/$CommentId/properties/$Key"
+        $verb = "PUT"
 
         $body=$Value
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "PUT" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

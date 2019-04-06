@@ -29,12 +29,13 @@ function Invoke-JiraUpdateIssueLinkType {
     )
     process {
         $functionPath = "/rest/api/2/issueLinkType/$LinkTypeId"
+        $verb = "PUT"
 
         $body=@{}
         if($PSBoundParameters.ContainsKey("Name")){$body.Add("name",$Name)}
         if($PSBoundParameters.ContainsKey("Inward")){$body.Add("inward",$Inward)}
         if($PSBoundParameters.ContainsKey("Outward")){$body.Add("outward",$Outward)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "PUT" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

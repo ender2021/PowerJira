@@ -25,12 +25,13 @@ function Invoke-JiraUpdateProjectRoleFull {
     )
     process {
         $functionPath = "/rest/api/2/role/$ProjectRoleId"
+        $verb = "PUT"
 
         $body=@{
             name = $Name
             description = $Description
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "PUT" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

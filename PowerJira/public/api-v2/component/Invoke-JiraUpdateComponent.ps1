@@ -37,6 +37,7 @@ function Invoke-JiraUpdateComponent {
     )
     process {
         $functionPath = "/rest/api/2/component/$ComponentId"
+        $verb = "PUT"
 
         $body=@{}
         if($PSBoundParameters.ContainsKey("Name")){$body.Add("name",$Name)}
@@ -44,6 +45,6 @@ function Invoke-JiraUpdateComponent {
         if($PSBoundParameters.ContainsKey("LeadAccountId")){$body.Add("leadAccountId",$LeadAccountId)}
         if($PSBoundParameters.ContainsKey("DefaultAssignee")){$body.Add("assigneeType",$DefaultAssignee)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "PUT" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }
