@@ -31,7 +31,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetVersionRelatedIssueCounts -VersionId 10482
 
 #GET VERSION UNRESOLVLED ISSUE COUNTS
-#Invoke-JiraGetVersionUnresolvedIssueCount -VersionId 10482
+#Invoke-JiraGetVersionUnresolvedIssueCount 10000
 
 #end tests
 
