@@ -1,4 +1,4 @@
-$JiraVersionExpand = @("operations","issuestatus")
+$JiraVersionExpand = @("operations","issuesstatus")
 
 # https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-version-post
 function Invoke-JiraCreateVersion {

@@ -1,76 +1,69 @@
+$JiraVersionExpand = @("operations","issuesstatus")
+
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-version-id-put
 function Invoke-JiraUpdateVersion {
     [CmdletBinding()]
     param (
         # The ID of the version to update
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory,Position=0)]
         [int32]
         $VersionId,
 
         # The updated name of the version.  Must be unique within the project.
-        [Parameter(Mandatory=$false)]
+        [Parameter(Position=1)]
         [ValidateLength(1,255)]
         [string]
         $Name,
 
         # A short description of the version
-        [Parameter(Mandatory=$false)]
+        [Parameter(Position=2)]
         [string]
         $Description,
 
         # The start date of the version. Will be converted to ISO 8601 format (yyyy-mm-dd). 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Position=3)]
         [datetime]
         $StartDate,
 
         # The release date of the version. Will be converted to ISO 8601 format (yyyy-mm-dd). 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Position=4)]
         [datetime]
         $ReleaseDate,
 
         # Indicates that the version is archived
-        [Parameter(Mandatory=$false)]
+        [Parameter(Position=5)]
         [bool]
         $Archived,
 
         # Indicates that the version is released
-        [Parameter(Mandatory=$false)]
+        [Parameter(Position=6)]
         [bool]
         $Released,
 
         # The ID of the version to move unfixed issues into
-        [Parameter(Mandatory=$false)]
+        [Parameter(Position=7)]
         [int32]
         $UnfixedIssuesVersionId,
 
-        # Returns all possible operations for the issue.
-        [Parameter(Mandatory=$false)]
-        [Switch]
-        $ExpandOperations,
-        
-        # Returns the count of issues in this version for each of the status categories to do,
-        # in progress, done, and unmapped. The unmapped property contains a count of issues with
-        # a status other than to do, in progress, and done.
-        [Parameter(Mandatory=$false)]
-        [Switch]
-        $ExpandIssuesStatusCount,
+        # Used to expand additional attributes
+        [Parameter(Position=8)]
+        [ValidateScript({ Compare-StringArraySubset $JiraVersionExpand $_ })]
+        [string[]]
+        $Expand,
         
         # The JiraConnection object to use for the request
-        [Parameter(Mandatory=$false)]
+        [Parameter(Position=9)]
         [hashtable]
         $JiraConnection
     )
     process {
         $functionPath = "/rest/api/2/version/$VersionId"
-        
-        $expand = @()
-        if($PSBoundParameters.ContainsKey("ExpandOperations")){$expand += "operations"}
-        if($PSBoundParameters.ContainsKey("ExpandIssuesStatusCount")){$expand += "issuesstatus"}
+        $verb = "PUT"
         
         $body = @{
             id = $VersionId
         }
-        if($expand.Count -gt 0) {$body.Add("expand",$expand -join ",")}
+        if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("Name")){$body.Add("name",$Name)}
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("StartDate")){$body.Add("startDate",(Format-JiraRestDateTime $StartDate))}
@@ -79,6 +72,6 @@ function Invoke-JiraUpdateVersion {
         if($PSBoundParameters.ContainsKey("Released")){$body.Add("released",$Released)}
         if($PSBoundParameters.ContainsKey("UnfixedIssuesVersionId")) {$body.Add("moveUnfixedIssuesTo",$UnfixedIssuesVersionId)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "PUT" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }
