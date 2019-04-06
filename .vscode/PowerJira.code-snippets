@@ -20,7 +20,7 @@
 		"prefix": "jcparam",
 		"body": [
 			"# The JiraConnection object to use for the request",
-        	"[Parameter(Mandatory=\\$false)]",
+        	"[Parameter(Position=)]",
             "[hashtable]",
 			"\\$JiraConnection"
 		],

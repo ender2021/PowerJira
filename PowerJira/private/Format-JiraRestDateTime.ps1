@@ -2,12 +2,12 @@ function Format-JiraRestDateTime {
     [CmdletBinding()]
     param (
         # The DateTime to format
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory,Position=0)]
         [datetime]
         $DateTime,
 
         # Set this flag to use the simple date format
-        [Parameter()]
+        [Parameter(Position=1)]
         [switch]
         $Simple
     )

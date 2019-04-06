@@ -16,7 +16,7 @@ function Invoke-JiraGetProjectVersions {
         $Expand,
         
         # The JiraConnection object to use for the request
-        [Parameter(Mandatory=$false)]
+        [Parameter(Position=3)]
         [hashtable]
         $JiraConnection
     )
