@@ -10,7 +10,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #GET CURRENT USER
-#$user = Invoke-JiraGetCurrentUser -ExpandGroups
+#$user = Invoke-JiraGetCurrentUser
 #$user
 
 #FIND USERS
