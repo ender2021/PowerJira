@@ -1,3 +1,5 @@
+$JiraWorklogExpand = @("properties")
+
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-issue-issueIdOrKey-worklog-post
 function Invoke-JiraAddWorklog {
     [CmdletBinding(DefaultParameterSetName="TimeSpent")]
@@ -10,26 +12,14 @@ function Invoke-JiraAddWorklog {
         # Time spent, using Jira's time notation format (e.g. 2h30m)
         [Parameter(Mandatory,ParameterSetName="TimeSpent",Position=1)]
         [Parameter(Mandatory,ParameterSetName="TimeSpent,new",Position=1)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpent,new,GroupVisibility",Position=1)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpent,new,RoleVisibility",Position=1)]
         [Parameter(Mandatory,ParameterSetName="TimeSpent,manual",Position=1)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpent,manual,GroupVisibility",Position=1)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpent,manual,RoleVisibility",Position=1)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpent,GroupVisibility",Position=1)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpent,RoleVisibility",Position=1)]
         [string]
         $TimeSpent,
 
         # Time spent in seconds, represented as an integer
         [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds",Position=1)]
         [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,new",Position=1)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,new,GroupVisibility",Position=1)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,new,RoleVisibility",Position=1)]
         [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,manual",Position=1)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,manual,GroupVisibility",Position=1)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,manual,RoleVisibility",Position=1)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,GroupVisibility",Position=1)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,RoleVisibility",Position=1)]
         [int64]
         $TimeSpentSeconds,
 
@@ -42,25 +32,17 @@ function Invoke-JiraAddWorklog {
         [Parameter(Position=3)]
         [ValidateSet("new","leave","manual","auto")]
         [string]
-        $AdjustMethod,
+        $AdjustMethod="auto",
 
         # Sets the new remaining estimate
         [Parameter(Mandatory,ParameterSetName="TimeSpent,new",Position=4)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpent,new,RoleVisibility",Position=4)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpent,new,GroupVisibility",Position=4)]
         [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,new",Position=4)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,new,RoleVisibility",Position=4)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,new,GroupVisibility",Position=4)]
         [string]
         $NewEstimate,
 
         # Amount to reduce the existing estimate by
         [Parameter(Mandatory,ParameterSetName="TimeSpent,manual",Position=4)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpent,manual,RoleVisibility",Position=4)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpent,manual,GroupVisibility",Position=4)]
         [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,manual",Position=4)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,manual,RoleVisibility",Position=4)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,manual,GroupVisibility",Position=4)]
         [string]
         $ReduceBy,
 
@@ -74,30 +56,16 @@ function Invoke-JiraAddWorklog {
         [switch]
         $DisableNotifications,
 
-        # Expands the properties in the returned worklog object
+        # Used to expand additional attributes
         [Parameter(Position=7)]
-        [switch]
-        $ExpandProperties,
+        [ValidateScript({ Compare-StringArraySubset $JiraWorklogExpand $_ })]
+        [string[]]
+        $Expand,
 
-        # Set this value to restrict the comment visibility to a project role
-        [Parameter(Mandatory,ParameterSetName="TimeSpent,RoleVisibility",Position=8)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpent,new,RoleVisibility",Position=8)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpent,manual,RoleVisibility",Position=8)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,new,RoleVisibility",Position=8)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,manual,RoleVisibility",Position=8)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,RoleVisibility",Position=8)]
-        [string]
-        $SetRoleVisibility,
-
-        # Set this value to restrict the comment visibility to a group
-        [Parameter(Mandatory,ParameterSetName="TimeSpent,GroupVisibility",Position=8)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpent,new,GroupVisibility",Position=8)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpent,manual,GroupVisibility",Position=8)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,new,GroupVisibility",Position=8)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,manual,GroupVisibility",Position=8)]
-        [Parameter(Mandatory,ParameterSetName="TimeSpentSeconds,GroupVisibility",Position=8)]
-        [string]
-        $SetGroupVisibility,
+        # Set the visibility of the worklog.  Use New-JiraWorklogVisiblity
+        [Parameter(Position=8)]
+        [hashtable]
+        $Visibility,
 
         # Additional properties to add to the comment object
         [Parameter(Position=9)]
@@ -112,21 +80,24 @@ function Invoke-JiraAddWorklog {
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/worklog"
 
+        $query = @{
+            adjustEstimate = $AdjustMethod
+            notifyUsers = $true
+        }
+        if($PSBoundParameters.ContainsKey("NewEstimate")){$query.Add("newEstimate",$NewEstimate)}
+        if($PSBoundParameters.ContainsKey("DisableNotifications")){$query.notifyUsers = $false}
+        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
+        if($PSBoundParameters.ContainsKey("ReduceBy")){$query.Add("reduceBy",$ReduceBy)}
+
         $body=@{
             started = (Format-JiraRestDateTime $Started)
         }
         if($PSBoundParameters.ContainsKey("TimeSpent")){$body.Add("timeSpent",$TimeSpent)}
         if($PSBoundParameters.ContainsKey("TimeSpentSeconds")){$body.Add("timeSpentSeconds",$TimeSpentSeconds)}
         if($PSBoundParameters.ContainsKey("Comment")){$body.Add("comment",$Comment)}
-        if($PSBoundParameters.ContainsKey("AdjustMethod")){$body.Add("adjustEstimate",$AdjustMethod)}
-        if($PSBoundParameters.ContainsKey("NewEstimate")){$body.Add("newEstimate",$NewEstimate)}
-        if($PSBoundParameters.ContainsKey("ReduceBy")){$body.Add("reduceBy",$ReduceBy)}
-        if($PSBoundParameters.ContainsKey("DisableNotifications")){$body.Add("notifyUsers",$false)}
-        if($PSBoundParameters.ContainsKey("ExpandProperties")){$body.Add("expand","properties")}
-        if($PSBoundParameters.ContainsKey("SetRoleVisibility")){$body.Add("visibility",@{type="role";value="$SetRoleVisibility"})}
-        if($PSBoundParameters.ContainsKey("SetGroupVisibility")){$body.Add("visibility",@{type="group";value="$SetGroupVisibility"})}
+        if($PSBoundParameters.ContainsKey("Visibility")){$body.Add("visibility",$Visibility)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
         
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body -QueryParams $query
     }
 }
