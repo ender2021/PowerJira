@@ -24,14 +24,15 @@ function Invoke-JiraGetCommentsByIds {
     )
     process {
         $functionPath = "/rest/api/2/comment/list"
+        $verb = "POST"
+
+        $query = @{}
+        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
         $body=@{
             ids = $CommentIds
         }
-        if($PSBoundParameters.ContainsKey("Expand")){
-            $functionPath += '?expand=' + $Expand -join ","
-        }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -QueryParams $query -Body $body
     }
 }
