@@ -3,18 +3,19 @@ function Invoke-JiraGetIssueEditMetadata {
     [CmdletBinding()]
     param (
         # IDs of projects to return metadata for
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory,Position=0)]
         [string]
         $IssueIdOrKey,
         
         # The JiraConnection object to use for the request
-        [Parameter(Mandatory=$false)]
+        [Parameter(Position=1)]
         [hashtable]
         $JiraConnection
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/editmeta"
+        $verb = "GET"
         
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET"
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb
     }
 }
