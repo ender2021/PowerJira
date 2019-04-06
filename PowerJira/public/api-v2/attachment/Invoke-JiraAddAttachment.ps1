@@ -19,9 +19,10 @@ function Invoke-JiraAddAttachment {
     )
     process {
         $functionPath = "/rest/api/2/issue/$issueIdOrKey/attachments"
+        $verb = "POST"
 
         $form = @{file=$Attachment}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Multipart -Form $form
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Multipart -Form $form
     }
 }

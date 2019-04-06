@@ -14,11 +14,12 @@ function Invoke-JiraCreateGroup {
     )
     process {
         $functionPath = "/rest/api/2/group"
+        $verb = "POST"
 
         $body=@{
             name = $Name
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

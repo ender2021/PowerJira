@@ -19,10 +19,11 @@ function Invoke-JiraAddWatcher {
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/watchers"
+        $verb = "POST"
 
         $body=""
         if($PSBoundParameters.ContainsKey("AccountId")){$body = """$AccountId"""}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -LiteralBody $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -LiteralBody $body
     }
 }

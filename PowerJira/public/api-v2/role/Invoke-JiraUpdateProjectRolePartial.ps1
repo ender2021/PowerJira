@@ -25,11 +25,12 @@ function Invoke-JiraUpdateProjectRolePartial {
     )
     process {
         $functionPath = "/rest/api/2/role/$ProjectRoleId"
+        $verb = "POST"
 
         $body=@{}
         if($PSBoundParameters.ContainsKey("Name")){$body.Add("name",$Name)}
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

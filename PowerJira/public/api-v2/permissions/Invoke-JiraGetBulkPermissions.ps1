@@ -38,6 +38,7 @@ function Invoke-JiraGetBulkPermissions {
     )
     process {
         $functionPath = "/rest/api/2/permissions/check"
+        $verb = "POST"
 
         $body = @{}
         if($PSBoundParameters.ContainsKey("GlobalPermissions")){$body.Add("globalPermissions",$GlobalPermissions)}
@@ -49,6 +50,6 @@ function Invoke-JiraGetBulkPermissions {
             if($PSBoundParameters.ContainsKey("IssueIds")){$body.projectPermissions[0].Add("issues",$IssueIds)}
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

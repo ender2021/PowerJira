@@ -45,6 +45,7 @@ function Invoke-JiraCreateIssueLink {
     )
     process {
         $functionPath = "/rest/api/2/issueLink"
+        $verb = "POST"
 
         $outwardIssue=@{}
         $inwardIssue=@{}
@@ -63,6 +64,6 @@ function Invoke-JiraCreateIssueLink {
         if($PSBoundParameters.ContainsKey("Comment")){$body.Add("comment",@{body=$Comment})}
         if($PSBoundParameters.ContainsKey("CommentObject")){$body.Add("comment",$CommentObject)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

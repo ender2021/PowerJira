@@ -74,6 +74,7 @@ function Invoke-JiraSendIssueNotification {
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/notify"
+        $verb = "POST"
 
         $to = @{
             reporter = $true
@@ -116,6 +117,6 @@ function Invoke-JiraSendIssueNotification {
         if($PSBoundParameters.ContainsKey("Subject")){$body.Add("subject",$Subject)}
         if(($restrict.groups.Count -gt 0) -or ($restrict.permissions.Count -gt 0)) {$body.Add("restrict",$restrict)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body -BodyDepth 5
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body -BodyDepth 5
     }
 }

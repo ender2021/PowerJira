@@ -14,7 +14,8 @@ function Invoke-JiraAddVote {
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/votes"
+        $verb = "POST"
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST"
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb
     }
 }

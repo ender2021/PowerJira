@@ -24,11 +24,12 @@ function Invoke-JiraAddDefaultActorsToProjectRole {
     )
     process {
         $functionPath = "/rest/api/2/role/$RoleId/actors"
+        $verb = "POST"
 
         $body = @{}
         if($PSBoundParameters.ContainsKey("Users")){$body.Add("user",$Users)}
         if($PSBoundParameters.ContainsKey("Groups")){$body.Add("group",$Groups)}
 
-        (Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "POST" -Body $body).actors
+        (Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body).actors
     }
 }
