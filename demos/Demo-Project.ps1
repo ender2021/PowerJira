@@ -83,6 +83,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET PROJECT ISSUE SECURITY LEVELS
 #Invoke-JiraGetProjectIssueSecurityLevels JPT
 
+#GET VALID PROJECT NAME
+#Invoke-JiraGetValidProjectName "PowerJira Testing"
+
 #end tests
 
 #close the Jira session
