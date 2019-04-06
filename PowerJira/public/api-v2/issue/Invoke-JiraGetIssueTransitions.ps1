@@ -1,3 +1,5 @@
+$JiraIssueTransitionsExpand = @("transitions.fields")
+
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-issue-issueIdOrKey-transitions-get
 function Invoke-JiraGetIssueTransitions {
     [CmdletBinding()]
@@ -7,15 +9,16 @@ function Invoke-JiraGetIssueTransitions {
         [string]
         $IssueIdOrKey,
 
-        # Set this flag to expand transition field information
-        [Parameter(Position=1)]
-        [switch]
-        $ExpandFields,
-
         # Set this to retrieve a specfic transition by ID
-        [Parameter(Position=2)]
+        [Parameter(Position=1)]
         [int32]
         $TransitionId,
+
+        # Used to expand additional attributes
+        [Parameter(Position=2)]
+        [ValidateScript({ Compare-StringArraySubset $JiraIssueTransitionsExpand $_ })]
+        [string[]]
+        $Expand,
 
         # Set this flag to skip retrieval of transitions hidden from users
         [Parameter(Position=3)]
@@ -29,12 +32,13 @@ function Invoke-JiraGetIssueTransitions {
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/transitions"
+        $verb = "GET"
 
-        $body=@{}
-        if($PSBoundParameters.ContainsKey("ExpandFields")){$body.Add("expand","transitions.fields")}
-        if($PSBoundParameters.ContainsKey("TransitionId")){$body.Add("transitionId",$TransitionId)}
-        if($PSBoundParameters.ContainsKey("SkipHidden")){$body.Add("skipRemoteOnlyCondition",$true)}
+        $query=@{}
+        if($PSBoundParameters.ContainsKey("ExpandFields")){$query.Add("expand",$Expand -join ",")}
+        if($PSBoundParameters.ContainsKey("TransitionId")){$query.Add("transitionId",$TransitionId)}
+        if($PSBoundParameters.ContainsKey("SkipHidden")){$query.Add("skipRemoteOnlyCondition",$true)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -QueryParams $query
     }
 }
