@@ -14,7 +14,8 @@ function Invoke-JiraDeleteVote {
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/votes"
+        $verb = "DELETE"
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "DELETE"
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb
     }
 }

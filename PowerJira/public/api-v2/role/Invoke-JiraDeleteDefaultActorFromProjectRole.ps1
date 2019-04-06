@@ -24,11 +24,12 @@ function Invoke-JiraDeleteDefaultActorFromProjectRole {
     )
     process {
         $functionPath = "/rest/api/2/role/$RoleId/actors"
+        $verb = "DELETE"
 
         $body = @{}
         if($PSBoundParameters.ContainsKey("User")){$body.Add("user",$User)}
         if($PSBoundParameters.ContainsKey("Group")){$body.Add("group",$Group)}
 
-        (Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "DELETE" -Body $body).actors
+        (Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body).actors
     }
 }

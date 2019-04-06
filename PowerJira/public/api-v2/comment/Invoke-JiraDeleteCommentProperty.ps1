@@ -20,7 +20,8 @@ function Invoke-JiraDeleteCommentProperty {
     )
     process {
         $functionPath = "/rest/api/2/comment/$CommentId/properties/$Key"
+        $verb = "DELETE"
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "DELETE"
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb
     }
 }

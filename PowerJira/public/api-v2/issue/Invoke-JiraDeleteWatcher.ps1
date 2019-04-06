@@ -19,11 +19,12 @@ function Invoke-JiraDeleteWatcher {
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/watchers"
+        $verb = "DELETE"
 
         $body=@{
             accountId = $WatcherAccountId
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "DELETE" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

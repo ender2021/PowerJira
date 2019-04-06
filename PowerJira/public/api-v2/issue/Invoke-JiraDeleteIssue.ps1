@@ -19,10 +19,11 @@ function Invoke-JiraDeleteIssue {
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey"
+        $verb = "DELETE"
 
         $body=@{}
         if($PSBoundParameters.ContainsKey("DeleteSubtasks")){$body.Add("deleteSubtasks",$true)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "DELETE" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }

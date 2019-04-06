@@ -19,12 +19,13 @@ function Invoke-JiraRemoveUserFromGroup {
     )
     process {
         $functionPath = "/rest/api/2/group/user"
+        $verb = "DELETE"
 
         $body=@{
             groupname = $Name
             accountId = $User
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "DELETE" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
     }
 }
