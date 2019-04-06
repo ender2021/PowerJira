@@ -62,6 +62,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #SET PROJECT PROPERTY
 #Invoke-JiraSetProjectProperty JPT "newKey" @{monkey="butt"}
 
+#GET PROJECT PROPERTY
+#Invoke-JiraGetProjectProperty JPT "newKey"
+
 #end tests
 
 #close the Jira session
