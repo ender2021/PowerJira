@@ -3,12 +3,12 @@ function Invoke-JiraGetVersionRelatedIssueCounts {
     [CmdletBinding()]
     param (
         # The ID of the version
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory,Position=0)]
         [int32]
         $VersionId,
 
         # The JiraConnection object to use for the request
-        [Parameter(Mandatory=$false)]
+        [Parameter(Position=1)]
         [hashtable]
         $JiraConnection
     )
