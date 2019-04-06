@@ -16,18 +16,18 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #(Invoke-JiraGetIssueWorklogs JPT-1 ).worklogs
 
 #GET WORKLOG
-#(Invoke-JiraGetWorklog JPT-1 10000 -Expand @("properties")).properties
+#Invoke-JiraGetWorklog JPT-1 10000 -Expand @("properties")
 
 #GET WORKLOG PROPERTY KEYS
 #Invoke-JiraGetWorklogPropertyKeys JPT-1 10000
 
 #GET DELETED WORKLOG IDs
-#Invoke-JiraGetDeletedWorklogIds (Format-UnixTimestamp (Get-Date "2019-01-01"))
+#(Invoke-JiraGetDeletedWorklogIds (Format-UnixTimestamp (Get-Date "2019-01-01"))).values
 
 #GET WORKLOGS BY ID
 #Invoke-JiraGetWorklogsById @("10000") @("properties")
 
-#GET DELETED WORKLOG IDs
+#GET UPDATED WORKLOG IDs
 #Invoke-JiraGetUpdatedWorklogIds
 
 #UPDATE WORKLOG
@@ -41,6 +41,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #DELETE WORKLOG PROPERTY
 #Invoke-JiraDeleteWorklogProperty JPT-1 10000 "someProp"
+
+#DELETE WORKLOG
+#Invoke-JiraDeleteWorklog JPT-1 10000
 
 #end tests
 
