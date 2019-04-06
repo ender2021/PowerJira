@@ -23,13 +23,15 @@ function Invoke-JiraGetWorklogsById {
     )
     process {
         $functionPath = "/rest/api/2/worklog/list"
-        if($PSBoundParameters.ContainsKey("Expand")){$functionPath += '?' + "expand=" + ($Expand -join ",")}
         $verb = "POST"
+
+        $query = @{}
+        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
         $body=@{
             ids = $WorklogIds
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -QueryParams $query -Body $body
     }
 }
