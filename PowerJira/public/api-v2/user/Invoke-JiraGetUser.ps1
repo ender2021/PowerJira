@@ -1,3 +1,5 @@
+$JiraUserExpand = @("groups","applicationRoles")
+
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-user-get
 function Invoke-JiraGetUser {
     [CmdletBinding()]
@@ -7,18 +9,14 @@ function Invoke-JiraGetUser {
         [string]
         $AccountId,
 
-        # Set this flag to expand the user's group membership
+        # Used to expand additional attributes
         [Parameter(Position=1)]
-        [switch]
-        $ExpandGroups,
-
-        # Set this flag to expand the user's application roles
-        [Parameter(Position=2)]
-        [switch]
-        $ExpandApplicationRoles,
+        [ValidateScript({ Compare-StringArraySubset $JiraUserExpand $_ })]
+        [string[]]
+        $Expand,
 
         # The JiraConnection object to use for the request
-        [Parameter(Position=3)]
+        [Parameter(Position=2)]
         [hashtable]
         $JiraConnection
     )
@@ -26,15 +24,11 @@ function Invoke-JiraGetUser {
         $functionPath = "/rest/api/2/user"
         $verb = "GET"
 
-        $expand = @()
-        if($PSBoundParameters.ContainsKey("ExpandGroups")){$expand += "groups"}
-        if($PSBoundParameters.ContainsKey("ExpandApplicationRoles")){$expand += "applicationRoles"}
-
-        $body=@{
+        $query = @{
             accountId = $AccountId
         }
-        if($expand.Length -gt 0){$body.Add("expand",$expand -join ",")}
+        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -QueryParams $query
     }
 }
