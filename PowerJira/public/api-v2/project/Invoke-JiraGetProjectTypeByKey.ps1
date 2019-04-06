@@ -1,4 +1,5 @@
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-project-type-projectTypeKey-get
+#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-project-type-projectTypeKey-accessible-get
 function Invoke-JiraGetProjectTypeByKey {
     [CmdletBinding()]
     param (
@@ -7,13 +8,19 @@ function Invoke-JiraGetProjectTypeByKey {
         [ValidateSet("ops","software","service_desk","business")]
         $Key,
 
-        # The JiraConnection object to use for the request
+        # Set this flag to only return the project type if it is accessible to the current user
         [Parameter()]
+        [switch]
+        $Accessible,
+
+        # The JiraConnection object to use for the request
+        [Parameter(Position=1)]
         [hashtable]
         $JiraConnection
     )
     process {
         $functionPath = "/rest/api/2/project/type/$Key"
+        if($PSBoundParameters.ContainsKey("Accessible")){$functionPath += "/accessible"}
 
         Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET"
     }
