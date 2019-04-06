@@ -59,22 +59,15 @@
 			"\t\t\\$JiraConnection",
 			"\t)",
 			"\tprocess {",
-			"\t\t\\$functionPath = \"\"\n",
-			"\t\t\\$body=@{}",
-			"\t\tif(\\$PSBoundParameters.ContainsKey(\"\")){\\$body.Add(\"\",\"\")}\n",
-			"\t\tInvoke-JiraRestRequest -JiraConnection \\$JiraConnection -FunctionPath \\$functionPath -HttpMethod \"\" -Body \\$body",
+			"\t\t\\$functionPath = \"\"",
+			"\t\t\\$verb = \"\"\n",
+			"\t\t\\$query=@{}",
+			"\t\t\\$body=@{}\n",
+			"\t\tInvoke-JiraRestRequest -JiraConnection \\$JiraConnection -FunctionPath \\$functionPath -HttpMethod $verb -QueryParams \\$query -Body \\$body",
 			"\t}",
 			"}",
 		],
 		"description": "Snippet for templating a new Invoke-Jira* API wrapper"
-	},
-	"Module Export line": {
-		"scope":"powershell",
-		"prefix": "modexp",
-		"body": [
-			"Export-ModuleMember -Function * -Variable *"
-		],
-		"description": "Insert the the standard export all module members line"
 	},
 	"breakpoint": {
 		"scope":"powershell",
