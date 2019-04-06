@@ -77,6 +77,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET PROJECT NOTIFICATION SCHEME
 #Invoke-JiraGetProjectNotificationScheme JPT | fl
 
+#GET PROJECT PERMISSION SCHEME
+#Invoke-JiraGetProjectPermissionScheme JPT @("permissions") | fl
+
 #end tests
 
 #close the Jira session
