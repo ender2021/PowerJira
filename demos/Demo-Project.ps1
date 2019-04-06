@@ -65,6 +65,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET PROJECT PROPERTY
 #Invoke-JiraGetProjectProperty JPT "newKey"
 
+#DELETE PROJECT PROPERTY
+#Invoke-JiraDeleteProjectProperty JPT "newKey"
+
 #end tests
 
 #close the Jira session
