@@ -10,7 +10,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #SEARCH (POST)
-#$results = Invoke-JiraSearchIssues -JQL "project = GROPGDIS" -MaxResults 1 -ExpandTransitions -ExpandOperations
+#$results = Invoke-JiraSearchIssues -JQL "project = GROPGDIS" -MaxResults 1
 #$results.issues[0]
 
 #SEARCH (GET)

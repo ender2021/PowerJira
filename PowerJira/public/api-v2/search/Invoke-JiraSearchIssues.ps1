@@ -63,6 +63,9 @@ function Invoke-JiraSearchIssues {
         $method = "POST"
         if($PSBoundParameters.ContainsKey("GET")){$method = "GET"}
 
+        $query = @{}
+        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
+
         $body = @{
             jql = $JQL
             startAt = $StartAt
@@ -70,10 +73,9 @@ function Invoke-JiraSearchIssues {
             fields = $Fields
             validateQuery = $QueryValidation
         }
-        if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
         if($PSBoundParameters.ContainsKey("FieldsByKeys")){$body.Add("fieldsByKeys",$true)}
         
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $method -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $method -QueryParams $query -Body $body
     }
 }

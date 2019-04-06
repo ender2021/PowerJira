@@ -60,6 +60,9 @@ function Invoke-JiraGetProjects {
         $functionPath = "/rest/api/2/project/search"
         $verb = "GET"
 
+        $query = @{}
+        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
+
         $body=@{
             startAt = $StartAt
             maxResults = $MaxResults
@@ -69,8 +72,7 @@ function Invoke-JiraGetProjects {
         }
         if($PSBoundParameters.ContainsKey("Filter")){$body.Add("query",$Filter)}
         if($PSBoundParameters.ContainsKey("CategoryId")){$body.Add("categoryId",$CategoryId)}
-        if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -QueryParams $query -Body $body
     }
 }

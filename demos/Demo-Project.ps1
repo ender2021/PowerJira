@@ -14,7 +14,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # $proj
 
 #GET PROJECT VERSIONS
-#Invoke-JiraGetProjectVersions -ProjectIdOrKey "JPT" -ExpandOperations
+#Invoke-JiraGetProjectVersions -ProjectIdOrKey "JPT"
 
 #GET PROJECT VERSIONS PAGINATED
 #(Invoke-JiraGetProjectVersionsPaginated JPT -Expand @()).values
