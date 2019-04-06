@@ -1,4 +1,4 @@
-$JiraVersionExpand = @("properties")
+$JiraVersionExpand = @("operations","issuestatus")
 
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-version-id-GET
 function Invoke-JiraGetVersion {

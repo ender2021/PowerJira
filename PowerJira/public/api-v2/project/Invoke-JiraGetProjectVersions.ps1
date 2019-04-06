@@ -1,16 +1,19 @@
+$JiraProjectVersionExpand = @("operations")
+
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-project-projectIdOrKey-versions-get
 function Invoke-JiraGetProjectVersions {
     [CmdletBinding()]
     param (
         # The project ID or project key (case sensitive).
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory,Position=0)]
         [string]
         $ProjectIdOrKey,
 
-        # Returns all possible operations for the issue.
-        [Parameter(Mandatory=$false)]
-        [Switch]
-        $ExpandOperations,
+        # Used to expand additional attributes
+        [Parameter(Position=2)]
+        [ValidateScript({ Compare-StringArraySubset $JiraProjectVersionExpand $_ })]
+        [string[]]
+        $Expand,
         
         # The JiraConnection object to use for the request
         [Parameter(Mandatory=$false)]
@@ -20,9 +23,9 @@ function Invoke-JiraGetProjectVersions {
     process {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/versions"
 
-        $body = @{}
-        if($PSBoundParameters.ContainsKey("ExpandOperations")){$body.Add("expand","operations")}
+        $query = @{}
+        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -QueryParams $query
     }
 }
