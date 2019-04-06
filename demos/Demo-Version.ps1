@@ -16,7 +16,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraUpdateVersion -VersionId 10485 -Archived $false
 
 #GET VERSION
-#$test1 = Invoke-JiraGetVersion -VersionId 10484
+#Invoke-JiraGetVersion 10000
 
 #DELETE VERSION
 #Invoke-JiraDeleteVersion -VersionId 10485

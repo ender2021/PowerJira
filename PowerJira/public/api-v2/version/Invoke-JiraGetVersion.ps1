@@ -1,39 +1,31 @@
+$JiraVersionExpand = @("properties")
+
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-version-id-GET
 function Invoke-JiraGetVersion {
     [CmdletBinding()]
     param (
         # The ID of the version to update
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory,Position=0)]
         [int32]
         $VersionId,
 
-        # Returns all possible operations for the issue.
-        [Parameter(Mandatory=$false)]
-        [Switch]
-        $ExpandOperations,
-
-        # Returns the count of issues in this version for each of the status categories to do,
-        # in progress, done, and unmapped. The unmapped property contains a count of issues with
-        # a status other than to do, in progress, and done.
-        [Parameter(Mandatory=$false)]
-        [Switch]
-        $ExpandIssuesStatusCount,
+        # Used to expand additional attributes
+        [Parameter(Position=1)]
+        [ValidateScript({ Compare-StringArraySubset $JiraVersionExpand $_ })]
+        [string[]]
+        $Expand,
 
         # The JiraConnection object to use for the request
-        [Parameter(Mandatory=$false)]
+        [Parameter(Position=2)]
         [hashtable]
         $JiraConnection
     )
     process {
         $functionPath = "/rest/api/2/version/$VersionId"
         
-        $expand = @()
-        if($PSBoundParameters.ContainsKey("ExpandOperations")){$expand += "operations"}
-        if($PSBoundParameters.ContainsKey("ExpandIssuesStatusCount")){$expand += "issuesstatus"}
+        $query = @{}
+        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
         
-        $body = @{}
-        if($expand.Count -gt 0) {$body.Add("expand",$expand -join ",")}
-        
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod "GET" -QueryParams $query
     }
 }
