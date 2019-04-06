@@ -1,9 +1,11 @@
+$JiraSearchExpand = @("renderedFields","names","schema","transitions","operations","editmeta","changelog","versionedRepresentations")
+
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-search-post
 function Invoke-JiraSearchIssues {
-    [CmdletBinding(DefaultParameterSetName="DefaultSearchParams")]
+    [CmdletBinding()]
     param (
         # The JQL string to execute
-        [Parameter(Mandatory=$true,Position=0)]
+        [Parameter(Mandatory,Position=0)]
         [string]
         $Jql,
 
@@ -19,89 +21,48 @@ function Invoke-JiraSearchIssues {
         $MaxResults=50,
 
         # Array of comma-separated lists of fields to return for each issue, use it to retrieve a subset of fields.
-        [Parameter()]
+        [Parameter(Position=3)]
         [string[]]
         $Fields=@("*navigable"),
 
         # Parameter help description
-        [Parameter()]
+        [Parameter(Position=4)]
         [ValidateSet("strict","warn","none")]
         [string]
         $QueryValidation="strict",
 
-        # Returns field values rendered in HTML format.
-        [Parameter()]
-        [Switch]
-        $ExpandRenderedFields,
-
-        # Returns the display name of each field.
-        [Parameter()]
-        [Switch]
-        $ExpandNames,
-
-        # Returns the schema describing a field type.
-        [Parameter()]
-        [Switch]
-        $ExpandSchema,
-
-        # Returns all possible transitions for the issue.
-        [Parameter()]
-        [Switch]
-        $ExpandTransitions,
-
-        # Returns all possible operations for the issue.
-        [Parameter()]
-        [Switch]
-        $ExpandOperations,
-
-        # Returns information about how each field can be edited.
-        [Parameter()]
-        [Switch]
-        $ExpandEditMetadata,
-
-        # Returns a list of recent updates to an issue, sorted by date, starting from the most recent.
-        [Parameter()]
-        [Switch]
-        $ExpandChangelog,
-
-        # Instead of fields, returns versionedRepresentations a JSON array containing each version of a field's value, with the highest numbered item representing the most recent version.
-        [Parameter()]
-        [Switch]
-        $ExpandVersionedRepresentations,
+        # Used to expand additional attributes
+        [Parameter(Position=5)]
+        [ValidateScript({ Compare-StringArraySubset $JiraSearchExpand $_ })]
+        [string[]]
+        $Expand,
 
         # A comma-separated list of up to 5 issue properties to include in the results.
-        [Parameter()]
+        [Parameter(Position=6)]
         [ValidateCount(1,5)]
         [string[]]
         $Properties,
 
         # Reference fields by their key (rather than ID). The default is false.
-        [Parameter()]
+        [Parameter(Position=7)]
         [Switch]
         $FieldsByKeys,
 
         # Set this flag to use the GET HTTP verb instead of the default POST
-        [Parameter()]
+        [Parameter(Position=8)]
         [switch]
         $GET,
 
         # The JiraConnection object to use for the request
-        [Parameter()]
+        [Parameter(Position=9)]
         [hashtable]
         $JiraConnection
     )
     process {
         $functionPath = "/rest/api/2/search"
+        $method = "POST"
+        if($PSBoundParameters.ContainsKey("GET")){$method = "GET"}
 
-        $expand = @()
-        if($PSBoundParameters.ContainsKey("ExpandRenderedFields")){$expand += "renderedFields"} 
-        if($PSBoundParameters.ContainsKey("ExpandNames")){$expand += "names"}
-        if($PSBoundParameters.ContainsKey("ExpandSchema")){$expand += "schema"}
-        if($PSBoundParameters.ContainsKey("ExpandTransitions")){$expand += "transitions"}
-        if($PSBoundParameters.ContainsKey("ExpandOperations")){$expand += "operations"}
-        if($PSBoundParameters.ContainsKey("ExpandEditMetadata")){$expand += "editmeta"}
-        if($PSBoundParameters.ContainsKey("ExpandVersionedRepresentations")){$expand += "versionedRepresentations"}
-        
         $body = @{
             jql = $JQL
             startAt = $StartAt
@@ -109,13 +70,10 @@ function Invoke-JiraSearchIssues {
             fields = $Fields
             validateQuery = $QueryValidation
         }
-        if($expand.Count -gt 0) {$body.Add("expand",$expand)}
-        if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand)}
+        if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
         if($PSBoundParameters.ContainsKey("FieldsByKeys")){$body.Add("fieldsByKeys",$true)}
         
-        $method = "POST"
-        if($PSBoundParameters.ContainsKey("GET")){$method = "GET"}
         Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $method -Body $body
     }
 }
