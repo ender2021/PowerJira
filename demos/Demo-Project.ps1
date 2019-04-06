@@ -53,6 +53,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET ALL PROJECT TYPES
 #Invoke-JiraGetAllProjectTypes
 
+#GET PROJECT TYPE BY KEY
+#Invoke-JiraGetProjectTypeByKey "ops"
+
 #end tests
 
 #close the Jira session
