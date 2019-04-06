@@ -71,6 +71,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET ALL PROJECT STATUSES
 #Invoke-JiraGetAllProjectStatuses JPT
 
+#GET PROJECT ISSUE SECURITY SCHEME
+#Invoke-JiraGetProjectIssueSecurityScheme JPT
+
 #end tests
 
 #close the Jira session
