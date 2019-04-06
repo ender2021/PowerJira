@@ -54,7 +54,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetAllProjectTypes
 
 #GET PROJECT TYPE BY KEY
-Invoke-JiraGetProjectTypeByKey "software" -Accessible
+#Invoke-JiraGetProjectTypeByKey "software" -Accessible
+
+#GET PROJECT PROPERTY KEYS
+#Invoke-JiraGetProjectPropertyKeys JPT | fl
 
 #end tests
 
