@@ -50,6 +50,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraDeleteActorFromProjectRole JPT 10002  (Invoke-JiraGetCurrentUser).accountId
 #(Invoke-JiraGetProjectRoleForProject JPT 10002)[0].actors
 
+#GET ALL PROJECT TYPES
+#Invoke-JiraGetAllProjectTypes
 
 #end tests
 
