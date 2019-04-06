@@ -92,6 +92,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #VALIDATE PROJECT KEY
 #Invoke-JiraValidateProjectKey "JPT1"
 
+#GET ALL PROJECT AVATARS
+#(Invoke-JiraGetAllProjectAvatars JPT).system | fl
+
 #end tests
 
 #close the Jira session
