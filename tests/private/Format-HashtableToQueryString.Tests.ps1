@@ -7,8 +7,8 @@ Describe "Format-HashtableToQueryString" {
         }
         It "joins an object with two properties correctly" {
             $toJoin = @{key="one";value="item"}
-            $expected = "key=one&value=item"
-            Format-HashtableToQueryString $toJoin | Should -Be $expected
+            $expected = @("key=one&value=item","value=item&key=one")
+            Format-HashtableToQueryString $toJoin | Should -BeIn $expected
         }
     }
     Context "join tuples with ^" {
@@ -19,8 +19,8 @@ Describe "Format-HashtableToQueryString" {
         }
         It "joins an object with two properties correctly" {
             $toJoin = @{key="one";value="item"}
-            $expected = "key^one&value^item"
-            Format-HashtableToQueryString $toJoin -KeyValueSeparator "^" | Should -Be $expected
+            $expected = @("key^one&value^item","value^item&key^one")
+            Format-HashtableToQueryString $toJoin -KeyValueSeparator "^" | Should -BeIn $expected
         }
     }
     Context "join pairs with +" {
@@ -31,8 +31,8 @@ Describe "Format-HashtableToQueryString" {
         }
         It "joins an object with two properties correctly" {
             $toJoin = @{key="one";value="item"}
-            $expected = "key=one+value=item"
-            Format-HashtableToQueryString $toJoin "+" | Should -Be $expected
+            $expected = @("key=one+value=item","value=item+key=one")
+            Format-HashtableToQueryString $toJoin "+" | Should -BeIn $expected
         }
     }
     Context "join tuples with ^ and pairs with +" {
@@ -43,8 +43,8 @@ Describe "Format-HashtableToQueryString" {
         }
         It "joins an object with two properties correctly" {
             $toJoin = @{key="one";value="item"}
-            $expected = "key^one+value^item"
-            Format-HashtableToQueryString $toJoin "+" "^" | Should -Be $expected
+            $expected = @("key^one+value^item","value^item+key^one")
+            Format-HashtableToQueryString $toJoin "+" "^" | Should -BeIn $expected
         }
     }
 }
