@@ -74,7 +74,7 @@ function Invoke-JiraRestRequest {
         $uri = "$hostname/$function"
         if($PSBoundParameters.ContainsKey("Query") -and ($Query.Keys.Count -gt 0)){
             $uri += '?' + (Format-HashtableToQueryString $Query)
-        } elseif ($PSBoundParameters.ContainsKey("QueryKvp") -and ($QueryKvp.Count -gt 0) {
+        } elseif ($PSBoundParameters.ContainsKey("QueryKvp") -and ($QueryKvp.Count -gt 0)) {
             $uri += '?' + (Format-KvpArrayToQueryString $QueryKvp)
         }
 
