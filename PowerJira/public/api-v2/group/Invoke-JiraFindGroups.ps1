@@ -7,7 +7,7 @@ function Invoke-JiraFindGroups {
         [string]
         $SearchTerm,
 
-        # A list of groups to exclude from th results
+        # A list of groups to exclude from the results
         [Parameter(Position=1)]
         [string[]]
         $Exclude,
@@ -26,10 +26,12 @@ function Invoke-JiraFindGroups {
         $functionPath = "/rest/api/2/groups/picker"
         $verb = "GET"
 
-        $body="query=$SearchTerm"
-        if($Exclude.Count -gt 0) { $Exclude | ForEach-Object {$body+="&exclude=$_"}}
-        if($PSBoundParameters.ContainsKey("MaxResults")){$body+="&maxResults=$MaxResults"}
+        $queryKvp = @(
+            Format-QueryKvp "query" $SearchTerm
+        )
+        if($Exclude.Count -gt 0) { $Exclude | ForEach-Object {$queryKvp += Format-QueryKvp "exclude" $_} }
+        if($PSBoundParameters.ContainsKey("MaxResults")){$queryKvp += Format-QueryKvp "maxResults" $MaxResults}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -LiteralBody $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -QueryKvp $queryKvp
     }
 }
