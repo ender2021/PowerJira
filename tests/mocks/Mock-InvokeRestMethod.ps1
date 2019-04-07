@@ -1,4 +1,4 @@
-$MockRestRequest = {
+$MockInvokeRestMethod = {
     @{
         Uri = $Uri
         Method = $Method
