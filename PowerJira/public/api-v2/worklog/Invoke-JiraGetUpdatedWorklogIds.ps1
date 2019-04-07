@@ -25,6 +25,6 @@ function Invoke-JiraGetUpdatedWorklogIds {
         if($PSCmdlet.ParameterSetName -eq "DateTime"){$query.Add("since",(Format-UnixTimestamp $StartDateTime))}
         if($PSCmdlet.ParameterSetName -eq "Unix"){$query.Add("since",$StartUnixStamp)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
     }
 }

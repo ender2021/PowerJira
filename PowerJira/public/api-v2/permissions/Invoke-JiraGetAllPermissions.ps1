@@ -11,6 +11,6 @@ function Invoke-JiraGetAllPermissions {
         $functionPath = "/rest/api/2/permissions"
         $verb = "GET"
 
-        (Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb).permissions
+        (Invoke-JiraRestRequest $JiraConnection $functionPath $verb).permissions
     }
 }

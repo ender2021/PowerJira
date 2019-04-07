@@ -26,6 +26,6 @@ function Invoke-JiraGetWorklogProperty {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/worklog/$WorklogId/properties/$PropertyKey"
         $verb = "GET"
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
     }
 }

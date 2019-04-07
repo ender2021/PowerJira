@@ -30,6 +30,6 @@ function Invoke-JiraMoveVersion {
         $body = @{}
         if($PSBoundParameters.ContainsKey("After")){$body.Add("after",$After)} else {$body.Add("position",$Position)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
     }
 }

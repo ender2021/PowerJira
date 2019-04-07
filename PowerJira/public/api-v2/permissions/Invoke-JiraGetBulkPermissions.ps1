@@ -50,6 +50,6 @@ function Invoke-JiraGetBulkPermissions {
             if($PSBoundParameters.ContainsKey("IssueIds")){$body.projectPermissions[0].Add("issues",$IssueIds)}
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
     }
 }

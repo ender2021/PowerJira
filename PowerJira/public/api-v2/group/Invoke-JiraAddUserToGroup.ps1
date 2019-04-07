@@ -29,6 +29,6 @@ function Invoke-JiraAddUserToGroup {
             accountId = $User
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query -Body $body
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query -Body $body
     }
 }

@@ -11,6 +11,6 @@ function Invoke-JiraGetPriorities {
         $functionPath = "/rest/api/2/priority"
         $verb = "GET"
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
     }
 }

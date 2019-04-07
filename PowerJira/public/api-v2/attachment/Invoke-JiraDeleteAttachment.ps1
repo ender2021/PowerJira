@@ -16,6 +16,6 @@ function Invoke-JiraDeleteAttachment {
         $functionPath = "/rest/api/2/attachment/$AttachmentId"
         $verb = "DELETE"
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
     }
 }

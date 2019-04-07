@@ -45,6 +45,6 @@ function Invoke-JiraUpdateComponent {
         if($PSBoundParameters.ContainsKey("LeadAccountId")){$body.Add("leadAccountId",$LeadAccountId)}
         if($PSBoundParameters.ContainsKey("DefaultAssignee")){$body.Add("assigneeType",$DefaultAssignee)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
     }
 }

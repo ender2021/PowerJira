@@ -33,6 +33,6 @@ function Invoke-JiraFindUsers {
             maxResults = $MaxResults
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
     }
 }

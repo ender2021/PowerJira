@@ -16,6 +16,6 @@ function Invoke-JiraGetProjectRoleDefaultActors {
         $functionPath = "/rest/api/2/role/$ProjectRoleId/actors"
         $verb = "GET"
 
-        (Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb).actors
+        (Invoke-JiraRestRequest $JiraConnection $functionPath $verb).actors
     }
 }

@@ -16,6 +16,6 @@ function Invoke-JiraGetCommentPropertyKeys {
         $functionPath = "/rest/api/2/comment/$CommentId/properties"
         $verb = "GET"
 
-        (Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb).keys
+        (Invoke-JiraRestRequest $JiraConnection $functionPath $verb).keys
     }
 }

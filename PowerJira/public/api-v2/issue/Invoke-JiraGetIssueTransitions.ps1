@@ -39,6 +39,6 @@ function Invoke-JiraGetIssueTransitions {
         if($PSBoundParameters.ContainsKey("TransitionId")){$query.Add("transitionId",$TransitionId)}
         if($PSBoundParameters.ContainsKey("SkipHidden")){$query.Add("skipRemoteOnlyCondition",$true)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
     }
 }

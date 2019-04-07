@@ -46,6 +46,6 @@ function Invoke-JiraCreateComponent {
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("LeadAccountId")){$body.Add("leadAccountId",$LeadAccountId)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
     }
 }

@@ -24,6 +24,6 @@ function Invoke-JiraDeleteProjectRole {
         $query = @{}
         if($PSBoundParameters.ContainsKey("SwapRoleId")){$query.Add("swap",$SwapRoleId)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
     }
 }

@@ -42,6 +42,6 @@ function Invoke-JiraSetActorsForProjectRole {
         if($PSBoundParameters.ContainsKey("Users")){$body.categorisedActors.Add("atlassian-user-role-actor",$Users)}
         if($PSBoundParameters.ContainsKey("Groups")){$body.categorisedActors.Add("atlassian-group-role-actor",$Groups)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
     }
 }

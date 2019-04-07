@@ -33,6 +33,6 @@ function Invoke-JiraDeleteRemoteIssueLink {
             $query.Add("globalId",$GlobalId)
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
     }
 }

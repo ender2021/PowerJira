@@ -54,6 +54,6 @@ function Invoke-JiraCreateVersion {
         if($PSBoundParameters.ContainsKey("StartDate")){$body.Add("startDate",(Format-JiraRestDateTime $StartDate))}
         if($PSBoundParameters.ContainsKey("ReleaseDate")){$body.Add("releaseDate",(Format-JiraRestDateTime $ReleaseDate))}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query -Body $body
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query -Body $body
     }
 }

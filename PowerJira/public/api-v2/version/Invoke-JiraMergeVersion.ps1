@@ -21,6 +21,6 @@ function Invoke-JiraMergeVersion {
         $functionPath = "/rest/api/2/version/$SourceVersionId/mergeto/$TargetVersionId"
         $verb = "PUT"
     
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
     }
 }

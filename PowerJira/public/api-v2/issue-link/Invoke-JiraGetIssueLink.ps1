@@ -16,6 +16,6 @@ function Invoke-JiraGetIssueLink {
         $functionPath = "/rest/api/2/issueLink/$LinkId"
         $verb = "GET"
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
     }
 }

@@ -78,6 +78,6 @@ function Invoke-JiraFindUsersAndGroups {
         }
         if($PSBoundParameters.ContainsKey("ExcludeConnectAddons")){$queryKvp += Format-QueryKvp "excludeConnectAddons" $true}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -QueryKvp $queryKvp
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -QueryKvp $queryKvp
     }
 }

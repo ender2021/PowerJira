@@ -37,6 +37,6 @@ function Invoke-JiraAssignIssue {
         if($PSBoundParameters.ContainsKey("Unassign")){$body.Add("accountId",$null)}
         if($PSBoundParameters.ContainsKey("ProjectDefault")){$body.Add("accountId","-1")}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
     }
 }

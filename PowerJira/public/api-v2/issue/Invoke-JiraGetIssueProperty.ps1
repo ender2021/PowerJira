@@ -21,6 +21,6 @@ function Invoke-JiraGetIssueProperty {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/properties/$Key"
         $verb = "GET"
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
     }
 }

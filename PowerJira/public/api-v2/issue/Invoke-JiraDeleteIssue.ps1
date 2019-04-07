@@ -24,6 +24,6 @@ function Invoke-JiraDeleteIssue {
         $query=@{}
         if($PSBoundParameters.ContainsKey("DeleteSubtasks")){$query.Add("deleteSubtasks",$true)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
     }
 }

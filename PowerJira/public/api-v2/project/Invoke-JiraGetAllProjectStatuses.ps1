@@ -16,6 +16,6 @@ function Invoke-JiraGetAllProjectStatuses {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/statuses"
         $verb = "GET"
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
     }
 }

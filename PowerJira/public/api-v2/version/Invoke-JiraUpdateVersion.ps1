@@ -72,6 +72,6 @@ function Invoke-JiraUpdateVersion {
         if($PSBoundParameters.ContainsKey("Released")){$body.Add("released",$Released)}
         if($PSBoundParameters.ContainsKey("UnfixedIssuesVersionId")) {$body.Add("moveUnfixedIssuesTo",$UnfixedIssuesVersionId)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query -Body $body
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query -Body $body
     }
 }

@@ -31,6 +31,6 @@ function Invoke-JiraGetApplicationProperty {
         if($PSBoundParameters.ContainsKey("KeyFilter")){$query.Add("keyFilter",$KeyFilter)}
         if($PSBoundParameters.ContainsKey("PermissionLevel")){$query.Add("permissionLevel",$PermissionLevel)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
+        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
     }
 }
