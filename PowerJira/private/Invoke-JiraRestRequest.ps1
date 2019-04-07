@@ -25,7 +25,7 @@ function Invoke-JiraRestRequest {
         $Headers=@{},
         
         # Used the same as the $Body param, but these parameters will be put into the query string
-        [Parameter(Mandatory,ParameterSetName="NoBody-HashQuery",Position=4)]
+        [Parameter(ParameterSetName="NoBody-HashQuery",Position=4)]
         [Parameter(Mandatory,ParameterSetName="JsonBody-HashQuery",Position=4)]
         [Parameter(Mandatory,ParameterSetName="SimpleBody-HashQuery",Position=4)]
         [ValidateNotNull()]
