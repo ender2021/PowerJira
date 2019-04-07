@@ -31,39 +31,24 @@ function Format-HashtableToQueryString {
 
     param(
         # The values to format
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory,Position=0)]
         [hashtable]
         $Values,
 
         # The character to use to separate values (default is '&')
-        [Parameter()]
+        [Parameter(Position=1)]
         [string]
         $PairSeparator = '&',
 
         # The value to use to separate key/value pairs
-        [Parameter()]
+        [Parameter(Position=2)]
         [string]
-        $KeyValueSeparator = '=',
-
-        # Use to sort the outcome
-        [Parameter()]
-        [string[]]
-        $Sort
+        $KeyValueSeparator = '='
     )
     process {
         [string]::join($PairSeparator, @(
-            if($Sort) {
-                foreach( $kv in $Values.GetEnumerator() | Sort $Sort) {
-                    if($kv.Name) {
-                    '{0}{1}{2}' -f $kv.Name, $KeyValueSeparator, $kv.Value
-                    }
-                }
-            } else {
-                foreach( $kv in $Values.GetEnumerator()) {
-                    if($kv.Name) {
-                    '{0}{1}{2}' -f $kv.Name, $KeyValueSeparator, $kv.Value
-                    }
-                }
+            foreach( $kv in $Values.GetEnumerator()) {
+                if($kv.Name) {'{0}{1}{2}' -f $kv.Name, $KeyValueSeparator, $kv.Value}
             }
         ))
     }
