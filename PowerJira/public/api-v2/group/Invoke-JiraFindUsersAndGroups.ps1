@@ -61,19 +61,23 @@ function Invoke-JiraFindUsersAndGroups {
         $functionPath = "/rest/api/2/groupuserpicker"
         $verb = "GET"
 
-        $body="query=$SearchTerm"
-        if($PSBoundParameters.ContainsKey("CustomFieldId")){
-            $body+="&fieldId=$CustomFieldId"
-            if($PSBoundParameters.ContainsKey("Projects")){$Projects | ForEach-Object {$body+="&projectId=$_"}}
-            if($PSBoundParameters.ContainsKey("IssueTypes")){$IssueTypes | ForEach-Object {$body+="&issueTypeId=$_"}}            
-        }
-        if($PSBoundParameters.ContainsKey("MaxResults")){$body+="&maxResults=$MaxResults"}
-        if(!$PSBoundParameters.ContainsKey("CaseSensitiveGroups")){$body+="&caseInsensitive=true"}
-        if($PSBoundParameters.ContainsKey("ShowAvatar")){
-            $body+="&showAvatar=true&avatarSize=$AvatarSize"
-        }
-        if($PSBoundParameters.ContainsKey("ExcludeConnectAddons")){$body+="excludeConnectAddons=true"}
+        $queryKvp = @(
+            Format-QueryKvp "query" $SearchTerm
+        )
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -LiteralBody $body
+        if($PSBoundParameters.ContainsKey("CustomFieldId")){
+            $queryKvp += Format-QueryKvp "fieldId" $CustomFieldId
+            if($PSBoundParameters.ContainsKey("Projects")){$Projects | ForEach-Object {$queryKvp += Format-QueryKvp "projectId" $_}}
+            if($PSBoundParameters.ContainsKey("IssueTypes")){$IssueTypes | ForEach-Object {$queryKvp += Format-QueryKvp "issueTypeId" $_}}
+        }
+        if($PSBoundParameters.ContainsKey("MaxResults")){$queryKvp += Format-QueryKvp "maxResults" $MaxResults}
+        if(!$PSBoundParameters.ContainsKey("CaseSensitiveGroups")){$queryKvp += Format-QueryKvp "caseInsensitive" $true}
+        if($PSBoundParameters.ContainsKey("ShowAvatar")){
+            $queryKvp += Format-QueryKvp "showAvatar" $true
+            $queryKvp += Format-QueryKvp "avatarSize" $AvatarSize
+        }
+        if($PSBoundParameters.ContainsKey("ExcludeConnectAddons")){$queryKvp += Format-QueryKvp "excludeConnectAddons" $true}
+
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -QueryKvp $queryKvp
     }
 }

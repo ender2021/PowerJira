@@ -10,7 +10,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #FIND GROUPS
-Invoke-JiraFindGroups test
+#Invoke-JiraFindGroups test -Exclude @("one","two","three","four")
 
 #FIND USERS AND GROUPS
 #$results = Invoke-JiraFindUsersAndGroups ucsb -ShowAvatar
