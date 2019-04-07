@@ -23,6 +23,6 @@ function Invoke-JiraAddAttachment {
 
         $form = @{file=$Attachment}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Multipart -Form $form
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Form $form
     }
 }
