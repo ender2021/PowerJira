@@ -53,7 +53,12 @@ function Invoke-JiraRestRequest {
         [Parameter()]
         [ValidateNotNull()]
         [hashtable]
-        $Query
+        $Query,
+
+        # Query string key value pairs passed as an array of objects created by Format-QueryKvp
+        [Parameter()]
+        [object[]]
+        $QueryKvp
     )
     process {
         if($null -eq $JiraConnection) { $JiraConnection = $Global:PowerJira.Session }
@@ -69,6 +74,8 @@ function Invoke-JiraRestRequest {
         $uri = "$hostname/$function"
         if($PSBoundParameters.ContainsKey("Query") -and ($Query.Keys.Count -gt 0)){
             $uri += '?' + (Format-HashtableToQueryString $Query)
+        } elseif ($PSBoundParameters.ContainsKey("QueryKvp") -and ($QueryKvp.Count -gt 0) {
+            $uri += '?' + (Format-KvpArrayToQueryString $QueryKvp)
         }
 
         if ($PSBoundParameters.ContainsKey("Multipart")) {
