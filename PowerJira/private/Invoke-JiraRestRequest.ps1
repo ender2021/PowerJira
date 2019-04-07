@@ -72,13 +72,14 @@ function Invoke-JiraRestRequest {
     process {
         #validate $JiraConnection
         if($null -eq $JiraConnection) { $JiraConnection = $Global:PowerJira.Session }
-        if($null -eq $JiraConnection) {ThrowError "Missing JiraConnection" "No JiraConnection object provided, and no JiraSession open."}
+        if($null -eq $JiraConnection) {throw "Missing/Malformed JiraConnection: No JiraConnection object provided, and no JiraSession open."}
+        if(!($JiraConnection.ContainsKey("AuthHeader") -and $JiraConnection.ContainsKey("HostName"))) {throw "Missing/Malformed JiraConnection: The provided object is missing one of the required properties (AuthHeader and HostName)."}
 
         #validate method / body combination
         if ((@("GET","DELETE") -contains $HttpMethod) -and !($PSCmdlet.ParameterSetName -match "NoBody")) {
-            ThrowError "Invalid HttpMethod / Parameter combination" "Cannot use HttpMethod '$HttpMethod' with -Body, -LiteralBody, or -Form"
+            throw "Invalid HttpMethod / Parameter combination: Cannot use HttpMethod '$HttpMethod' with -Body, -LiteralBody, or -Form"
         } elseif ((@("PUT","POST","PATCH") -contains $HttpMethod) -and ($PSCmdlet.ParameterSetName -match "NoBody")) {
-            ThrowError "Invalid HttpMethod / Parameter combination" "HttpMethod '$HttpMethod' requires one of -Body, -LiteralBody, or -Form"
+            throw "Invalid HttpMethod / Parameter combination: HttpMethod '$HttpMethod' requires one of -Body, -LiteralBody, or -Form"
         }
 
         #compile headers object
@@ -90,7 +91,7 @@ function Invoke-JiraRestRequest {
         $contentType = 'application/json'
         
         #define uri
-        $hostname = $JiraConnection.HostName
+        $hostname = if($JiraConnection.HostName.EndsWith("/")) { $JiraConnection.HostName.Substring(0, ($JiraConnection.HostName.Length - 1))} else {$JiraConnection.HostName}
         $function = If($FunctionPath.StartsWith("/")) {$FunctionPath.Substring(1)} else {$FunctionPath}
         $uri = "$hostname/$function"
         if($PSBoundParameters.ContainsKey("Query") -and ($Query.Keys.Count -gt 0)){
@@ -116,7 +117,7 @@ function Invoke-JiraRestRequest {
                 Invoke-RestMethod -Uri $uri -Method $HttpMethod -Headers $sendHeaders -Form $Form
              }
             Default {
-                ThrowError "Parameter set not found" "Unknown parameter set '$_' in Invoke-JiraRestRequest"
+                throw "Invalid Parameter Set: Unknown parameter set '$_' in Invoke-JiraRestRequest"
             }
         }
     }
