@@ -6,6 +6,6 @@ function Test-Id {
         $Value
     )
     process {
-        $Value -match "^[\d\.]+$"
+        $Value -match "^[\d]+$"
     }
 }
