@@ -21,9 +21,9 @@ function Invoke-JiraGetProjectRoleDetails {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/roledetails"
         $verb = "GET"
 
-        $body = @{}
-        if($PSBoundParameters.ContainsKey("MyRoles")){$body.Add("currentMember",$true)}
+        $query = @{}
+        if($PSBoundParameters.ContainsKey("MyRoles")){$query.Add("currentMember",$true)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
     }
 }

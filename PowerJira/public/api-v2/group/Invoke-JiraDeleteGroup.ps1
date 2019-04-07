@@ -21,11 +21,11 @@ function Invoke-JiraDeleteGroup {
         $functionPath = "/rest/api/2/group"
         $verb = "DELETE"
 
-        $body=@{
+        $query=@{
             groupname = $Name
         }
-        if($PSBoundParameters.ContainsKey("SwapGroup")){$body.Add("swapGroup",$SwapGroup)}
+        if($PSBoundParameters.ContainsKey("SwapGroup")){$query.Add("swapGroup",$SwapGroup)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
     }
 }

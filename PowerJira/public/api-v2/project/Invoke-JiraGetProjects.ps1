@@ -1,5 +1,6 @@
 $ValidProjectTypes = @("business", "ops", "service_desk", "software")
 $ValidGetProjectsExpandTypes = @("description", "projectKeys", "lead", "issueTypes", "url")
+
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-project-search-get
 function Invoke-JiraGetProjects {
     [CmdletBinding()]
@@ -60,19 +61,17 @@ function Invoke-JiraGetProjects {
         $functionPath = "/rest/api/2/project/search"
         $verb = "GET"
 
-        $query = @{}
-        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
-
-        $body=@{
+        $query=@{
             startAt = $StartAt
             maxResults = $MaxResults
             orderBy = $OrderBy
             typeKey = $ProjectTypes -join ","
             action = $ActionFilter
         }
-        if($PSBoundParameters.ContainsKey("Filter")){$body.Add("query",$Filter)}
-        if($PSBoundParameters.ContainsKey("CategoryId")){$body.Add("categoryId",$CategoryId)}
+        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
+        if($PSBoundParameters.ContainsKey("Filter")){$query.Add("query",$Filter)}
+        if($PSBoundParameters.ContainsKey("CategoryId")){$query.Add("categoryId",$CategoryId)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query -Query $query
     }
 }

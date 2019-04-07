@@ -41,17 +41,17 @@ function Invoke-JiraGetIssuePickerSuggestions {
         $functionPath = "/rest/api/2/issue/picker"
         $verb = "GET"
 
-        $body=@{
+        $query=@{
             showSubTasks = $true
             showSubTaskParent = $true
         }
-        if($PSBoundParameters.ContainsKey("TextFilter")){$body.Add("query",$TextFilter)}
-        if($PSBoundParameters.ContainsKey("JqlFilter")){$body.Add("currentJQL",$JqlFilter)}
-        if($PSBoundParameters.ContainsKey("ProjectFilter")){$body.Add("currentProjectId",$ProjectFilter)}
-        if($PSBoundParameters.ContainsKey("ExcludeIssueKey")){$body.Add("currentIssueKey",$ExcludeIssueKey)}
-        if($PSBoundParameters.ContainsKey("HideSubTaskParent")){$body.showSubTaskParent = $false}
-        if($PSBoundParameters.ContainsKey("HideSubTasks")){$body.showSubTasks = $false}
+        if($PSBoundParameters.ContainsKey("TextFilter")){$query.Add("query",$TextFilter)}
+        if($PSBoundParameters.ContainsKey("JqlFilter")){$query.Add("currentJQL",$JqlFilter)}
+        if($PSBoundParameters.ContainsKey("ProjectFilter")){$query.Add("currentProjectId",$ProjectFilter)}
+        if($PSBoundParameters.ContainsKey("ExcludeIssueKey")){$query.Add("currentIssueKey",$ExcludeIssueKey)}
+        if($PSBoundParameters.ContainsKey("HideSubTaskParent")){$query.showSubTaskParent = $false}
+        if($PSBoundParameters.ContainsKey("HideSubTasks")){$query.showSubTasks = $false}
 
-      Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+      Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
     }
 }

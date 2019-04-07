@@ -1,4 +1,4 @@
-#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-group-post
+#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-group-member-get
 function Invoke-JiraGetGroupUsers {
     [CmdletBinding()]
     param (
@@ -32,13 +32,13 @@ function Invoke-JiraGetGroupUsers {
         $functionPath = "/rest/api/2/group/member"
         $verb = "GET"
 
-        $body=@{
+        $query=@{
             groupname = $Name
             maxResults = $MaxResults
             startAt = $StartAt
         }
-        if($PSBoundParameters.ContainsKey("IncludeInactive")){$body.Add("includeInactiveUsers",$true)}
+        if($PSBoundParameters.ContainsKey("IncludeInactive")){$query.Add("includeInactiveUsers",$true)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
     }
 }

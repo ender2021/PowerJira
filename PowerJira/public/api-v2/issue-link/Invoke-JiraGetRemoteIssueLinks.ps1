@@ -21,9 +21,9 @@ function Invoke-JiraGetRemoteIssueLinks {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/remotelink"
         $verb = "GET"
 
-        $body=@{}
-        if($PSBoundParameters.ContainsKey("GlobalId")){$body.Add("globalId",$GlobalId)}
+        $query=@{}
+        if($PSBoundParameters.ContainsKey("GlobalId")){$query.Add("globalId",$GlobalId)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
     }
 }

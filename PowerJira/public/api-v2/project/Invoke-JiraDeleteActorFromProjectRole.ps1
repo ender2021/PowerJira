@@ -31,10 +31,10 @@ function Invoke-JiraDeleteActorFromProjectRole {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/role/$RoleId"
         $verb = "DELETE"
 
-        $body = @{}
-        if($PSBoundParameters.ContainsKey("User")){$body.Add("user",$User)}
-        if($PSBoundParameters.ContainsKey("Group")){$body.Add("group",$Group)}
+        $query = @{}
+        if($PSBoundParameters.ContainsKey("User")){$query.Add("user",$User)}
+        if($PSBoundParameters.ContainsKey("Group")){$query.Add("group",$Group)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
     }
 }

@@ -18,13 +18,17 @@ function Invoke-JiraAddUserToGroup {
         $JiraConnection
     )
     process {
-        $functionPath = "/rest/api/2/group/user" + '?' + "groupname=$Name"
+        $functionPath = "/rest/api/2/group/user"
         $verb = "POST"
+
+        $query = @{
+            groupname = $Name
+        }
 
         $body=@{
             accountId = $User
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query -Body $body
     }
 }

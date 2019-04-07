@@ -21,9 +21,9 @@ function Invoke-JiraDeleteComponent {
         $functionPath = "/rest/api/2/component/$ComponentId"
         $verb = "DELETE"
 
-        $body=@{}
-        if($PSBoundParameters.ContainsKey("MoveIssuesTo")){$body.Add("moveIssuesTo",$MoveIssuesTo)}
+        $query=@{}
+        if($PSBoundParameters.ContainsKey("MoveIssuesTo")){$query.Add("moveIssuesTo",$MoveIssuesTo)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
     }
 }

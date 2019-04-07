@@ -28,11 +28,11 @@ function Invoke-JiraDeleteRemoteIssueLink {
         if($PSBoundParameters.ContainsKey("RemoteLinkId")){$functionPath += "/$RemoteLinkId"}
         $verb = "DELETE"
         
-        $body = @{}
+        $query = @{}
         if($PSBoundParameters.ContainsKey("GlobalId")){
-            $body.Add("globalId",$GlobalId)
+            $query.Add("globalId",$GlobalId)
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
     }
 }
