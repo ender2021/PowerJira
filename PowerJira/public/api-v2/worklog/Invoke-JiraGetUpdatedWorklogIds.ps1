@@ -21,10 +21,10 @@ function Invoke-JiraGetUpdatedWorklogIds {
         $functionPath = "/rest/api/2/worklog/updated"
         $verb = "GET"
 
-        $body=@{}
-        if($PSCmdlet.ParameterSetName -eq "DateTime"){$body.Add("since",(Format-UnixTimestamp $StartDateTime))}
-        if($PSCmdlet.ParameterSetName -eq "Unix"){$body.Add("since",$StartUnixStamp)}
+        $query=@{}
+        if($PSCmdlet.ParameterSetName -eq "DateTime"){$query.Add("since",(Format-UnixTimestamp $StartDateTime))}
+        if($PSCmdlet.ParameterSetName -eq "Unix"){$query.Add("since",$StartUnixStamp)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
     }
 }

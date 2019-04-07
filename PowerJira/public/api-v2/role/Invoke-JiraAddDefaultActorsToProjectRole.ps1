@@ -1,4 +1,4 @@
-#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-role-id-actors-get
+#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-role-id-actors-post
 function Invoke-JiraAddDefaultActorsToProjectRole {
     [CmdletBinding(DefaultParameterSetName="Users")]
     param (

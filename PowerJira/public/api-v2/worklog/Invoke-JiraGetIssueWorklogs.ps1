@@ -35,14 +35,12 @@ function Invoke-JiraGetIssueWorklogs {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/worklog"
         $verb = "GET"
 
-        $query = @{}
-        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
-
-        $body=@{
+        $query=@{
             startAt = $StartAt
             maxResults = $MaxResults
         }
+        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query -Query $query
     }
 }

@@ -21,9 +21,9 @@ function Invoke-JiraDeleteProjectRole {
         $functionPath = "/rest/api/2/role/$ProjectRoleId"
         $verb = "DELETE"
 
-        $body = @{}
-        if($PSBoundParameters.ContainsKey("SwapRoleId")){$body.Add("swap",$SwapRoleId)}
+        $query = @{}
+        if($PSBoundParameters.ContainsKey("SwapRoleId")){$query.Add("swap",$SwapRoleId)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
     }
 }

@@ -1,4 +1,4 @@
-#
+#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-application-properties-get
 function Invoke-JiraGetApplicationProperty {
     [CmdletBinding(DefaultParameterSetName="Key")]
     param (
@@ -26,11 +26,11 @@ function Invoke-JiraGetApplicationProperty {
         $functionPath = "/rest/api/2/application-properties"
         $verb = "GET"
 
-        $body=@{}
-        if($PSBoundParameters.ContainsKey("Key")){$body.Add("key",$Key)}
-        if($PSBoundParameters.ContainsKey("KeyFilter")){$body.Add("keyFilter",$KeyFilter)}
-        if($PSBoundParameters.ContainsKey("PermissionLevel")){$body.Add("permissionLevel",$PermissionLevel)}
+        $query=@{}
+        if($PSBoundParameters.ContainsKey("Key")){$query.Add("key",$Key)}
+        if($PSBoundParameters.ContainsKey("KeyFilter")){$query.Add("keyFilter",$KeyFilter)}
+        if($PSBoundParameters.ContainsKey("PermissionLevel")){$query.Add("permissionLevel",$PermissionLevel)}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
     }
 }

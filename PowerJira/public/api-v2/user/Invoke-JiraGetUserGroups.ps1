@@ -16,8 +16,8 @@ function Invoke-JiraGetUserGroups {
         $functionPath = "/rest/api/2/user/groups"
         $verb = "GET"
 
-        $body=@{accountId=$AccountId}
+        $query=@{accountId=$AccountId}
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
     }
 }

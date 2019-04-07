@@ -60,12 +60,10 @@ function Invoke-JiraUpdateVersion {
         $functionPath = "/rest/api/2/version/$VersionId"
         $verb = "PUT"
 
-        $query = @{}
-        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
-
         $body = @{
             id = $VersionId
         }
+        if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("Name")){$body.Add("name",$Name)}
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("StartDate")){$body.Add("startDate",(Format-JiraRestDateTime $StartDate))}

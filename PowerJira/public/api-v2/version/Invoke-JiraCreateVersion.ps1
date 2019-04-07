@@ -45,13 +45,11 @@ function Invoke-JiraCreateVersion {
         $functionPath = "/rest/api/2/version"
         $verb = "POST"
 
-        $query = @{}        
-        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
-
         $body = @{
             projectId = $ProjectId
             name = $Name
         }
+        if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("StartDate")){$body.Add("startDate",(Format-JiraRestDateTime $StartDate))}
         if($PSBoundParameters.ContainsKey("ReleaseDate")){$body.Add("releaseDate",(Format-JiraRestDateTime $ReleaseDate))}

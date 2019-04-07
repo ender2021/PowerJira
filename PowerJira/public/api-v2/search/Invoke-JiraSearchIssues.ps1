@@ -60,11 +60,7 @@ function Invoke-JiraSearchIssues {
     )
     process {
         $functionPath = "/rest/api/2/search"
-        $method = "POST"
-        if($PSBoundParameters.ContainsKey("GET")){$method = "GET"}
-
-        $query = @{}
-        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
+        $verb = "POST"
 
         $body = @{
             jql = $JQL
@@ -73,9 +69,15 @@ function Invoke-JiraSearchIssues {
             fields = $Fields
             validateQuery = $QueryValidation
         }
+        if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
         if($PSBoundParameters.ContainsKey("FieldsByKeys")){$body.Add("fieldsByKeys",$true)}
-        
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $method -Query $query -Body $body
+
+        if ($PSBoundParameters.ContainsKey("GET")) {
+            $verb = "GET"
+            Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $body
+        } else {
+            Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        }
     }
 }

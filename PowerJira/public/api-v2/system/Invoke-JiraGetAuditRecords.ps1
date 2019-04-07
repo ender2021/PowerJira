@@ -40,15 +40,15 @@ function Invoke-JiraGetAuditRecords {
         $functionPath = "/rest/api/2/auditing/record"
         $verb = "GET"
 
-        $body=@{}
-        if($PSBoundParameters.ContainsKey("Filter")){$body.Add("filter",$Filter)}
-        if($PSBoundParameters.ContainsKey("StartAt")){$body.Add("offset",$StartAt)}
-        if($PSBoundParameters.ContainsKey("MaxResults")){$body.Add("limit",$MaxResults)}
+        $query=@{}
+        if($PSBoundParameters.ContainsKey("Filter")){$query.Add("filter",$Filter)}
+        if($PSBoundParameters.ContainsKey("StartAt")){$query.Add("offset",$StartAt)}
+        if($PSBoundParameters.ContainsKey("MaxResults")){$query.Add("limit",$MaxResults)}
         if($PSBoundParameters.ContainsKey("From")){
-            $body.Add("from",(Format-JiraRestDateTime $From -Simple))
-            $body.Add("to",(Format-JiraRestDateTime $To -Simple))
+            $query.Add("from",(Format-JiraRestDateTime $From -Simple))
+            $query.Add("to",(Format-JiraRestDateTime $To -Simple))
         }
 
-        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Body $body
+        Invoke-JiraRestRequest -JiraConnection $JiraConnection -FunctionPath $functionPath -HttpMethod $verb -Query $query
     }
 }
