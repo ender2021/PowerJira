@@ -1,4 +1,4 @@
-Import-Module $PSScriptRoot\..\PowerJira\PowerJira.psm1 -Force
+Import-Module $PSScriptRoot\PowerJira\PowerJira.psm1 -Force
 
 # grab private functions from files
 $privateFiles = Get-ChildItem -Path $PSScriptRoot\..\PowerJira\private -Recurse -Include *.ps1 -ErrorAction SilentlyContinue
