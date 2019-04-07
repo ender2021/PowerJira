@@ -31,38 +31,25 @@ function Format-KvpArrayToQueryString {
 
     param(
         # The values to format
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory,Position=0)]
         [object[]]
         $Values,
 
         # The character to use to separate values (default is '&')
-        [Parameter()]
+        [Parameter(Position=1)]
         [string]
         $PairSeparator = '&',
 
         # The value to use to separate key/value pairs
-        [Parameter()]
+        [Parameter(Position=2)]
         [string]
-        $KeyValueSeparator = '=',
-
-        # Use to sort the outcome
-        [Parameter()]
-        [string[]]
-        $Sort
+        $KeyValueSeparator = '='
     )
     process {
         [string]::join($PairSeparator, @(
-            if($Sort) {
-                foreach( $kv in $Values | Sort-Object $Sort) {
-                    if($kv.key) {
-                    '{0}{1}{2}' -f $kv.key, $KeyValueSeparator, $kv.value
-                    }
-                }
-            } else {
-                foreach( $kv in $Values) {
-                    if($kv.key) {
-                    '{0}{1}{2}' -f $kv.key, $KeyValueSeparator, $kv.value
-                    }
+            foreach( $kv in $Values) {
+                if($kv.key) {
+                '{0}{1}{2}' -f $kv.key, $KeyValueSeparator, $kv.value
                 }
             }
         ))
