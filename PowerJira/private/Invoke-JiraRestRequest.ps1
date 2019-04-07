@@ -70,13 +70,23 @@ function Invoke-JiraRestRequest {
         $Form
     )
     process {
+        #validate $JiraConnection
         if($null -eq $JiraConnection) { $JiraConnection = $Global:PowerJira.Session }
-        if($null -eq $JiraConnection) {throw "No JiraConnection object provided, and no JiraSession open."}
+        if($null -eq $JiraConnection) {ThrowError "Missing JiraConnection" "No JiraConnection object provided, and no JiraSession open."}
 
+        #validate method / body combination
+        if ((@("GET","DELETE") -contains $HttpMethod) -and !($PSCmdlet.ParameterSetName -match "NoBody")) {
+            ThrowError "Invalid HttpMethod / Parameter combination" "Cannot use HttpMethod '$HttpMethod' with -Body, -LiteralBody, or -Form"
+        } elseif ((@("PUT","POST","PATCH") -contains $HttpMethod) -and ($PSCmdlet.ParameterSetName -match "NoBody")) {
+            ThrowError "Invalid HttpMethod / Parameter combination" "HttpMethod '$HttpMethod' requires one of -Body, -LiteralBody, or -Form"
+        }
+
+        #compile headers object
         $sendHeaders = @{}
         $sendHeaders += $JiraConnection.AuthHeader
         $sendHeaders += $Headers
 
+        #set the default content type
         $contentType = 'application/json'
         
         #define uri
@@ -89,11 +99,12 @@ function Invoke-JiraRestRequest {
             $uri += '?' + (Format-KvpArrayToQueryString $QueryKvp)
         }
 
+        #select correct invocation depending on parameters provided
         switch ($PSCmdlet.ParameterSetName) {
-            {($_ -match "NoBody") -or (($_ -match "JsonBody") -and ($Body.Count -eq 0))} { 
+            {($_ -match "NoBody") -or (($_ -match "JsonBody") -and ($Body.Count -eq 0))} {
                 Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType $contentType -Headers $sendHeaders                
              }
-            {$_ -match "JsonBody"} { 
+            {$_ -match "JsonBody"} {
                 $bodyJson = ConvertTo-Json $Body -Compress -Depth $BodyDepth
                 Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType $contentType -Headers $sendHeaders -Body $bodyJson
              }
