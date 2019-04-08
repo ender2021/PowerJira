@@ -47,14 +47,7 @@ function Invoke-JiraRestRequest {
         [ValidateNotNull()]
         [hashtable]
         $Body,
-
-        # Use to configure how deep the body hashtable is
-        [Parameter(ParameterSetName="JsonBody",Position=5)]
-        [Parameter(ParameterSetName="JsonBody-HashQuery",Position=6)]
-        [Parameter(ParameterSetName="JsonBody-ArrayQuery",Position=6)]
-        [int32]
-        $BodyDepth=4,
-
+     
         # Allows passing a raw string for the body of the request
         [Parameter(Mandatory,ParameterSetName="SimpleBody",Position=4)]
         [Parameter(Mandatory,ParameterSetName="SimpleBody-HashQuery",Position=5)]
@@ -106,7 +99,8 @@ function Invoke-JiraRestRequest {
                 Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType $contentType -Headers $sendHeaders                
              }
             {$_ -match "JsonBody"} {
-                $bodyJson = ConvertTo-Json $Body -Compress -Depth $BodyDepth
+                $bodyDepth = Find-HashtableDepth $Body
+                $bodyJson = ConvertTo-Json $Body -Compress -Depth $bodyDepth
                 Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType $contentType -Headers $sendHeaders -Body $bodyJson
              }
             {$_ -match "SimpleBody"} { 
