@@ -9,7 +9,7 @@ function Find-HashtableDepth {
         # The current depth of the hashtable
         [Parameter(Position=1)]
         [int32]
-        $Depth=0
+        $Depth=1
     )
     process {
         $deepest = $Depth
