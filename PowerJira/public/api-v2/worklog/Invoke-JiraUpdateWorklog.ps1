@@ -46,7 +46,7 @@ function Invoke-JiraUpdateWorklog {
         [datetime]
         $Started,
         
-        # Set the visibility of the comment.  Use New-JiraWorklogVisibility
+        # Set the visibility of the comment.  Use New-JiraVisibility
         [Parameter(Position=7)]
         [hashtable]
         $Visibility,

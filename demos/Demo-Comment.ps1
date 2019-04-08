@@ -22,7 +22,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #(Invoke-JiraGetCommentsByIds @(10000,10001,10002) -Expand @("properties")).values
 
 #UPDATE COMMENT
-#Invoke-JiraUpdateComment JPT-1 10000 "This is another comment from Powershell!" -Visibility (New-JiraCommentVisibility "role" "Administrators")
+#Invoke-JiraUpdateComment JPT-1 10000 "This is another comment from Powershell!" -Visibility (New-JiraVisibility "role" "Administrators")
 
 #DELETE COMMENT
 #Invoke-JiraDeleteComment JPT-1 10001

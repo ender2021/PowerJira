@@ -20,7 +20,7 @@ function Invoke-JiraAddComment {
         [string[]]
         $Expand,
         
-        # Set the visibility of the comment.  Use New-JiraCommentVisibility
+        # Set the visibility of the comment.  Use New-JiraVisibility
         [Parameter(Position=3)]
         [hashtable]
         $Visibility,

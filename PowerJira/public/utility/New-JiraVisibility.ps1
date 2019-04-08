@@ -1,4 +1,4 @@
-function New-JiraWorklogVisibility {
+function New-JiraVisibility {
     [CmdletBinding()]
     param (
         # Indicates whether visibility of this item is restricted to a group or role.
