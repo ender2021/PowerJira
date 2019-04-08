@@ -304,9 +304,12 @@ Describe "Invoke-JiraRestMethod" {
             $path = "some/path"
             $verb = "POST"
             $body = @{one="item";two="things"}
-            $expected = '{"one":"item","two":"things"}'
+            $expected = @(
+                '{"one":"item","two":"things"}'
+                '{"two":"things","one":"item"}'
+            )
             $req = Invoke-JiraRestMethod $conn $path $verb -Body $body
-            $req.Body | Should -Be $expected
+            $req.Body | Should -BeIn $expected
         }
         It "correctly serializes a complex body" {
             Mock "New-JiraConnection" $MockNewJiraConnection
@@ -315,9 +318,12 @@ Describe "Invoke-JiraRestMethod" {
             $path = "some/path"
             $verb = "POST"
             $body = @{zero3=@{one=@{two=@{three="item"}}};zero5=@{one=@{two=@{three=@{four=@{five="item"}}}}}}
-            $expected = '{"zero3":{"one":{"two":{"three":"item"}}},"zero5":{"one":{"two":{"three":{"four":{"five":"item"}}}}}}'
+            $expected = @(
+                '{"zero3":{"one":{"two":{"three":"item"}}},"zero5":{"one":{"two":{"three":{"four":{"five":"item"}}}}}}'
+                '{"zero5":{"one":{"two":{"three":{"four":{"five":"item"}}}}},"zero3":{"one":{"two":{"three":"item"}}}}'
+            )
             $req = Invoke-JiraRestMethod $conn $path $verb -Body $body
-            $req.Body | Should -Be $expected
+            $req.Body | Should -BeIn $expected
         }
         It "correctly sets a literal body" {
             Mock "New-JiraConnection" $MockNewJiraConnection
