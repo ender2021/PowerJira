@@ -65,6 +65,6 @@ function Invoke-JiraUpdateComment {
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
         if($PSBoundParameters.ContainsKey("AdditionalProperties")){$body += $AdditionalProperties}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query -Body $body
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
     }
 }

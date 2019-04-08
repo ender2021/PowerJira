@@ -32,6 +32,6 @@ function Invoke-JiraUpdateProjectRoleFull {
             description = $Description
         }
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
     }
 }

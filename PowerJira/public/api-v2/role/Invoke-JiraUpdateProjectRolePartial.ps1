@@ -31,6 +31,6 @@ function Invoke-JiraUpdateProjectRolePartial {
         if($PSBoundParameters.ContainsKey("Name")){$body.Add("name",$Name)}
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
     }
 }

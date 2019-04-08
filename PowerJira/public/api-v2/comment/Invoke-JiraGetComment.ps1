@@ -29,6 +29,6 @@ function Invoke-JiraGetComment {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/comment/$CommentId"
         $verb = "GET"
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
     }
 }

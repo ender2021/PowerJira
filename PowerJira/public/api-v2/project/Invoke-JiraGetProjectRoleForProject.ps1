@@ -21,6 +21,6 @@ function Invoke-JiraGetProjectRoleForProject {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/role/$RoleId"
         $verb = "GET"
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
     }
 }

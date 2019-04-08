@@ -18,6 +18,6 @@ function Invoke-JiraCreateIssueBulk {
 
         $body=@{issueUpdates=$Issues}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
     }
 }

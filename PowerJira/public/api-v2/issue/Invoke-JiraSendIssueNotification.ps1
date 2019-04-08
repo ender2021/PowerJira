@@ -117,6 +117,6 @@ function Invoke-JiraSendIssueNotification {
         if($PSBoundParameters.ContainsKey("Subject")){$body.Add("subject",$Subject)}
         if(($restrict.groups.Count -gt 0) -or ($restrict.permissions.Count -gt 0)) {$body.Add("restrict",$restrict)}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body -BodyDepth 5
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body -BodyDepth 5
     }
 }

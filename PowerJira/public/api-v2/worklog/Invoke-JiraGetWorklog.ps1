@@ -32,6 +32,6 @@ function Invoke-JiraGetWorklog {
         $query=@{}
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
     }
 }

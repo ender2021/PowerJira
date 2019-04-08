@@ -48,6 +48,6 @@ function Invoke-JiraGetComments {
         if($PSBoundParameters.ContainsKey("OrderBy")){$query.Add("orderBy",$OrderBy)}
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
     }
 }

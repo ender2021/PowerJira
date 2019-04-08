@@ -32,6 +32,6 @@ function Invoke-JiraGetIssueChangelogs {
             maxResults = $MaxResults
         }
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
     }
 }

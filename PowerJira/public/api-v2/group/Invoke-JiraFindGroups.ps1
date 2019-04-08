@@ -32,6 +32,6 @@ function Invoke-JiraFindGroups {
         if($Exclude.Count -gt 0) { $Exclude | ForEach-Object {$queryKvp += Format-QueryKvp "exclude" $_} }
         if($PSBoundParameters.ContainsKey("MaxResults")){$queryKvp += Format-QueryKvp "maxResults" $MaxResults}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -QueryKvp $queryKvp
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -QueryKvp $queryKvp
     }
 }

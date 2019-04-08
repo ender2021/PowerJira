@@ -11,6 +11,6 @@ function Invoke-JiraGetInstanceInfo {
         $functionPath = "/rest/api/2/serverInfo"
         $verb = "GET"
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
     }
 }

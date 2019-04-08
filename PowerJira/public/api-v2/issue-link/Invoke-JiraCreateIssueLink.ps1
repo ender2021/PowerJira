@@ -64,6 +64,6 @@ function Invoke-JiraCreateIssueLink {
         if($PSBoundParameters.ContainsKey("Comment")){$body.Add("comment",@{body=$Comment})}
         if($PSBoundParameters.ContainsKey("CommentObject")){$body.Add("comment",$CommentObject)}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
     }
 }

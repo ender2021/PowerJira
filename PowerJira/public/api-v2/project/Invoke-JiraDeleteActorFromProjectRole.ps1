@@ -35,6 +35,6 @@ function Invoke-JiraDeleteActorFromProjectRole {
         if($PSBoundParameters.ContainsKey("User")){$query.Add("user",$User)}
         if($PSBoundParameters.ContainsKey("Group")){$query.Add("group",$Group)}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
     }
 }

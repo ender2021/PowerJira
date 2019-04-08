@@ -21,6 +21,6 @@ function Invoke-JiraDeleteProjectProperty {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/properties/$PropertyKey"
         $verb = "DELETE"
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
     }
 }

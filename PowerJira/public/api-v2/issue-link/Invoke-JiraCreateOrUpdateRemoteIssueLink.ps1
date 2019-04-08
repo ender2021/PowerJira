@@ -50,6 +50,6 @@ function Invoke-JiraCreateOrUpdateRemoteIssueLink {
         if($PSBoundParameters.ContainsKey("Application")){$body.Add("application",$Application)}
         if($PSBoundParameters.ContainsKey("AdditionalProperties")){$body += $AdditionalProperties}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
     }
 }

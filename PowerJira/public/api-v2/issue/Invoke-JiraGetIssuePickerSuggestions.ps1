@@ -52,6 +52,6 @@ function Invoke-JiraGetIssuePickerSuggestions {
         if($PSBoundParameters.ContainsKey("HideSubTaskParent")){$query.showSubTaskParent = $false}
         if($PSBoundParameters.ContainsKey("HideSubTasks")){$query.showSubTasks = $false}
 
-      Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
+      Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
     }
 }

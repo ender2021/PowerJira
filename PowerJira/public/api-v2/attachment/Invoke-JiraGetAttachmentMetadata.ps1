@@ -16,6 +16,6 @@ function Invoke-JiraGetAttachmentMetadata {
         $functionPath = "/rest/api/2/attachment/$AttachmentId"
         $verb = "GET"
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
     }
 }

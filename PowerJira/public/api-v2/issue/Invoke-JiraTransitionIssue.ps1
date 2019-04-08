@@ -55,6 +55,6 @@ function Invoke-JiraTransitionIssue {
         if($PSBoundParameters.ContainsKey("HistoryMetadata")){$body.Add("historyMetadata",$HistoryMetadata)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
     }
 }

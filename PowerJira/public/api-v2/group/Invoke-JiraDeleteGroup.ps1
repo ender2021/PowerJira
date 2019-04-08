@@ -26,6 +26,6 @@ function Invoke-JiraDeleteGroup {
         }
         if($PSBoundParameters.ContainsKey("SwapGroup")){$query.Add("swapGroup",$SwapGroup)}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
     }
 }

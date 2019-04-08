@@ -98,6 +98,6 @@ function Invoke-JiraUpdateWorklog {
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
         if($PSBoundParameters.ContainsKey("AdditionalProperties")){$body += $AdditionalProperties}
         
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body -Query $query
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body -Query $query
     }
 }

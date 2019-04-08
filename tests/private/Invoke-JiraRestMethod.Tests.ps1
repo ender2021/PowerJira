@@ -3,15 +3,15 @@
 
 $InvokeJiraRestRequest_ContentType = "application/json"
 
-Describe "Invoke-JiraRestRequest" {
+Describe "Invoke-JiraRestMethod" {
     Context "Missing/Malformed JiraConnection Object" {
         It "throws 'Missing/Malformed JiraConnection' when connection is not supplied and no session is open" {
             Mock "Invoke-RestMethod" $MockInvokeRestMethod
-            { Invoke-JiraRestRequest $null "some/path" "GET" } | Should -Throw 'Missing/Malformed JiraConnection'
+            { Invoke-JiraRestMethod $null "some/path" "GET" } | Should -Throw 'Missing/Malformed JiraConnection'
         }
         It 'throws validation error when the JiraConnection object is missing required keys' {
             Mock "Invoke-RestMethod" $MockInvokeRestMethod
-            { Invoke-JiraRestRequest @{AuthHeader=@{}} "some/path" "GET" } | Should -Throw 'Missing/Malformed JiraConnection'
+            { Invoke-JiraRestMethod @{AuthHeader=@{}} "some/path" "GET" } | Should -Throw 'Missing/Malformed JiraConnection'
         }
     }
     Context "AuthHeader" {
@@ -20,7 +20,7 @@ Describe "Invoke-JiraRestRequest" {
             Mock "Invoke-RestMethod" $MockInvokeRestMethod
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
-            $req = Invoke-JiraRestRequest $conn $path "GET"
+            $req = Invoke-JiraRestMethod $conn $path "GET"
             $req.Headers.Keys | Should -Contain "Authorization"
         }
         It "set the value of the Authorization key in the Headers parameter" {
@@ -28,7 +28,7 @@ Describe "Invoke-JiraRestRequest" {
             Mock "Invoke-RestMethod" $MockInvokeRestMethod
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
-            $req = Invoke-JiraRestRequest $conn $path "GET"
+            $req = Invoke-JiraRestMethod $conn $path "GET"
             $req.Headers.Authorization | Should -Be $conn.AuthHeader.Authorization
         }
     }
@@ -38,7 +38,7 @@ Describe "Invoke-JiraRestRequest" {
             Mock "Invoke-RestMethod" $MockInvokeRestMethod
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
-            $req = Invoke-JiraRestRequest $conn $path "GET"
+            $req = Invoke-JiraRestMethod $conn $path "GET"
             $req.ContentType | Should -Be $InvokeJiraRestRequest_ContentType
         }
         It "sets ContentType for query requests" {
@@ -46,7 +46,7 @@ Describe "Invoke-JiraRestRequest" {
             Mock "Invoke-RestMethod" $MockInvokeRestMethod
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
-            $req = Invoke-JiraRestRequest $conn $path "GET" -Query @{some="content"}
+            $req = Invoke-JiraRestMethod $conn $path "GET" -Query @{some="content"}
             $req.ContentType | Should -Be $InvokeJiraRestRequest_ContentType
         }
         It "sets ContentType for Json Body requests" {
@@ -54,7 +54,7 @@ Describe "Invoke-JiraRestRequest" {
             Mock "Invoke-RestMethod" $MockInvokeRestMethod
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
-            $req = Invoke-JiraRestRequest $conn $path "POST" -Body @{some="content"}
+            $req = Invoke-JiraRestMethod $conn $path "POST" -Body @{some="content"}
             $req.ContentType | Should -Be $InvokeJiraRestRequest_ContentType
         }
         It "sets ContentType for Simple Body requests" {
@@ -62,7 +62,7 @@ Describe "Invoke-JiraRestRequest" {
             Mock "Invoke-RestMethod" $MockInvokeRestMethod
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
-            $req = Invoke-JiraRestRequest $conn $path "POST" -LiteralBody '{"some"="content"}'
+            $req = Invoke-JiraRestMethod $conn $path "POST" -LiteralBody '{"some"="content"}'
             $req.ContentType | Should -Be $InvokeJiraRestRequest_ContentType
         }
         It "does not set ContentType for Form requests" {
@@ -70,7 +70,7 @@ Describe "Invoke-JiraRestRequest" {
             Mock "Invoke-RestMethod" $MockInvokeRestMethod
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
-            $req = Invoke-JiraRestRequest $conn $path "POST" -Form @{some="content"}
+            $req = Invoke-JiraRestMethod $conn $path "POST" -Form @{some="content"}
             $req.ContentType | Should -BeNullOrEmpty
         }
     }
@@ -81,7 +81,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "GET"
-            $req = Invoke-JiraRestRequest $conn $path $verb
+            $req = Invoke-JiraRestMethod $conn $path $verb
             $req.Method | Should -Be $verb
         }
         It "does not allow unapproved HTTP verbs" {
@@ -90,7 +90,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "BURP"
-            {Invoke-JiraRestRequest $conn $path $verb} | Should -Throw "validate"
+            {Invoke-JiraRestMethod $conn $path $verb} | Should -Throw "validate"
         }
     }
     Context "GET/DELETE body validation" {
@@ -100,7 +100,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "GET"
-            {Invoke-JiraRestRequest $conn $path $verb -Body @{some="content"}} | Should -Throw "Invalid HttpMethod / Parameter combination"
+            {Invoke-JiraRestMethod $conn $path $verb -Body @{some="content"}} | Should -Throw "Invalid HttpMethod / Parameter combination"
         }
         It "does not allow -Body when using 'DELETE'" {
             Mock "New-JiraConnection" $MockNewJiraConnection
@@ -108,7 +108,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "DELETE"
-            {Invoke-JiraRestRequest $conn $path $verb -Body @{some="content"}} | Should -Throw "Invalid HttpMethod / Parameter combination"
+            {Invoke-JiraRestMethod $conn $path $verb -Body @{some="content"}} | Should -Throw "Invalid HttpMethod / Parameter combination"
         }
         It "does not allow -LiteralBody when using 'GET'" {
             Mock "New-JiraConnection" $MockNewJiraConnection
@@ -116,7 +116,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "GET"
-            {Invoke-JiraRestRequest $conn $path $verb -LiteralBody '{"some"="content"}'} | Should -Throw "Invalid HttpMethod / Parameter combination"
+            {Invoke-JiraRestMethod $conn $path $verb -LiteralBody '{"some"="content"}'} | Should -Throw "Invalid HttpMethod / Parameter combination"
         }
         It "does not allow -LiteralBody when using 'DELETE'" {
             Mock "New-JiraConnection" $MockNewJiraConnection
@@ -124,7 +124,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "DELETE"
-            {Invoke-JiraRestRequest $conn $path $verb -LiteralBody '{"some"="content"}'} | Should -Throw "Invalid HttpMethod / Parameter combination"
+            {Invoke-JiraRestMethod $conn $path $verb -LiteralBody '{"some"="content"}'} | Should -Throw "Invalid HttpMethod / Parameter combination"
         }
         It "does not allow -Form when using 'GET'" {
             Mock "New-JiraConnection" $MockNewJiraConnection
@@ -132,7 +132,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "GET"
-            {Invoke-JiraRestRequest $conn $path $verb -Form @{some="content"}} | Should -Throw "Invalid HttpMethod / Parameter combination"
+            {Invoke-JiraRestMethod $conn $path $verb -Form @{some="content"}} | Should -Throw "Invalid HttpMethod / Parameter combination"
         }
         It "does not allow -BodyKvp when using 'DELETE'" {
             Mock "New-JiraConnection" $MockNewJiraConnection
@@ -140,7 +140,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "DELETE"
-            {Invoke-JiraRestRequest $conn $path $verb -Form @{some="content"}} | Should -Throw "Invalid HttpMethod / Parameter combination"
+            {Invoke-JiraRestMethod $conn $path $verb -Form @{some="content"}} | Should -Throw "Invalid HttpMethod / Parameter combination"
         }
     }
     Context "POST/PUT/PATCH body validation" {
@@ -150,7 +150,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "POST"
-            {Invoke-JiraRestRequest $conn $path $verb} | Should -Throw "Invalid HttpMethod / Parameter combination"
+            {Invoke-JiraRestMethod $conn $path $verb} | Should -Throw "Invalid HttpMethod / Parameter combination"
         }
         It "does not allow 'PUT' without a body or form parameter" {
             Mock "New-JiraConnection" $MockNewJiraConnection
@@ -158,7 +158,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "PUT"
-            {Invoke-JiraRestRequest $conn $path $verb} | Should -Throw "Invalid HttpMethod / Parameter combination"
+            {Invoke-JiraRestMethod $conn $path $verb} | Should -Throw "Invalid HttpMethod / Parameter combination"
         }
         It "does not allow 'PATCH' without a body or form parameter" {
             Mock "New-JiraConnection" $MockNewJiraConnection
@@ -166,7 +166,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "PATCH"
-            {Invoke-JiraRestRequest $conn $path $verb} | Should -Throw "Invalid HttpMethod / Parameter combination"
+            {Invoke-JiraRestMethod $conn $path $verb} | Should -Throw "Invalid HttpMethod / Parameter combination"
         }
         It "allows 'POST' with -Body" {
             Mock "New-JiraConnection" $MockNewJiraConnection
@@ -174,7 +174,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "POST"
-            $req = Invoke-JiraRestRequest $conn $path $verb -Body @{some="Content"}
+            $req = Invoke-JiraRestMethod $conn $path $verb -Body @{some="Content"}
             $req.Method | Should -Be $verb
         }
         It "allows 'PUT' with -Body" {
@@ -183,7 +183,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "PUT"
-            $req = Invoke-JiraRestRequest $conn $path $verb -Body @{some="Content"}
+            $req = Invoke-JiraRestMethod $conn $path $verb -Body @{some="Content"}
             $req.Method | Should -Be $verb
         }
         It "allows 'PATCH' with -Body" {
@@ -192,7 +192,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "PATCH"
-            $req = Invoke-JiraRestRequest $conn $path $verb -Body @{some="Content"}
+            $req = Invoke-JiraRestMethod $conn $path $verb -Body @{some="Content"}
             $req.Method | Should -Be $verb
         }
         It "allows 'POST' with -LiteralBody" {
@@ -201,7 +201,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "POST"
-            $req = Invoke-JiraRestRequest $conn $path $verb -LiteralBody '{"some"="content"}'
+            $req = Invoke-JiraRestMethod $conn $path $verb -LiteralBody '{"some"="content"}'
             $req.Method | Should -Be $verb
         }
         It "allows 'PUT' with -LiteralBody" {
@@ -210,7 +210,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "PUT"
-            $req = Invoke-JiraRestRequest $conn $path $verb -LiteralBody '{"some"="content"}'
+            $req = Invoke-JiraRestMethod $conn $path $verb -LiteralBody '{"some"="content"}'
             $req.Method | Should -Be $verb
         }
         It "allows 'PATCH' with -LiteralBody" {
@@ -219,7 +219,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "PATCH"
-            $req = Invoke-JiraRestRequest $conn $path $verb -LiteralBody '{"some"="content"}'
+            $req = Invoke-JiraRestMethod $conn $path $verb -LiteralBody '{"some"="content"}'
             $req.Method | Should -Be $verb
         }
         It "allows 'POST' with -Form" {
@@ -228,7 +228,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "POST"
-            $req = Invoke-JiraRestRequest $conn $path $verb -Form @{some="Content"}
+            $req = Invoke-JiraRestMethod $conn $path $verb -Form @{some="Content"}
             $req.Method | Should -Be $verb
         }
         It "allows 'PUT' with -Form" {
@@ -237,7 +237,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "PUT"
-            $req = Invoke-JiraRestRequest $conn $path $verb -Form @{some="Content"}
+            $req = Invoke-JiraRestMethod $conn $path $verb -Form @{some="Content"}
             $req.Method | Should -Be $verb
         }
         It "allows 'PATCH' with -Form" {
@@ -246,7 +246,7 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "PATCH"
-            $req = Invoke-JiraRestRequest $conn $path $verb -Form @{some="Content"}
+            $req = Invoke-JiraRestMethod $conn $path $verb -Form @{some="Content"}
             $req.Method | Should -Be $verb
         }
     }
@@ -258,7 +258,7 @@ Describe "Invoke-JiraRestRequest" {
             $path = "some/path"
             $verb = "GET"
             $query = @{one="param"}
-            $req = Invoke-JiraRestRequest $conn $path $verb -Query $query
+            $req = Invoke-JiraRestMethod $conn $path $verb -Query $query
             $req.Uri | Should -Be ($conn.HostName + $path + '?' + "one=param")
         }
         It "GET with multiple query params as hash" {
@@ -270,7 +270,7 @@ Describe "Invoke-JiraRestRequest" {
             $query = @{one="param";two="items"}
             $expectedPath = $conn.HostName + $path
             $expectedQueries = @($expectedPath + '?' + "one=param&two=items";$expectedPath + '?' + "two=items&one=param")
-            $req = Invoke-JiraRestRequest $conn $path $verb -Query $query
+            $req = Invoke-JiraRestMethod $conn $path $verb -Query $query
             $req.Uri | Should -BeIn $expectedQueries
         }
         It "GET with one query param as kvp array" {
@@ -280,7 +280,7 @@ Describe "Invoke-JiraRestRequest" {
             $path = "some/path"
             $verb = "GET"
             $query = @(@{key="one";value="param"})
-            $req = Invoke-JiraRestRequest $conn $path $verb -QueryKvp $query
+            $req = Invoke-JiraRestMethod $conn $path $verb -QueryKvp $query
             $req.Uri | Should -Be ($conn.HostName + $path + '?' + "one=param")
         }
         It "GET with multiple query params as kvp array" {
@@ -292,7 +292,7 @@ Describe "Invoke-JiraRestRequest" {
             $query = @(@{key="one";value="param"};@{key="two";value="items"})
             $expectedPath = $conn.HostName + $path
             $expectedQueries = @($expectedPath + '?' + "one=param&two=items";$expectedPath + '?' + "two=items&one=param")
-            $req = Invoke-JiraRestRequest $conn $path $verb -QueryKvp $query
+            $req = Invoke-JiraRestMethod $conn $path $verb -QueryKvp $query
             $req.Uri | Should -BeIn $expectedQueries
         }
     }
@@ -305,7 +305,7 @@ Describe "Invoke-JiraRestRequest" {
             $verb = "POST"
             $body = @{one="item";two="things"}
             $expected = '{"one":"item","two":"things"}'
-            $req = Invoke-JiraRestRequest $conn $path $verb -Body $body
+            $req = Invoke-JiraRestMethod $conn $path $verb -Body $body
             $req.Body | Should -Be $expected
         }
         It "correctly serializes a complex body" {
@@ -316,7 +316,7 @@ Describe "Invoke-JiraRestRequest" {
             $verb = "POST"
             $body = @{zero3=@{one=@{two=@{three="item"}}};zero5=@{one=@{two=@{three=@{four=@{five="item"}}}}}}
             $expected = '{"zero3":{"one":{"two":{"three":"item"}}},"zero5":{"one":{"two":{"three":{"four":{"five":"item"}}}}}}'
-            $req = Invoke-JiraRestRequest $conn $path $verb -Body $body
+            $req = Invoke-JiraRestMethod $conn $path $verb -Body $body
             $req.Body | Should -Be $expected
         }
         It "correctly sets a literal body" {
@@ -326,7 +326,7 @@ Describe "Invoke-JiraRestRequest" {
             $path = "some/path"
             $verb = "POST"
             $literalBody = '{"zero3":{"one":{"two":{"three":"item"}}},"zero5":{"one":{"two":{"three":{"four":{"five":"item"}}}}}}'
-            $req = Invoke-JiraRestRequest $conn $path $verb -LiteralBody $literalBody
+            $req = Invoke-JiraRestMethod $conn $path $verb -LiteralBody $literalBody
             $req.Body | Should -Be $literalBody
         }
         It "correctly sets a Form" {
@@ -336,7 +336,7 @@ Describe "Invoke-JiraRestRequest" {
             $path = "some/path"
             $verb = "POST"
             $form = @{zero3=@{one=@{two=@{three="item"}}};zero5=@{one=@{two=@{three=@{four=@{five="item"}}}}}}
-            $req = Invoke-JiraRestRequest $conn $path $verb -Form $form
+            $req = Invoke-JiraRestMethod $conn $path $verb -Form $form
             $req.Form | Should -Be $form
         }
     }

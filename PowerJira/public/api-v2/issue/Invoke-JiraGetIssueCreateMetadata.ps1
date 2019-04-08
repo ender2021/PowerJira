@@ -46,6 +46,6 @@ function Invoke-JiraGetIssueCreateMetadata {
         if($PSBoundParameters.ContainsKey("IssueTypeNames")){$query.Add("issuetypeNames",$IssueTypeNames  -join ",")}
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
     }
 }

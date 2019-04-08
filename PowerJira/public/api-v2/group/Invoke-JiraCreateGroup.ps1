@@ -20,6 +20,6 @@ function Invoke-JiraCreateGroup {
             name = $Name
         }
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
     }
 }

@@ -50,6 +50,6 @@ function Invoke-JiraEditIssue {
         if($PSBoundParameters.ContainsKey("HistoryMetadata")){$body.Add("historyMetadata",$HistoryMetadata)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query -Body $body
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
     }
 }

@@ -16,6 +16,6 @@ function Invoke-JiraGetIssueWatchers {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/watchers"
         $verb = "GET"
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
     }
 }

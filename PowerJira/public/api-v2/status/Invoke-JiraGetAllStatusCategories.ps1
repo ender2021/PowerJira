@@ -11,6 +11,6 @@ function Invoke-JiraGetAllStatusCategories {
         $functionPath = "/rest/api/2/statuscategory"
         $verb = "GET"
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
     }
 }

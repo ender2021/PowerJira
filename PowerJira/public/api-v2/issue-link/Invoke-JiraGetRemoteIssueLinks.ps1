@@ -24,6 +24,6 @@ function Invoke-JiraGetRemoteIssueLinks {
         $query=@{}
         if($PSBoundParameters.ContainsKey("GlobalId")){$query.Add("globalId",$GlobalId)}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
     }
 }

@@ -34,6 +34,6 @@ function Invoke-JiraSetWorklogProperty {
 
         $body=$Value
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
     }
 }

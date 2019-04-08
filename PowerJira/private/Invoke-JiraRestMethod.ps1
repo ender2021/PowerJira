@@ -1,5 +1,5 @@
 #NOTE: Multipart requests are only supported in PowerShell 6+
-function Invoke-JiraRestRequest {
+function Invoke-JiraRestMethod {
     [CmdletBinding(DefaultParameterSetName="NoBody-HashQuery")]
     param (
         # The Jira Connection to use, if a session is not active.  The hashtable must have AuthHeader and HostName properties.
@@ -111,7 +111,7 @@ function Invoke-JiraRestRequest {
                 Invoke-RestMethod -Uri $uri -Method $HttpMethod -Headers $sendHeaders -Form $Form
              }
             Default {
-                throw "Invalid Parameter Set: Unknown parameter set '$_' in Invoke-JiraRestRequest"
+                throw "Invalid Parameter Set: Unknown parameter set '$_' in Invoke-JiraRestMethod"
             }
         }
     }

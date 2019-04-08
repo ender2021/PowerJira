@@ -39,6 +39,6 @@ function Invoke-JiraGetGroupUsers {
         }
         if($PSBoundParameters.ContainsKey("IncludeInactive")){$query.Add("includeInactiveUsers",$true)}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
     }
 }

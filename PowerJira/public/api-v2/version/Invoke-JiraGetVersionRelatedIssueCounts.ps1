@@ -16,6 +16,6 @@ function Invoke-JiraGetVersionRelatedIssueCounts {
         $functionPath = "/rest/api/2/version/$VersionId/relatedIssueCounts"
         $verb = "GET"
     
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
     }
 }

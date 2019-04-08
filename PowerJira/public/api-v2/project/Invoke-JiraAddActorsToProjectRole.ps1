@@ -40,6 +40,6 @@ function Invoke-JiraAddActorsToProjectRole {
         if($PSBoundParameters.ContainsKey("Users")){$body.Add("user",$Users)}
         if($PSBoundParameters.ContainsKey("Groups")){$body.Add("group",$Groups)}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
     }
 }

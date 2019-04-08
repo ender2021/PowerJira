@@ -16,6 +16,6 @@ function Invoke-JiraGetStatus {
         $functionPath = "/rest/api/2/status/$StatusIdOrName"
         $verb = "GET"
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
     }
 }

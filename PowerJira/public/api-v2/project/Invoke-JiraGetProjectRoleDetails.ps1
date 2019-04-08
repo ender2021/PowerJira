@@ -24,6 +24,6 @@ function Invoke-JiraGetProjectRoleDetails {
         $query = @{}
         if($PSBoundParameters.ContainsKey("MyRoles")){$query.Add("currentMember",$true)}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
     }
 }

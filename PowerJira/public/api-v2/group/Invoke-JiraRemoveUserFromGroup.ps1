@@ -26,6 +26,6 @@ function Invoke-JiraRemoveUserFromGroup {
             accountId = $User
         }
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
     }
 }

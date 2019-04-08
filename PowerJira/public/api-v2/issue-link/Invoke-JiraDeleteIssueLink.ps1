@@ -16,6 +16,6 @@ function Invoke-JiraDeleteIssueLink {
         $functionPath = "/rest/api/2/issueLink/$LinkId"
         $verb = "DELETE"
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
     }
 }

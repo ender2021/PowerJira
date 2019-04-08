@@ -24,6 +24,6 @@ function Invoke-JiraAddWatcher {
         $body=""
         if($PSBoundParameters.ContainsKey("AccountId")){$body = """$AccountId"""}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -LiteralBody $body
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -LiteralBody $body
     }
 }

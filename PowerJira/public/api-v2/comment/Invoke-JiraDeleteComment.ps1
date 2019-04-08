@@ -21,6 +21,6 @@ function Invoke-JiraDeleteComment {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/comment/$CommentId"
         $verb = "DELETE"
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
     }
 }

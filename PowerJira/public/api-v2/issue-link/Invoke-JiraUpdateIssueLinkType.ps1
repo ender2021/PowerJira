@@ -36,6 +36,6 @@ function Invoke-JiraUpdateIssueLinkType {
         if($PSBoundParameters.ContainsKey("Inward")){$body.Add("inward",$Inward)}
         if($PSBoundParameters.ContainsKey("Outward")){$body.Add("outward",$Outward)}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
     }
 }

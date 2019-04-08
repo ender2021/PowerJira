@@ -54,6 +54,6 @@ function Invoke-JiraAddComment {
         if($PSBoundParameters.ContainsKey("JsdHide")){$body.Add("jsdPublic",$false)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query -Body $body
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
     }
 }

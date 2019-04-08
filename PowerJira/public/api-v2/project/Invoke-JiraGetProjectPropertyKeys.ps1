@@ -16,6 +16,6 @@ function Invoke-JiraGetProjectPropertyKeys {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/properties"
         $verb = "GET"
 
-        (Invoke-JiraRestRequest $JiraConnection $functionPath $verb).keys
+        (Invoke-JiraRestMethod $JiraConnection $functionPath $verb).keys
     }
 }

@@ -16,6 +16,6 @@ function Invoke-JiraGetAllProjectAvatars {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/avatars"
         $verb = "GET"
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
     }
 }

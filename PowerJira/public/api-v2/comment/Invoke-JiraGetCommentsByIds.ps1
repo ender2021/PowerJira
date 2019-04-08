@@ -33,6 +33,6 @@ function Invoke-JiraGetCommentsByIds {
             ids = $CommentIds
         }
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query -Body $body
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
     }
 }

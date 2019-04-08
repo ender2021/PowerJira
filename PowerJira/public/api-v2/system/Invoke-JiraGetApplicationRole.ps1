@@ -16,6 +16,6 @@ function Invoke-JiraGetApplicationRole {
         $functionPath = "/rest/api/2/applicationrole/$RoleKey"
         $verb = "GET"
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
     }
 }

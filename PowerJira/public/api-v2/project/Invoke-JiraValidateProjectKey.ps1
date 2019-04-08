@@ -20,6 +20,6 @@ function Invoke-JiraValidateProjectKey {
             key = $Key
         }
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
     }
 }

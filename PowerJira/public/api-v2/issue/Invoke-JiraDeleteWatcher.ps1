@@ -25,6 +25,6 @@ function Invoke-JiraDeleteWatcher {
             accountId = $WatcherAccountId
         }
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
     }
 }

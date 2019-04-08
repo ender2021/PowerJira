@@ -75,9 +75,9 @@ function Invoke-JiraSearchIssues {
 
         if ($PSBoundParameters.ContainsKey("GET")) {
             $verb = "GET"
-            Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $body
+            Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $body
         } else {
-            Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Body $body
+            Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
         }
     }
 }

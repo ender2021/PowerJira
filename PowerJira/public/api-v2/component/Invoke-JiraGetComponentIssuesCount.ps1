@@ -16,6 +16,6 @@ function Invoke-JiraGetComponentIssuesCount {
         $functionPath = "/rest/api/2/component/$ComponentId/relatedIssueCounts"
         $verb = "GET"
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
     }
 }

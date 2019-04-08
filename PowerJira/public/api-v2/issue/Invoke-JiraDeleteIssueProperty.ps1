@@ -21,6 +21,6 @@ function Invoke-JiraDeleteIssueProperty {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/properties/$Key"
         $verb = "DELETE"
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
     }
 }

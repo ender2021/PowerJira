@@ -72,6 +72,6 @@ function Invoke-JiraGetProjects {
         if($PSBoundParameters.ContainsKey("Filter")){$query.Add("query",$Filter)}
         if($PSBoundParameters.ContainsKey("CategoryId")){$query.Add("categoryId",$CategoryId)}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query -Query $query
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Query $query
     }
 }

@@ -24,6 +24,6 @@ function Invoke-JiraDeleteComponent {
         $query=@{}
         if($PSBoundParameters.ContainsKey("MoveIssuesTo")){$query.Add("moveIssuesTo",$MoveIssuesTo)}
 
-        Invoke-JiraRestRequest $JiraConnection $functionPath $verb -Query $query
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
     }
 }
