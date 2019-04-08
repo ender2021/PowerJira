@@ -250,38 +250,16 @@ Describe "Invoke-JiraRestRequest" {
             $req.Method | Should -Be $verb
         }
     }
-    Context "GET functions" {
-        It "GET with no query" {
-            Mock "New-JiraConnection" $MockNewJiraConnection
-            Mock "Invoke-RestMethod" $MockInvokeRestMethod
-            $conn = New-JiraConnection dummy dummy dummy
-            $path = "some/path"
-            $verb = "GET"
-            $contentType = "application/json"
-            $req = Invoke-JiraRestRequest $conn $path $verb
-            $req.Uri | Should -Be ($conn.HostName + $path)
-            $req.Method | Should -Be $verb
-            $req.Headers.Keys | Should -Contain "Authorization"
-            $req.Headers.Authorization | Should -Be $conn.AuthHeader.Authorization
-            $req.Body | Should -BeNullOrEmpty
-            $req.Form | Should -BeNullOrEmpty
-        }
+    Context "Query/QueryKvp" {
         It "GET with one query param as hash" {
             Mock "New-JiraConnection" $MockNewJiraConnection
             Mock "Invoke-RestMethod" $MockInvokeRestMethod
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "GET"
-            $contentType = "application/json"
             $query = @{one="param"}
             $req = Invoke-JiraRestRequest $conn $path $verb -Query $query
             $req.Uri | Should -Be ($conn.HostName + $path + '?' + "one=param")
-            $req.Method | Should -Be $verb
-            $req.Headers.Keys | Should -Contain "Authorization"
-            $req.Headers.Authorization | Should -Be $conn.AuthHeader.Authorization
-            $req.ContentType | Should -Be $contentType
-            $req.Body | Should -BeNullOrEmpty
-            $req.Form | Should -BeNullOrEmpty
         }
         It "GET with multiple query params as hash" {
             Mock "New-JiraConnection" $MockNewJiraConnection
@@ -289,27 +267,77 @@ Describe "Invoke-JiraRestRequest" {
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "GET"
-            $contentType = "application/json"
             $query = @{one="param";two="items"}
             $expectedPath = $conn.HostName + $path
             $expectedQueries = @($expectedPath + '?' + "one=param&two=items";$expectedPath + '?' + "two=items&one=param")
             $req = Invoke-JiraRestRequest $conn $path $verb -Query $query
             $req.Uri | Should -BeIn $expectedQueries
-            $req.Method | Should -Be $verb
-            $req.Headers.Keys | Should -Contain "Authorization"
-            $req.Headers.Authorization | Should -Be $conn.AuthHeader.Authorization
-            $req.ContentType | Should -Be $contentType
-            $req.Body | Should -BeNullOrEmpty
-            $req.Form | Should -BeNullOrEmpty
+        }
+        It "GET with one query param as kvp array" {
+            Mock "New-JiraConnection" $MockNewJiraConnection
+            Mock "Invoke-RestMethod" $MockInvokeRestMethod
+            $conn = New-JiraConnection dummy dummy dummy
+            $path = "some/path"
+            $verb = "GET"
+            $query = @(@{key="one";value="param"})
+            $req = Invoke-JiraRestRequest $conn $path $verb -QueryKvp $query
+            $req.Uri | Should -Be ($conn.HostName + $path + '?' + "one=param")
+        }
+        It "GET with multiple query params as kvp array" {
+            Mock "New-JiraConnection" $MockNewJiraConnection
+            Mock "Invoke-RestMethod" $MockInvokeRestMethod
+            $conn = New-JiraConnection dummy dummy dummy
+            $path = "some/path"
+            $verb = "GET"
+            $query = @(@{key="one";value="param"};@{key="two";value="items"})
+            $expectedPath = $conn.HostName + $path
+            $expectedQueries = @($expectedPath + '?' + "one=param&two=items";$expectedPath + '?' + "two=items&one=param")
+            $req = Invoke-JiraRestRequest $conn $path $verb -QueryKvp $query
+            $req.Uri | Should -BeIn $expectedQueries
         }
     }
-    # Context "POST functions" {
-        
-    # }
-    # Context "PUT functions" {
-
-    # }
-    # Context "DELETE functions" {
-
-    # }
+    Context "Body/LiteralBody/Form" {
+        It "correctly serializes a simple body" {
+            Mock "New-JiraConnection" $MockNewJiraConnection
+            Mock "Invoke-RestMethod" $MockInvokeRestMethod
+            $conn = New-JiraConnection dummy dummy dummy
+            $path = "some/path"
+            $verb = "POST"
+            $body = @{one="item";two="things"}
+            $expected = '{"one":"item","two":"things"}'
+            $req = Invoke-JiraRestRequest $conn $path $verb -Body $body
+            $req.Body | Should -Be $expected
+        }
+        It "correctly serializes a complex body" {
+            Mock "New-JiraConnection" $MockNewJiraConnection
+            Mock "Invoke-RestMethod" $MockInvokeRestMethod
+            $conn = New-JiraConnection dummy dummy dummy
+            $path = "some/path"
+            $verb = "POST"
+            $body = @{zero3=@{one=@{two=@{three="item"}}};zero5=@{one=@{two=@{three=@{four=@{five="item"}}}}}}
+            $expected = '{"zero3":{"one":{"two":{"three":"item"}}},"zero5":{"one":{"two":{"three":{"four":{"five":"item"}}}}}}'
+            $req = Invoke-JiraRestRequest $conn $path $verb -Body $body
+            $req.Body | Should -Be $expected
+        }
+        It "correctly sets a literal body" {
+            Mock "New-JiraConnection" $MockNewJiraConnection
+            Mock "Invoke-RestMethod" $MockInvokeRestMethod
+            $conn = New-JiraConnection dummy dummy dummy
+            $path = "some/path"
+            $verb = "POST"
+            $literalBody = '{"zero3":{"one":{"two":{"three":"item"}}},"zero5":{"one":{"two":{"three":{"four":{"five":"item"}}}}}}'
+            $req = Invoke-JiraRestRequest $conn $path $verb -LiteralBody $literalBody
+            $req.Body | Should -Be $literalBody
+        }
+        It "correctly sets a Form" {
+            Mock "New-JiraConnection" $MockNewJiraConnection
+            Mock "Invoke-RestMethod" $MockInvokeRestMethod
+            $conn = New-JiraConnection dummy dummy dummy
+            $path = "some/path"
+            $verb = "POST"
+            $form = @{zero3=@{one=@{two=@{three="item"}}};zero5=@{one=@{two=@{three=@{four=@{five="item"}}}}}}
+            $req = Invoke-JiraRestRequest $conn $path $verb -Form $form
+            $req.Form | Should -Be $form
+        }
+    }
 }
