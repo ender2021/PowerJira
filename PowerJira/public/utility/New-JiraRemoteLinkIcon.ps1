@@ -14,13 +14,7 @@ function New-JiraRemoteLinkIcon {
         # A url for a tooltip (used only for the Status object)
         [Parameter(Position=2)]
         [string]
-        $ToolTipLink,
-
-        
-        # Additional properties to add to the remote object
-        [Parameter(Position=3)]
-        [hashtable]
-        $AdditionalProperties
+        $ToolTipLink
     )
     process {
         $icon = @{
@@ -28,7 +22,6 @@ function New-JiraRemoteLinkIcon {
             title = $Title
         }
         if($PSBoundParameters.ContainsKey("ToolTipLink")){$icon.Add("link",$ToolTipLink)}
-        if($PSBoundParameters.ContainsKey("AdditionalProperties")){$icon += $AdditionalProperties}
 
         $icon
     }
