@@ -56,24 +56,19 @@ function Invoke-JiraUpdateWorklog {
         [hashtable[]]
         $Properties,
 
-        # Additional properties to add to the root object
-        [Parameter(Position=9)]
-        [hashtable]
-        $AdditionalProperties,
-
         # Used to expand additional attributes
-        [Parameter(Position=10)]
+        [Parameter(Position=9)]
         [ValidateScript({ Compare-StringArraySubset $JiraWorklogExpand $_ })]
         [string[]]
         $Expand,
 
         # Set this flag to disable notifications
-        [Parameter(Position=11)]
+        [Parameter(Position=10)]
         [switch]
         $DisableNotifications,
 
         # The JiraConnection object to use for the request
-        [Parameter(Position=12)]
+        [Parameter(Position=11)]
         [hashtable]
         $JiraConnection
     )
@@ -96,7 +91,6 @@ function Invoke-JiraUpdateWorklog {
         if($PSBoundParameters.ContainsKey("Comment")){$body.Add("comment",$Comment)}
         if($PSBoundParameters.ContainsKey("Visibility")){$body.Add("visibility",$Visibility)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
-        if($PSBoundParameters.ContainsKey("AdditionalProperties")){$body += $AdditionalProperties}
         
         Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body -Query $query
     }

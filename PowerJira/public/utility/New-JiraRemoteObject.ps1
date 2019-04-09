@@ -16,20 +16,15 @@ function New-JiraRemoteObject {
         [string]
         $Summary,
 
-        # A Jira icon object to associate with the remote object
+        # A Jira icon object to associate with the remote object. Use New-JiraRemoteLinkIcon
         [Parameter(Position=3)]
         [hashtable]
         $Icon,
 
-        # A Jira status object to associate with the remote object
+        # A Jira status object to associate with the remote object. Use New-JiraRemoteLinkStatus
         [Parameter(Position=4)]
         [hashtable]
-        $Status,
-
-        # Additional properties to add to the remote object
-        [Parameter(Position=5)]
-        [hashtable]
-        $AdditionalProperties
+        $Status
     )
     process {
         $ro = @{
@@ -39,7 +34,6 @@ function New-JiraRemoteObject {
         if($PSBoundParameters.ContainsKey("Summary")){$ro.Add("summary",$Summary)}
         if($PSBoundParameters.ContainsKey("Icon")){$ro.Add("icon",$Icon)}
         if($PSBoundParameters.ContainsKey("Status")){$ro.Add("status",$Status)}
-        if($PSBoundParameters.ContainsKey("AdditionalProperties")){$ro += $AdditionalProperties}
 
         $ro
     }

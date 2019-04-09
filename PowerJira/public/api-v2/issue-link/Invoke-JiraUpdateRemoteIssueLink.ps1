@@ -33,13 +33,8 @@ function Invoke-JiraUpdateRemoteIssueLink {
         [string]
         $Relationship,
 
-        # Additional properties to add to the remote application
-        [Parameter(Position=6)]
-        [hashtable]
-        $AdditionalProperties,
-
         # The JiraConnection object to use for the request
-        [Parameter(Position=7)]
+        [Parameter(Position=6)]
         [hashtable]
         $JiraConnection
     )
@@ -53,7 +48,6 @@ function Invoke-JiraUpdateRemoteIssueLink {
         if($PSBoundParameters.ContainsKey("GlobalId")){$body.Add("globalId",$GlobalId)}
         if($PSBoundParameters.ContainsKey("Relationship")){$body.Add("relationship",$Relationship)}
         if($PSBoundParameters.ContainsKey("Application")){$body.Add("application",$Application)}
-        if($PSBoundParameters.ContainsKey("AdditionalProperties")){$body += $AdditionalProperties}
 
         Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
     }

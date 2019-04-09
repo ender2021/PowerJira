@@ -35,18 +35,13 @@ function Invoke-JiraUpdateComment {
         [hashtable[]]
         $Properties,
 
-        # Additional properties to add to the remote object
-        [Parameter(Position=6)]
-        [hashtable]
-        $AdditionalProperties,
-        
         # Set this flag to hide this comment in Jira Service Desk
-        [Parameter(Position=7)]
+        [Parameter(Position=6)]
         [switch]
         $JsdHide,
 
         # The JiraConnection object to use for the request
-        [Parameter(Position=8)]
+        [Parameter(Position=7)]
         [hashtable]
         $JiraConnection
     )
@@ -63,7 +58,6 @@ function Invoke-JiraUpdateComment {
         if($PSBoundParameters.ContainsKey("Visibility")){$body.Add("visibility",$Visibility)}
         if($PSBoundParameters.ContainsKey("JsdHide")){$body.Add("jsdPublic",$false)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
-        if($PSBoundParameters.ContainsKey("AdditionalProperties")){$body += $AdditionalProperties}
 
         Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
     }
