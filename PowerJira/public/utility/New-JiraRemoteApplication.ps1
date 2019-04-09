@@ -9,20 +9,12 @@ function New-JiraRemoteApplication {
         # The name of the application. Used in conjunction with the (remote) object icon title to display a tooltip for the link's icon.
         [Parameter(Mandatory,Position=1)]
         [string]
-        $Name,
-
-        # Additional properties to add to the remote application
-        [Parameter(Position=2)]
-        [hashtable]
-        $AdditionalProperties
+        $Name
     )
     process {
-        $app = @{
+        @{
             type = $Type
             name = $Name
         }
-        if($PSBoundParameters.ContainsKey("AdditionalProperties")){$app += $AdditionalProperties}
-
-        $app
     }
 }
