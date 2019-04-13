@@ -3,6 +3,7 @@ function New-JiraRemoteLinkStatus {
     param (
         # A Jira icon object to associate with the remote object
         [Parameter(Position=0)]
+        [ValidateScript({ (Compare-StringArraySubset @("url16x16";"title";"link") $_.Keys) -and ($_.Keys -contains "url16x16") -and ($_.Keys -contains "title") })]
         [hashtable]
         $Icon,
 
