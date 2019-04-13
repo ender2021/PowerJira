@@ -10,7 +10,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #CREATE FILTER
-Invoke-JiraCreateFilter "test filter 5" "project = JPT ORDER BY Summary" -Favourite -Expand @("sharedUsers")
+#Invoke-JiraCreateFilter "test filter 5" "project = JPT ORDER BY Summary" -Favourite -Expand @("sharedUsers")
+
+#GET DEFAULT SHARE SCOPE
+#Invoke-JiraGetDefaultShareScope
 
 #end tests
 
