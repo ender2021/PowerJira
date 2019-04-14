@@ -29,6 +29,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #DELETE ISSUE TYPE
 #Invoke-JiraDeleteIssueType 10006
 
+#SET ISSUE TYPE PROPERTY
+#Invoke-JiraSetIssueTypeProperty 10005 "propKey" @{name="neato";description="Super cool!"}
+
 #end tests
 
 #close the Jira session
