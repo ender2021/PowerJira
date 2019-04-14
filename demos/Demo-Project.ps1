@@ -110,6 +110,11 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #DELETE PROJECT
 #Invoke-JiraDeleteProject RCP
 
+#UPDATE PROJECT
+#Invoke-JiraCreateProject "RCP" "REST-Created Project" "software" "com.pyxis.greenhopper.jira:gh-simplified-basic" (Invoke-JiraGetCurrentUser).accountId
+#Invoke-JiraUpdateProject "RCP" -Name "REST-Updated Project"
+
+
 #end tests
 
 #close the Jira session
