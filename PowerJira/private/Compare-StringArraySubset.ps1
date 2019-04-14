@@ -11,11 +11,25 @@ function Compare-StringArraySubset {
         [Parameter(Mandatory,Position=1)]
         [ValidateNotNullOrEmpty()]
         [string[]]
-        $Subset
+        $Subset,
+
+        # Set this flag to treat items in the superset as regular expressions
+        [Parameter()]
+        [switch]
+        $Regex
     )
     process {
         $toReturn = $true
-        $Subset | ForEach-Object { if (!$Superset.Contains($_)) {$toReturn = $false} }
+        $Subset | ForEach-Object { 
+            $eval = $false
+            if ($Regex) {
+                $item = $_
+                $Superset | ForEach-Object { if ($item -match $_) { $eval = $true } }
+            } else {
+                $eval = $Superset -contains $_
+            }
+            if (!$eval) {$toReturn = $false} 
+        }
         $toReturn
     }
 }
