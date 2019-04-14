@@ -105,6 +105,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #DELETE PROJECT AVATAR
 #Invoke-JiraDeleteProjectAvatar JPT 10513
 
+#CREATE PROJECT
+#Invoke-JiraCreateProject "RCP" "REST-Created Project" "software" "com.pyxis.greenhopper.jira:gh-simplified-basic" (Invoke-JiraGetCurrentUser).accountId
+
 #end tests
 
 #close the Jira session
