@@ -1,4 +1,4 @@
-$JiraFilterExpand = @("sharedUsers","subscriptions")
+$JiraFilterExpand = @("^sharedUsers(\[\d{1,4}\:\d{1,4}\])?$","^subscriptions(\[\d{1,4}\:\d{1,4}\])?$")
 
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-filter-post
 function Invoke-JiraCreateFilter {
@@ -21,19 +21,9 @@ function Invoke-JiraCreateFilter {
 
         # Used to expand additional attributes
         [Parameter(Position=3)]
-        [ValidateScript({ Compare-StringArraySubset $JiraFilterExpand $_ })]
+        [ValidateScript({ Compare-StringArraySubset $JiraFilterExpand $_ -Regex })]
         [string[]]
         $Expand,
-
-        # Set this value to 1 or greater to return more than 1000 users when expanding sharedUsers
-        [Parameter(Position=4)]
-        [int32]
-        $SharedUsersPage,
-
-        # Set this value to 1 or greater to return more than 1000 users when expanding subscriptions
-        [Parameter(Position=5)]
-        [int32]
-        $SubscriptionsPage,
 
         # Set this flag to indicate that the filter should be added to the users favourites
         [Parameter()]
@@ -41,7 +31,7 @@ function Invoke-JiraCreateFilter {
         $Favourite,
 
         # The JiraConnection object to use for the request
-        [Parameter()]
+        [Parameter(Position=4)]
         [hashtable]
         $JiraConnection
     )
@@ -50,21 +40,7 @@ function Invoke-JiraCreateFilter {
         $verb = "POST"
 
         $query=@{}
-        if($PSBoundParameters.ContainsKey("Expand")){
-            if ($Expand.Contains("sharedUsers") -and $PSBoundParameters.ContainsKey("SharedUsersPage")) {
-                $usi = (1000 * $SharedUsersPage) + 1
-                $uei = $usi + 1000
-                $Expand.Remove("sharedUsers")
-                $Expand.Add("sharedUsers[$usi" + ':' + "$uei]")
-            }
-            if ($Expand.Contains("subscriptions") -and $PSBoundParameters.ContainsKey("SubscriptionsPage")) {
-                $ssi = (1000 * $SubscriptionsPage) + 1
-                $sei = $ssi + 1000
-                $Expand.Remove("subscriptions")
-                $Expand.Add("subscriptions[$ssi" + ':' + "$sei]")
-            }
-            $query.Add("expand",$Expand -join ",")
-        }
+        if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
         $body=@{
             name = $Name
