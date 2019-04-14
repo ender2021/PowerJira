@@ -41,6 +41,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET FILTER SHARE PERMISSIONS
 #Invoke-JiraGetFilterSharePermissions 10004
 
+#GET FILTER SHARE PERMISSION
+#Invoke-JiraGetFilterSharePermission 10004 10102
+
 #end tests
 
 #close the Jira session

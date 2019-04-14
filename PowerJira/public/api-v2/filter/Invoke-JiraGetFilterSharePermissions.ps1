@@ -1,4 +1,4 @@
-#
+#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-filter-id-permission-get
 function Invoke-JiraGetFilterSharePermissions {
     [CmdletBinding()]
     param (
