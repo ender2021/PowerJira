@@ -31,8 +31,12 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetFilter 10004
 
 #UPDATE FILTER
-Invoke-JiraUpdateFilter 10004 -SharePermissions @((New-JiraFilterSharePermission "authenticated"))
+#Invoke-JiraUpdateFilter 10004 -SharePermissions @((New-JiraFilterSharePermission "authenticated"))
 #Invoke-JiraGetProject 10000
+
+#DELETE FILTER
+#Invoke-JiraGetFilter 10005
+#Invoke-JiraDeleteFilter 10005
 
 #end tests
 
