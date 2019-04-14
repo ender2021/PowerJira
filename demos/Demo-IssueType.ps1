@@ -38,6 +38,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET ISSUE TYPE PROPERTY KEYS
 #Invoke-JiraGetIssueTypePropertyKeys 10005
 
+#DELETE ISSUE TYPE PROPERTY
+#Invoke-JiraDeleteIssueTypeProperty 10005 "propKey"
+
 #end tests
 
 #close the Jira session
