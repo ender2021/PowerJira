@@ -117,6 +117,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #UPDATE PROJECT TYPE
 #Invoke-JiraUpdateProjectType RCP "business"
 
+#SET PROJECT PERMISSION SCHEME
+#Invoke-JiraSetProjectPermissionScheme RCP 10000
+
 #end tests
 
 #close the Jira session
