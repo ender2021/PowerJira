@@ -50,6 +50,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #ADD FILTER SHARE PERMISSION
 #Invoke-JiraAddFilterSharePermission 10004 (New-JiraFilterSharePermission "authenticated")
 
+#ADD FAVOURITE FILTER
+#Invoke-JiraAddFavouriteFilter 10004
+
+
 
 #end tests
 
