@@ -57,7 +57,12 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraRemoveFavouriteFilter 10004
 
 #GET FILTER COLUMNS
-Invoke-JiraGetFilterColumns 10004
+#Invoke-JiraGetFilterColumns 10004
+
+#RESET FILTER COLUMNS
+#Invoke-JiraResetFilterColumns 10004
+
+
 
 #end tests
 
