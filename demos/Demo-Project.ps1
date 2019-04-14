@@ -93,14 +93,17 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraValidateProjectKey "JPT1"
 
 #GET ALL PROJECT AVATARS
-#(Invoke-JiraGetAllProjectAvatars JPT).system | fl
+#(Invoke-JiraGetAllProjectAvatars JPT) | fl
 
 #ADD PROJECT AVATAR
 #$item = Get-Item $PSScriptRoot\icon.png
 #Invoke-JiraAddProjectAvatar JPT $item
 
 #SET PROJECT AVATAR
-#Invoke-JiraSetProjectAvatar JPT 10513
+#Invoke-JiraSetProjectAvatar JPT 10425
+
+#DELETE PROJECT AVATAR
+#Invoke-JiraDeleteProjectAvatar JPT 10513
 
 #end tests
 
