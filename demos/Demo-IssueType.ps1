@@ -22,6 +22,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #UPDATE ISSUE TYPE
 #Invoke-JiraUpdateIssueType 10000 -AvatarId 10512
 
+#CREATE ISSUE TYPE
+#Invoke-JiraCreateIssueType "REST Method" "Issues representing REST methods"
+#Invoke-JiraCreateIssueType "REST Method Sub-task" "Sub-task of issues representing REST methods" -Subtask
+
 #end tests
 
 #close the Jira session
