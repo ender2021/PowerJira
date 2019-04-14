@@ -30,6 +30,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET FILTER
 #Invoke-JiraGetFilter 10004
 
+#UPDATE FILTER
+Invoke-JiraUpdateFilter 10004 -SharePermissions @((New-JiraFilterSharePermission "authenticated"))
+#Invoke-JiraGetProject 10000
+
 #end tests
 
 #close the Jira session
