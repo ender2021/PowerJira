@@ -26,6 +26,8 @@ function Invoke-JiraRestMethod {
         
         # Used the same as the $Body param, but these parameters will be put into the query string
         [Parameter(ParameterSetName="NoBody-HashQuery",Position=4)]
+        [Parameter(ParameterSetName="Multipart",Position=4)]
+        [Parameter(ParameterSetName="File",Position=4)]
         [Parameter(Mandatory,ParameterSetName="JsonBody-HashQuery",Position=4)]
         [Parameter(Mandatory,ParameterSetName="SimpleBody-HashQuery",Position=4)]
         [ValidateNotNull()]
@@ -57,10 +59,15 @@ function Invoke-JiraRestMethod {
         $LiteralBody,
 
         # The Form values for a multipart request
-        [Parameter(Mandatory,ParameterSetName="Multipart",Position=4)]
+        [Parameter(Mandatory,ParameterSetName="Multipart",Position=5)]
         [ValidateNotNull()]
         [hashtable]
-        $Form
+        $Form,
+
+        # The file object, when POST-ing or PUT-ing a file
+        [Parameter(Mandatory,ParameterSetName="File",Position=5)]
+        [object]
+        $File
     )
     process {
         #validate $JiraConnection
@@ -109,6 +116,10 @@ function Invoke-JiraRestMethod {
             {$_ -match "Multipart"} { 
                 $sendHeaders.Add("X-Atlassian-Token","no-check")
                 Invoke-RestMethod -Uri $uri -Method $HttpMethod -Headers $sendHeaders -Form $Form
+             }
+             {$_ -match "File"} { 
+                $sendHeaders.Add("X-Atlassian-Token","no-check")
+                Invoke-RestMethod -Uri $uri -Method $HttpMethod -Headers $sendHeaders -InFile $File
              }
             Default {
                 throw "Invalid Parameter Set: Unknown parameter set '$_' in Invoke-JiraRestMethod"
