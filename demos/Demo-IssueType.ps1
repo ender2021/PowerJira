@@ -19,6 +19,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$item = get-item $PSScriptRoot\icon.png
 #Invoke-JiraAddIssueTypeAvatar 10000 $item
 
+#UPDATE ISSUE TYPE
+#Invoke-JiraUpdateIssueType 10000 -AvatarId 10512
+
 #end tests
 
 #close the Jira session
