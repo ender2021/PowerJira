@@ -27,6 +27,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #SEARCH FILTERS
 #Invoke-JiraSearchFilters "4" -OwnerAccountId (Invoke-JiraGetCurrentUser).accountId
 
+#GET FILTER
+#Invoke-JiraGetFilter 10004
+
 #end tests
 
 #close the Jira session
