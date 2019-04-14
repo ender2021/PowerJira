@@ -15,6 +15,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET DEFAULT SHARE SCOPE
 #Invoke-JiraGetDefaultShareScope
 
+#SET DEFAULT SHARE SCOPE
+#Invoke-JiraSetDefaultShareScope "PRIVATE"
+
 #end tests
 
 #close the Jira session
