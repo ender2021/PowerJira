@@ -35,6 +35,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET ISSUE TYPE PROPERTY
 #(Invoke-JiraGetIssueTypeProperty 10005 "propKey").value
 
+#GET ISSUE TYPE PROPERTY KEYS
+#Invoke-JiraGetIssueTypePropertyKeys 10005
+
 #end tests
 
 #close the Jira session
