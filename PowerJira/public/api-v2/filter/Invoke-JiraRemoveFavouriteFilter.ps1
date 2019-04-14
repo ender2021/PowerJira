@@ -1,7 +1,7 @@
 $JiraFilterExpand = @("^sharedUsers(\[\d{1,4}\:\d{1,4}\])?$","^subscriptions(\[\d{1,4}\:\d{1,4}\])?$")
 
-#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-filter-id-favourite-put
-function Invoke-JiraAddFavouriteFilter {
+#https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-filter-id-favourite-delete
+function Invoke-JiraRemoveFavouriteFilter {
     [CmdletBinding()]
     param (
         # The filter id
@@ -22,7 +22,7 @@ function Invoke-JiraAddFavouriteFilter {
     )
     process {
         $functionPath = "/rest/api/2/filter/$FilterId/favourite"
-        $verb = "PUT"
+        $verb = "DELETE"
 
         $query=@{}
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}

@@ -53,7 +53,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #ADD FAVOURITE FILTER
 #Invoke-JiraAddFavouriteFilter 10004
 
-
+#REMOVE FAVOURITE FILTER
+#Invoke-JiraRemoveFavouriteFilter 10004
 
 #end tests
 
