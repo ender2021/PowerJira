@@ -99,6 +99,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$item = Get-Item $PSScriptRoot\icon.png
 #Invoke-JiraAddProjectAvatar JPT $item
 
+#SET PROJECT AVATAR
+#Invoke-JiraSetProjectAvatar JPT 10513
+
 #end tests
 
 #close the Jira session
