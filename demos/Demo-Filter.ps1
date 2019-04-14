@@ -21,6 +21,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET FAVOURITE FILTERS
 #Invoke-JiraGetFavouriteFilters
 
+#GET MY FILTERS
+#Invoke-JiraGetMyFilters -Favourites
+
 #end tests
 
 #close the Jira session
