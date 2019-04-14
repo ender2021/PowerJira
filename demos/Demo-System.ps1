@@ -47,6 +47,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #SET TIME TRACKING PROVIDER
 #Invoke-JiraSetTimeTrackingProvider "JIRA"
 
+#DISABLE TIME TRACKING
+#Invoke-JiraDisableTimeTracking
+
 #end tests
 
 #close the Jira session
