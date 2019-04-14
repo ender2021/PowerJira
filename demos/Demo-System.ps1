@@ -56,7 +56,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET ISSUE NAVIGATOR DEFAULT COLUMNS
 #Invoke-JiraGetIssueNavigatorDefaultColumns
 
-
+#SET ISSUE NAVIGATOR DEFAULT COLUMNS
+#Invoke-JiraSetIssueNavigatorDefaultColumns @("issuetype","issuekey","summary","assignee","reporter","priority","status","resolution","created","updated","duedate")
 
 #end tests
 
