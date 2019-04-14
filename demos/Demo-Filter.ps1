@@ -62,7 +62,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #RESET FILTER COLUMNS
 #Invoke-JiraResetFilterColumns 10004
 
-
+#SET FILTER COLUMNS
+#Invoke-JiraSetFilterColumns 10004 @("issuekey","summary")
 
 #end tests
 
