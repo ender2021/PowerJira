@@ -56,6 +56,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #REMOVE FAVOURITE FILTER
 #Invoke-JiraRemoveFavouriteFilter 10004
 
+#GET FILTER COLUMNS
+Invoke-JiraGetFilterColumns 10004
+
 #end tests
 
 #close the Jira session
