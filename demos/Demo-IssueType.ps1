@@ -32,6 +32,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #SET ISSUE TYPE PROPERTY
 #Invoke-JiraSetIssueTypeProperty 10005 "propKey" @{name="neato";description="Super cool!"}
 
+#GET ISSUE TYPE PROPERTY
+#(Invoke-JiraGetIssueTypeProperty 10005 "propKey").value
+
 #end tests
 
 #close the Jira session
