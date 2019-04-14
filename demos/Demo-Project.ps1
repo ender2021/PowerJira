@@ -114,6 +114,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraCreateProject "RCP" "REST-Created Project" "software" "com.pyxis.greenhopper.jira:gh-simplified-basic" (Invoke-JiraGetCurrentUser).accountId
 #Invoke-JiraUpdateProject "RCP" -Name "REST-Updated Project"
 
+#UPDATE PROJECT TYPE
+#Invoke-JiraUpdateProjectType RCP "business"
 
 #end tests
 
