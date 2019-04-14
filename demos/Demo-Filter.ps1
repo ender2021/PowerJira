@@ -47,6 +47,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #DELETE FILTER SHARE PERMISSION
 #Invoke-JiraDeleteFilterSharePermission 10004 10102
 
+#ADD FILTER SHARE PERMISSION
+#Invoke-JiraAddFilterSharePermission 10004 (New-JiraFilterSharePermission "authenticated")
+
+
 #end tests
 
 #close the Jira session
