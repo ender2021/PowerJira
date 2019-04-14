@@ -7,6 +7,7 @@ Describe "Invoke-JiraRestMethod" {
     Context "Missing/Malformed JiraConnection Object" {
         It "throws 'Missing/Malformed JiraConnection' when connection is not supplied and no session is open" {
             Mock "Invoke-RestMethod" $MockInvokeRestMethod
+            $Global:PowerJira.Session = $null
             { Invoke-JiraRestMethod $null "some/path" "GET" } | Should -Throw 'Missing/Malformed JiraConnection'
         }
         It 'throws validation error when the JiraConnection object is missing required keys' {
@@ -152,13 +153,13 @@ Describe "Invoke-JiraRestMethod" {
             $verb = "POST"
             {Invoke-JiraRestMethod $conn $path $verb} | Should -Throw "Invalid HttpMethod / Parameter combination"
         }
-        It "does not allow 'PUT' without a body or form parameter" {
+        It "allows 'PUT' without a body or form parameter" {
             Mock "New-JiraConnection" $MockNewJiraConnection
             Mock "Invoke-RestMethod" $MockInvokeRestMethod
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "PUT"
-            {Invoke-JiraRestMethod $conn $path $verb} | Should -Throw "Invalid HttpMethod / Parameter combination"
+            {Invoke-JiraRestMethod $conn $path $verb} | Should -Not -Throw "Invalid HttpMethod / Parameter combination"
         }
         It "does not allow 'PATCH' without a body or form parameter" {
             Mock "New-JiraConnection" $MockNewJiraConnection
