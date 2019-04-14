@@ -12,6 +12,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET FIELDS
 #Invoke-JiraGetFields | Format-Table
 
+#CREATE CUSTOM FIELD
+#Invoke-JiraCreateCustomField "My REST Date" "datepicker" "I created this field using REST!"
+
 #end tests
 
 #close the Jira session
