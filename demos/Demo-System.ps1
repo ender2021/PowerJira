@@ -53,6 +53,11 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #SET TIME TRACKING SETTINGS
 #Invoke-JiraSetTimeTrackingSettings 7 4 "hours" "week"
 
+#GET ISSUE NAVIGATOR DEFAULT COLUMNS
+#Invoke-JiraGetIssueNavigatorDefaultColumns
+
+
+
 #end tests
 
 #close the Jira session
