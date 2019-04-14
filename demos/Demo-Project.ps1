@@ -10,8 +10,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #GET PROJECT
-# $proj = Invoke-JiraGetProject "JPT"
-# $proj
+#Invoke-JiraGetProject JPT
 
 #GET PROJECT VERSIONS
 #Invoke-JiraGetProjectVersions -ProjectIdOrKey "JPT"
@@ -107,6 +106,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #CREATE PROJECT
 #Invoke-JiraCreateProject "RCP" "REST-Created Project" "software" "com.pyxis.greenhopper.jira:gh-simplified-basic" (Invoke-JiraGetCurrentUser).accountId
+
+#DELETE PROJECT
+#Invoke-JiraDeleteProject RCP
 
 #end tests
 
