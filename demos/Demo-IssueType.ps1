@@ -12,6 +12,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET ISSUE TYPE
 #Invoke-JiraGetIssueType 10000
 
+#GET ALTERNATIVE ISSUES TYPES
+#Invoke-JiraGetAlternativeIssueTypes 10000
+
 #end tests
 
 #close the Jira session
