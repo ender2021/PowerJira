@@ -15,6 +15,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET ALTERNATIVE ISSUES TYPES
 #Invoke-JiraGetAlternativeIssueTypes 10000
 
+#ADD ISSUE TYPE AVATAR
+#$item = get-item $PSScriptRoot\icon.png
+#Invoke-JiraAddIssueTypeAvatar 10000 $item
+
 #end tests
 
 #close the Jira session
