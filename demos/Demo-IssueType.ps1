@@ -26,6 +26,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraCreateIssueType "REST Method" "Issues representing REST methods"
 #Invoke-JiraCreateIssueType "REST Method Sub-task" "Sub-task of issues representing REST methods" -Subtask
 
+#DELETE ISSUE TYPE
+#Invoke-JiraDeleteIssueType 10006
+
 #end tests
 
 #close the Jira session
