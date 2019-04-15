@@ -66,7 +66,7 @@ function Invoke-JiraSearchIssues {
             jql = $JQL
             startAt = $StartAt
             maxResults = $MaxResults
-            fields = $Fields
+            fields = $Fields -join ","
             validateQuery = $QueryValidation
         }
         if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
