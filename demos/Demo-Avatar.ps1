@@ -15,6 +15,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET AVATARS
 #Invoke-JiraGetAvatars "project" 10000 | fl
 
+#ADD AVATAR
+#$item = Get-Item $PSScriptRoot\icon.png
+#Invoke-JiraAddAvatar "issuetype" 10000 $item
+
 #end tests
 
 #close the Jira session
