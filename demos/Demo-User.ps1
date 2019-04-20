@@ -28,10 +28,13 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetCurrentUserPermissions @("WORK_ON_ISSUES","VIEW_VOTERS_AND_WATCHERS") | fl
 
 #GET CURRENT USER PREFERENCE
-#Invoke-JiraGetCurrentUserPreference "user.notifications.mimetype"
+#Invoke-JiraGetCurrentUserPreference "user.madeup.json"
 
 #RESET CURRENT USER PREFERENCE
 #Invoke-JiraResetCurrentUserPreference "user.notifications.mimetype"
+
+#SET CURRENT USER PREFERENCE
+#Invoke-JiraSetCurrentUserPreference "user.madeup.json" @{attr="someValue";now=(Get-Date)}
 
 #end tests
 
