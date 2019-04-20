@@ -10,7 +10,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #GET SYSTEM AVATARS
-Invoke-JiraGetSystemAvatars "issuetype" | fl
+#Invoke-JiraGetSystemAvatars "issuetype" | fl
+
+#GET AVATARS
+#Invoke-JiraGetAvatars "project" 10000 | fl
 
 #end tests
 
