@@ -66,6 +66,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #RESET USER DEFAULT COLUMNS
 #Invoke-JiraResetUserDefaultColumns
 
+#GET USERS ASSIGNABLE TO PROJECTS
+Invoke-JiraGetUsersAssignableToProjects @("JPT")
+
 #end tests
 
 #close the Jira session
