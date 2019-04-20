@@ -36,6 +36,12 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #SET CURRENT USER PREFERENCE
 #Invoke-JiraSetCurrentUserPreference "user.madeup.json" @{attr="someValue";now=(Get-Date)}
 
+#GET CURRENT USER LOCALE
+#Invoke-JiraGetCurrentUserLocale
+
+#RESET CURRENT USER LOCALE
+Invoke-JiraResetCurrentUserLocale
+
 #end tests
 
 #close the Jira session
