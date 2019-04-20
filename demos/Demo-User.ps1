@@ -49,7 +49,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetUserPropertyKeys (Invoke-JiraGetCurrentUser).accountId
 
 #GET USER PROPERTY
-#Invoke-JiraGetUserProperty (Invoke-JiraGetCurrentUser).accountId "self"
+#Invoke-JiraGetUserProperty (Invoke-JiraGetCurrentUser).accountId "myProp"
+
+#SET USER PROPERTY
+#Invoke-JiraSetUserProperty (Invoke-JiraGetCurrentUser).accountId "myProp" @{hasValue=$true}
 
 #end tests
 

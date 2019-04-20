@@ -13,12 +13,12 @@ function Invoke-JiraSetCurrentUserPreference {
         [Parameter(Mandatory,Position=1,ParameterSetName="TextValue")]
         [ValidateNotNullOrEmpty()]
         [string]
-        $ParameterValueText,
+        $ValueText,
 
         # Use this parameter to pass a Json object
         [Parameter(Mandatory,Position=1,ParameterSetName="JsonValue")]
         [hashtable]
-        $ParameterValueJson,
+        $ValueJson,
 
         # The JiraConnection object to use for the request
         [Parameter(Position=2)]
@@ -34,9 +34,9 @@ function Invoke-JiraSetCurrentUserPreference {
         }
 
         if ($PSCmdlet.ParameterSetName -eq "TextValue") {
-            Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -LiteralBody $ParameterValueText
+            Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -LiteralBody $ValueText
         } else {
-            Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $ParameterValueJson
+            Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $ValueJson
         }
     }
 }
