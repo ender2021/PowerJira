@@ -45,6 +45,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #SET CURRENT USER LOCALE
 #Invoke-JiraSetCurrentUserLocale "fr_FR"
 
+#GET USER PROPERTY KEYS
+#Invoke-JiraGetUserPropertyKeys (Invoke-JiraGetCurrentUser).accountId
+
 #end tests
 
 #close the Jira session
