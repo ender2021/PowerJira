@@ -48,6 +48,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET USER PROPERTY KEYS
 #Invoke-JiraGetUserPropertyKeys (Invoke-JiraGetCurrentUser).accountId
 
+#GET USER PROPERTY
+#Invoke-JiraGetUserProperty (Invoke-JiraGetCurrentUser).accountId "self"
+
 #end tests
 
 #close the Jira session
