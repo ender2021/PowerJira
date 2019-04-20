@@ -40,7 +40,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetCurrentUserLocale
 
 #RESET CURRENT USER LOCALE
-Invoke-JiraResetCurrentUserLocale
+#Invoke-JiraResetCurrentUserLocale
+
+#SET CURRENT USER LOCALE
+#Invoke-JiraSetCurrentUserLocale "fr_FR"
 
 #end tests
 
