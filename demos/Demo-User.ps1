@@ -24,6 +24,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$users = Invoke-JiraFindUsers "Melanie"
 #Invoke-JiraGetUserGroups $users[0].accountId
 
+#GET CURRENT USER PERMISSIONS
+#Invoke-JiraGetCurrentUserPermissions @("WORK_ON_ISSUES","VIEW_VOTERS_AND_WATCHERS") | fl
 
 #end tests
 
