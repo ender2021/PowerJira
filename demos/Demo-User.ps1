@@ -30,6 +30,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET CURRENT USER PREFERENCE
 #Invoke-JiraGetCurrentUserPreference "user.notifications.mimetype"
 
+#RESET CURRENT USER PREFERENCE
+#Invoke-JiraResetCurrentUserPreference "user.notifications.mimetype"
+
 #end tests
 
 #close the Jira session
