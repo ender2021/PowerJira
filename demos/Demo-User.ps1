@@ -67,7 +67,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraResetUserDefaultColumns
 
 #GET USERS ASSIGNABLE TO PROJECTS
-Invoke-JiraGetUsersAssignableToProjects @("JPT")
+#Invoke-JiraGetUsersAssignableToProjects @("JPT")
+
+#GET USERS ASSIGNABLE TO ISSUES
+#Invoke-JiraGetUsersAssignableToIssues -IssueKey "JPT-1"
 
 #end tests
 
