@@ -63,7 +63,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #SET USER DEFAULT COLUMNS
 #Invoke-JiraSetUserDefaultColumns @("issuekey","summary")
 
-
+#RESET USER DEFAULT COLUMNS
+#Invoke-JiraResetUserDefaultColumns
 
 #end tests
 
