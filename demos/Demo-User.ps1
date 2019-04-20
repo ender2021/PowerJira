@@ -27,6 +27,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET CURRENT USER PERMISSIONS
 #Invoke-JiraGetCurrentUserPermissions @("WORK_ON_ISSUES","VIEW_VOTERS_AND_WATCHERS") | fl
 
+#GET CURRENT USER PREFERENCE
+#Invoke-JiraGetCurrentUserPreference "user.notifications.mimetype"
+
 #end tests
 
 #close the Jira session
