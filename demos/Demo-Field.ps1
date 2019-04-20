@@ -10,7 +10,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #GET FIELDS
-#Invoke-JiraGetFields | Format-Table
+# $fields = Invoke-JiraGetFields
+# $fields.GetEnumerator() | Where-Object {$_.navigable -eq "True"} | sort {$_.id} | Export-Csv $PSScriptRoot\fields.csv
 
 #CREATE CUSTOM FIELD
 #Invoke-JiraCreateCustomField "My REST Date" "datepicker" "I created this field using REST!"
