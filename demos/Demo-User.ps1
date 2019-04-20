@@ -54,6 +54,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #SET USER PROPERTY
 #Invoke-JiraSetUserProperty (Invoke-JiraGetCurrentUser).accountId "myProp" @{hasValue=$true}
 
+#DELETE USER PROPERTY
+#Invoke-JiraDeleteUserProperty (Invoke-JiraGetCurrentUser).accountId "myProp"
+
 #end tests
 
 #close the Jira session
