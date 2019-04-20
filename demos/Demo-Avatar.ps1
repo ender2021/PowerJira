@@ -13,11 +13,14 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetSystemAvatars "issuetype" | fl
 
 #GET AVATARS
-#Invoke-JiraGetAvatars "project" 10000 | fl
+#Invoke-JiraGetAvatars "issuetype" 10000 | fl
 
 #ADD AVATAR
 #$item = Get-Item $PSScriptRoot\icon.png
 #Invoke-JiraAddAvatar "issuetype" 10000 $item
+
+#DELETE AVATAR
+#Invoke-JiraDeleteAvatar "issuetype" 10000 10514
 
 #end tests
 
