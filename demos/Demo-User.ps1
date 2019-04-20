@@ -57,6 +57,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #DELETE USER PROPERTY
 #Invoke-JiraDeleteUserProperty (Invoke-JiraGetCurrentUser).accountId "myProp"
 
+#GET USER DEFAULT COLUMNS
+Invoke-JiraGetUserDefaultColumns
+
+
 #end tests
 
 #close the Jira session
