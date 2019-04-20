@@ -58,7 +58,11 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraDeleteUserProperty (Invoke-JiraGetCurrentUser).accountId "myProp"
 
 #GET USER DEFAULT COLUMNS
-Invoke-JiraGetUserDefaultColumns
+#Invoke-JiraGetUserDefaultColumns
+
+#SET USER DEFAULT COLUMNS
+#Invoke-JiraSetUserDefaultColumns @("issuekey","summary")
+
 
 
 #end tests

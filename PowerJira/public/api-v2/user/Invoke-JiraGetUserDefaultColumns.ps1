@@ -19,6 +19,6 @@ function Invoke-JiraGetUserDefaultColumns {
         $query=@{}
         if($PSBoundParameters.ContainsKey("User")){$query.Add("accountId",$User)}
 
-        (Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query).keys
+        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
     }
 }
