@@ -19,7 +19,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetDashboard 10000
 
 #GET DASHBOARD ITEM PROPERTY KEYS
-Invoke-JiraGetDashboardItemPropertyKeys 10000 10000
+#Invoke-JiraGetDashboardItemPropertyKeys 10000 10000
+
+#SET DASHBOARD ITEM PROPERTY
+#Invoke-JiraSetDashboardItemProperty 10000 10000 "prop" @{obj="json"}
 
 #end tests
 
