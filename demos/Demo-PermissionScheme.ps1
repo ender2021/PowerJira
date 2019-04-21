@@ -12,6 +12,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET ALL PERMISSIONS SCHEMES
 #Invoke-JiraGetAllPermissionSchemes
 
+#GET PERMISSION SCHEME
+#Invoke-JiraGetPermissionScheme 0
+
 #end tests
 
 #close the Jira session
