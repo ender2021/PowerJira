@@ -72,6 +72,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET USERS ASSIGNABLE TO ISSUES
 #Invoke-JiraGetUsersAssignableToIssues -IssueKey "JPT-1"
 
+#GET USERS WITH PERMISSIONS
+#Invoke-JiraGetUsersWithPermissions "JPT" @("ASSIGNABLE_USER")
+
 #end tests
 
 #close the Jira session
