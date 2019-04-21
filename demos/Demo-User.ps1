@@ -78,6 +78,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET USERS WITH BROWSE PERMISSION
 #Invoke-JiraGetUsersWithBrowsePermission "JPT" "justin"
 
+#GET USERS FOR PICKER
+#Invoke-JiraGetUsersForPicker "ju" -ShowAvatar
+
 #end tests
 
 #close the Jira session
