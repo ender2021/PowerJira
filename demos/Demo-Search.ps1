@@ -28,6 +28,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET FIELD AUTOCOMPLETE SUGGESTIONS
 #Invoke-JiraGetFieldAutocompleteSuggestions "project" "jpt"
 
+#REPLACE PERSONAL IDENTIFIERS
+#Invoke-JiraReplacePersonalIdentifiers @('reporter = admin')
+
 #end tests
 
 #close the Jira session
