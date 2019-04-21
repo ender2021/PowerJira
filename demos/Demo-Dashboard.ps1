@@ -18,6 +18,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET DASHBOARD
 #Invoke-JiraGetDashboard 10000
 
+#GET DASHBOARD ITEM PROPERTY KEYS
+Invoke-JiraGetDashboardItemPropertyKeys 10000 10000
+
 #end tests
 
 #close the Jira session
