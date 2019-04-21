@@ -15,6 +15,13 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET PERMISSION SCHEME
 #Invoke-JiraGetPermissionScheme 0
 
+#CREATE PERMISSION SCHEME
+#Invoke-JiraCreatePermissionScheme "scheme with no details"
+$permissions = @(
+    New-JiraPermissionGrant (New-JiraPermissionHolder "projectLead") "ADD_COMMENTS"
+)
+Invoke-JiraCreatePermissionScheme "scheme with a permission" -Permissions $permissions
+
 #end tests
 
 #close the Jira session
