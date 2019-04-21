@@ -75,6 +75,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET USERS WITH PERMISSIONS
 #Invoke-JiraGetUsersWithPermissions "JPT" @("ASSIGNABLE_USER")
 
+#GET USERS WITH BROWSE PERMISSION
+#Invoke-JiraGetUsersWithBrowsePermission "JPT" "justin"
+
 #end tests
 
 #close the Jira session
