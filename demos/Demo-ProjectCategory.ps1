@@ -21,6 +21,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #UPDATE PROJECT CATEGORY
 #Invoke-JiraUpdateProjectCategory 10000 "name change"
 
+#DELETE PROJECT CATEGORY
+#Invoke-JiraDeleteProjectCategory 10000
+
 #end tests
 
 #close the Jira session
