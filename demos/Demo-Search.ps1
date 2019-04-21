@@ -25,6 +25,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET FIELD REFERENCE DATA
 #Invoke-JiraGetFieldReferenceData | fl
 
+#GET FIELD AUTOCOMPLETE SUGGESTIONS
+#Invoke-JiraGetFieldAutocompleteSuggestions "project" "jpt"
+
 #end tests
 
 #close the Jira session
