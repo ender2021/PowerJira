@@ -29,7 +29,11 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraUpdatePermissionScheme 10002 "removed permissions" -Permissions @()
 
 #GET PERMISSION SCHEME GRANTS
-#Invoke-JiraGetPermissionSchemeGrants 10000
+#Invoke-JiraGetPermissionSchemeGrants 10002
+
+#ADD PERMISSION GRANT
+#$perm = New-JiraPermissionGrant (New-JiraPermissionHolder "projectLead") "ADD_COMMENTS"
+#Invoke-JiraAddPermissionGrant 10002 $perm
 
 #end tests
 
