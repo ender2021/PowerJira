@@ -13,7 +13,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetDashboards "my"
 
 #SEARCH DASHBOARDS
-Invoke-JiraSearchDashboards
+#Invoke-JiraSearchDashboards
+
+#GET DASHBOARD
+#Invoke-JiraGetDashboard 10000
 
 #end tests
 
