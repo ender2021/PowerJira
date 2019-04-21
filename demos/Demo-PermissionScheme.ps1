@@ -17,10 +17,13 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #CREATE PERMISSION SCHEME
 #Invoke-JiraCreatePermissionScheme "scheme with no details"
-$permissions = @(
-    New-JiraPermissionGrant (New-JiraPermissionHolder "projectLead") "ADD_COMMENTS"
-)
-Invoke-JiraCreatePermissionScheme "scheme with a permission" -Permissions $permissions
+# $permissions = @(
+#     New-JiraPermissionGrant (New-JiraPermissionHolder "projectLead") "ADD_COMMENTS"
+# )
+# Invoke-JiraCreatePermissionScheme "scheme with a permission" -Permissions $permissions
+
+#DELETE PERMISSION SCHEME
+#Invoke-JiraDeletePermissionScheme 10001
 
 #end tests
 
