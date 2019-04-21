@@ -22,6 +22,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # $context = New-JiraExpressionContext JPT-1
 # (Invoke-JiraEvaluateExpression $expression $context).value
 
+#GET FIELD REFERENCE DATA
+#Invoke-JiraGetFieldReferenceData | fl
+
 #end tests
 
 #close the Jira session
