@@ -35,6 +35,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$perm = New-JiraPermissionGrant (New-JiraPermissionHolder "projectLead") "ADD_COMMENTS"
 #Invoke-JiraAddPermissionGrant 10002 $perm
 
+#GET PERMISSION SCHEME GRANT
+#Invoke-JiraGetPermissionSchemeGrant 10002 10565
+
 #end tests
 
 #close the Jira session
