@@ -38,6 +38,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET PERMISSION SCHEME GRANT
 #Invoke-JiraGetPermissionSchemeGrant 10002 10565
 
+#DELETE PERMISSION SCHEME GRANT
+#Invoke-JiraDeletePermissionSchemeGrant 10002 10565
+
 #end tests
 
 #close the Jira session
