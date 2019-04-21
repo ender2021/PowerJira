@@ -17,8 +17,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # $results = Invoke-JiraSearchIssues -JQL "project = JPT" -GET
 # $results.issues | Format-List
 
-$results = Invoke-JiraSearchIssues "Project = GDISPROJ ORDER BY resolutiondate ASC" -GET -MaxResults 1
-$results.issues[0].fields | sort
+#EVALUTE EXPRESSION
+# $expression = "issue.comments.filter(c => c.author.accountId == user.accountId).map(c => c.body)"
+# $context = New-JiraExpressionContext JPT-1
+# (Invoke-JiraEvaluateExpression $expression $context).value
 
 #end tests
 
