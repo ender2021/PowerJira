@@ -12,6 +12,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET DASHBOARDS
 #Invoke-JiraGetDashboards "my"
 
+#SEARCH DASHBOARDS
+Invoke-JiraSearchDashboards
+
 #end tests
 
 #close the Jira session
