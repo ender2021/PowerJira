@@ -28,6 +28,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #UPDATE PERMISSION SCHEME
 #Invoke-JiraUpdatePermissionScheme 10002 "removed permissions" -Permissions @()
 
+#GET PERMISSION SCHEME GRANTS
+#Invoke-JiraGetPermissionSchemeGrants 10000
+
 #end tests
 
 #close the Jira session
