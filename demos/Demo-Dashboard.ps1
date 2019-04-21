@@ -24,6 +24,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #SET DASHBOARD ITEM PROPERTY
 #Invoke-JiraSetDashboardItemProperty 10000 10000 "prop" @{obj="json"}
 
+#GET DASHBOARD ITEM PROPERTY
+#Invoke-JiraGetDashboardItemProperty 10000 10000 "prop"
+
 #end tests
 
 #close the Jira session
