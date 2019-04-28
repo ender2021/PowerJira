@@ -100,7 +100,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraResetSchemeDefaultWorkflow 10104
 
 #UPDATE DRAFT SCHEME DEFAULT WORKFLOW
-#Invoke-JiraUpdateDraftDefaultWorkflow 10105 "jira"
+#Invoke-JiraUpdateDraftDefaultWorkflow 10105 "classic default workflow"
+
+#RESET DRAFT DEFAULT WORKFLOW
+#Invoke-JiraResetDraftDefaultWorkflow 10105
 
 #end tests
 
