@@ -58,6 +58,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #SET ISSUE TYPE WORKFLOW
 #Invoke-JiraSetIssueTypeWorkflow 10103 10000 jira
 
+#SET DRAFT ISSUE TYPE WORKFLOW
+#Invoke-JiraSetDraftIssueTypeWorkflow 10103 10000 jira
+
 #end tests
 
 #close the Jira session
