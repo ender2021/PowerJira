@@ -10,7 +10,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #GET ALL SCREENS
-#Invoke-JiraGetAllScreens -MaxResults 5
+#(Invoke-JiraGetAllScreens).values[0]
+
+#ADD FIELD TO DEFAULT SCREEN
+#Invoke-JiraAddFieldToDefaultScreen customfield_10003
 
 #end tests
 
