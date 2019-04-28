@@ -39,6 +39,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET DRAFT ISSUE TYPES WORKFLOWS
 #Invoke-JiraGetDraftIssueTypesWorkflows 10103
 
+#CREATE WORKFLOW TRANSITION PROPERTY
+#Invoke-JiraCreateWorkflowTransitionProperty "Editable Workflow" 11 "newProp" "value of the new property"
+#Invoke-JiraGetWorkflowTransitionProperties "Editable Workflow" 11
+
 #end tests
 
 #close the Jira session
