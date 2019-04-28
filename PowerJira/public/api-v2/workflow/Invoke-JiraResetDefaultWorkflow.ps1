@@ -1,5 +1,5 @@
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-workflowscheme-id-default-delete
-function Invoke-JiraResetSchemeDefaultWorkflow {
+function Invoke-JiraResetDefaultWorkflow {
     [CmdletBinding()]
     param (
         # The ID of the scheme to update
