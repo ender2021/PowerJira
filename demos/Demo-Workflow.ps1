@@ -81,6 +81,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$mappings = @((New-JiraIssueTypeWorkflowMapping 10000 "jira"), (New-JiraIssueTypeWorkflowMapping 10002 "classic default workflow"))
 #Invoke-JiraUpdateWorkflowScheme 10106 -Description "This workflow was updated" -DefaultWorkflow "jira" -IssueTypeMappings $mappings
 
+#DELETE WORKFLOW SCHEME
+#Invoke-JiraDeleteWorkflowScheme 10106
+
 #end tests
 
 #close the Jira session
