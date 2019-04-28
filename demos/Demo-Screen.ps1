@@ -13,13 +13,13 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #(Invoke-JiraGetAllScreens).values[0]
 
 #ADD FIELD TO DEFAULT SCREEN
-#Invoke-JiraAddFieldToDefaultScreen customfield_10003
+#Invoke-JiraAddDefaultScreenField customfield_10003
 
 #GET AVAILABLE SCREEN FIELDS
-#Invoke-JiraGetAvailableScreenFields 1
+#Invoke-JiraGetAvailableScreenFields 2
 
 #GET ALL SCREEN TABS
-#Invoke-JiraGetAllScreenTabs 1
+#Invoke-JiraGetAllScreenTabs 2
 
 #CREATE SCREEN TAB
 #Invoke-JiraCreateScreenTab 1 "tabName"
@@ -29,6 +29,12 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #DELETE SCREEN TAB
 #Invoke-JiraDeleteScreenTab 1 10106
+
+#GET ALL SCREEN TAB FIELDS
+#Invoke-JiraGetAllScreenTabFields 1 10000
+
+#ADD SCREEN TAB FIELD
+#Invoke-JiraAddScreenTabField 2 10001 versions
 
 #end tests
 
