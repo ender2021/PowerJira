@@ -42,6 +42,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #REORDER SCREEN TAB
 #Invoke-JiraReorderScreenTab 1 10107 1
 
+#REORDER SCREEN TAB FIELD
+#Invoke-JiraReorderScreenTabField 2 10001 versions Last
+
 #end tests
 
 #close the Jira session
