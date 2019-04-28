@@ -21,6 +21,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET ALL SCREEN TABS
 #Invoke-JiraGetAllScreenTabs 1
 
+#CREATE SCREEN TAB
+#Invoke-JiraCreateScreenTab 1 "tabName"
+
 #end tests
 
 #close the Jira session
