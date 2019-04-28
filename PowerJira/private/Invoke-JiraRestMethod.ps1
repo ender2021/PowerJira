@@ -78,8 +78,6 @@ function Invoke-JiraRestMethod {
         #validate method / body combination
         if ((@("GET","DELETE") -contains $HttpMethod) -and !($PSCmdlet.ParameterSetName -match "NoBody")) {
             throw "Invalid HttpMethod / Parameter combination: Cannot use HttpMethod '$HttpMethod' with -Body, -LiteralBody, or -Form"
-        } elseif ((@("POST","PATCH") -contains $HttpMethod) -and ($PSCmdlet.ParameterSetName -match "NoBody")) {
-            throw "Invalid HttpMethod / Parameter combination: HttpMethod '$HttpMethod' requires one of -Body, -LiteralBody, or -Form"
         }
 
         #compile headers object

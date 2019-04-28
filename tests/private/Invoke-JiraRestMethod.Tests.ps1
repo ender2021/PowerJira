@@ -145,13 +145,13 @@ Describe "Invoke-JiraRestMethod" {
         }
     }
     Context "POST/PUT/PATCH body validation" {
-        It "does not allow 'POST' without a body or form parameter" {
+        It "allows 'POST' without a body or form parameter" {
             Mock "New-JiraConnection" $MockNewJiraConnection
             Mock "Invoke-RestMethod" $MockInvokeRestMethod
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "POST"
-            {Invoke-JiraRestMethod $conn $path $verb} | Should -Throw "Invalid HttpMethod / Parameter combination"
+            {Invoke-JiraRestMethod $conn $path $verb} | Should -Not -Throw "Invalid HttpMethod / Parameter combination"
         }
         It "allows 'PUT' without a body or form parameter" {
             Mock "New-JiraConnection" $MockNewJiraConnection
@@ -161,13 +161,13 @@ Describe "Invoke-JiraRestMethod" {
             $verb = "PUT"
             {Invoke-JiraRestMethod $conn $path $verb} | Should -Not -Throw "Invalid HttpMethod / Parameter combination"
         }
-        It "does not allow 'PATCH' without a body or form parameter" {
+        It "allows 'PATCH' without a body or form parameter" {
             Mock "New-JiraConnection" $MockNewJiraConnection
             Mock "Invoke-RestMethod" $MockInvokeRestMethod
             $conn = New-JiraConnection dummy dummy dummy
             $path = "some/path"
             $verb = "PATCH"
-            {Invoke-JiraRestMethod $conn $path $verb} | Should -Throw "Invalid HttpMethod / Parameter combination"
+            {Invoke-JiraRestMethod $conn $path $verb} | Should -Not -Throw "Invalid HttpMethod / Parameter combination"
         }
         It "allows 'POST' with -Body" {
             Mock "New-JiraConnection" $MockNewJiraConnection
