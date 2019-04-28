@@ -49,6 +49,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #DELETE WORKFLOW TRANSITION PROPERTY
 #Invoke-JiraDeleteWorkflowTransitionProperty "Editable Workflow" 11 "newProp"
 
+#SET DRAFT WORKFLOW ISSUE TYPES
+#Invoke-JiraSetDraftWorkflowIssueTypes 10103 -Default @(10000,10001)
+
 #end tests
 
 #close the Jira session
