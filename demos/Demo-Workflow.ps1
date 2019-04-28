@@ -50,7 +50,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraDeleteWorkflowTransitionProperty "Editable Workflow" 11 "newProp"
 
 #SET DRAFT WORKFLOW ISSUE TYPES
-#Invoke-JiraSetDraftWorkflowIssueTypes 10103 -Default @(10000,10001)
+#Invoke-JiraSetDraftWorkflowIssueTypes 10103 jira @(10000,10001)
+
+#SET WORKFLOW ISSUE TYPES
+#Invoke-JiraSetWorkflowIssueTypes 10103 jira @(10000,10001)
 
 #end tests
 
