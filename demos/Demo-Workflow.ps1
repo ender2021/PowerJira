@@ -87,6 +87,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #CREATE DRAFT WORKFLOW
 #Invoke-JiraCreateDraftWorkflowScheme 10105
 
+#UPDATE DRAFT WORKFLOW
+#Invoke-JiraUpdateDraftWorkflowScheme 10105 -Name "draft name updated"
+
 #end tests
 
 #close the Jira session
