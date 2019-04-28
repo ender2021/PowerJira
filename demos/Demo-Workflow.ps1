@@ -64,6 +64,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #DELETE WORKFLOW ISSUE TYPES
 #Invoke-JiraDeleteWorkflowIssueTypes 10103 "classic default workflow"
 
+#DELETE DRAFT WORKFLOW ISSUE TYPES
+#Invoke-JiraDeleteDraftWorkflowIssueTypes 10103 "classic default workflow"
+
 #end tests
 
 #close the Jira session
