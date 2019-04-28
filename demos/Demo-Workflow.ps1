@@ -84,11 +84,14 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #DELETE WORKFLOW SCHEME
 #Invoke-JiraDeleteWorkflowScheme 10106
 
-#CREATE DRAFT WORKFLOW
+#CREATE DRAFT WORKFLOW SCHEME
 #Invoke-JiraCreateDraftWorkflowScheme 10105
 
-#UPDATE DRAFT WORKFLOW
+#UPDATE DRAFT WORKFLOW SCHEME
 #Invoke-JiraUpdateDraftWorkflowScheme 10105 -Name "draft name updated"
+
+#DELETE DRAFT WORKFLOW SCHEME
+#Invoke-JiraDeleteDraftWorkflowScheme 10105
 
 #end tests
 
