@@ -43,6 +43,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraCreateWorkflowTransitionProperty "Editable Workflow" 11 "newProp" "value of the new property"
 #Invoke-JiraGetWorkflowTransitionProperties "Editable Workflow" 11
 
+#UPDATE WORKFLOW TRANSITION PROPERTY
+Invoke-JiraUpdateWorkflowTransitionProperty "Editable Workflow" 11 "newProp" "the value has been changed"
+
 #end tests
 
 #close the Jira session
