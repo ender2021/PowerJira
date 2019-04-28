@@ -73,6 +73,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #DELETE DRAFT ISSUE TYPE WORKFLOW
 #Invoke-JiraDeleteDraftIssueTypeWorkflow 10103 10000
 
+#CREATE WORKFLOW SCHEME
+#$mappings = @((New-JiraIssueTypeWorkflowMapping 10000 "classic default workflow"), (New-JiraIssueTypeWorkflowMapping 10002 "jira"))
+#Invoke-JiraCreateWorkflowScheme "New Test Scheme 3" -DefaultWorkflow "classic default workflow" -IssueTypeMappings $mappings
+
 #end tests
 
 #close the Jira session
