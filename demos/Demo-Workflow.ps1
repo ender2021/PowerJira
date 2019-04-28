@@ -27,6 +27,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET WORKFLOW TRANSITION PROPERTIES
 #Invoke-JiraGetWorkflowTransitionProperties "Software Simplified Workflow for Project JPT" 11 -IncludeReserved
 
+#GET ISSUE TYPE WORKFLOW
+Invoke-JiraGetIssueTypeWorkflow 10103 10002
+
 #end tests
 
 #close the Jira session
