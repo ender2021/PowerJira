@@ -84,6 +84,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #DELETE WORKFLOW SCHEME
 #Invoke-JiraDeleteWorkflowScheme 10106
 
+#CREATE DRAFT WORKFLOW
+#Invoke-JiraCreateDraftWorkflowScheme 10105
+
 #end tests
 
 #close the Jira session
