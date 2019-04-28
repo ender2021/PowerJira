@@ -18,6 +18,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET AVAILABLE SCREEN FIELDS
 #Invoke-JiraGetAvailableScreenFields 1
 
+#GET ALL SCREEN TABS
+#Invoke-JiraGetAllScreenTabs 1
+
 #end tests
 
 #close the Jira session
