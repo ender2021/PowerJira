@@ -33,8 +33,11 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET DRAFT ISSUE TYPE WORKFLOW
 #Invoke-JiraGetDraftIssueTypeWorkflow 10103 10001
 
-#GET SCHEME ISSUE TYPES WORKFLOWS
-#Invoke-JiraGetWorkflowSchemeIssueTypesWorkflows 10103 "classic default workflow"
+#GET ISSUE TYPES WORKFLOWS
+#Invoke-JiraGetIssueTypesWorkflows 10103 "classic default workflow"
+
+#GET DRAFT ISSUE TYPES WORKFLOWS
+#Invoke-JiraGetDraftIssueTypesWorkflows 10103
 
 #end tests
 

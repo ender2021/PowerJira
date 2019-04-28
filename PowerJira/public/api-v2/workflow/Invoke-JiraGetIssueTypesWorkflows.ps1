@@ -1,5 +1,5 @@
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-workflowscheme-id-workflow-get
-function Invoke-JiraGetWorkflowSchemeIssueTypesWorkflows {
+function Invoke-JiraGetIssueTypesWorkflows {
     [CmdletBinding()]
     param (
         # The id of the scheme
