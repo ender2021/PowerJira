@@ -22,7 +22,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetWorkflowSchemeDraft 10000
 
 #GET DRAFT DEFAULT WORKFLOW 
-Invoke-JiraGetDraftDefaultWorkflow 10000
+#Invoke-JiraGetDraftDefaultWorkflow 10000
+
+#GET WORKFLOW TRANSITION PROPERTIES
+#Invoke-JiraGetWorkflowTransitionProperties "Software Simplified Workflow for Project JPT" 11 -IncludeReserved
 
 #end tests
 
