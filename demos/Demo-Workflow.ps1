@@ -77,6 +77,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$mappings = @((New-JiraIssueTypeWorkflowMapping 10000 "classic default workflow"), (New-JiraIssueTypeWorkflowMapping 10002 "jira"))
 #Invoke-JiraCreateWorkflowScheme "New Test Scheme 3" -DefaultWorkflow "classic default workflow" -IssueTypeMappings $mappings
 
+#UPDATE WORKFLOW SCHEME
+#$mappings = @((New-JiraIssueTypeWorkflowMapping 10000 "jira"), (New-JiraIssueTypeWorkflowMapping 10002 "classic default workflow"))
+#Invoke-JiraUpdateWorkflowScheme 10106 -Description "This workflow was updated" -DefaultWorkflow "jira" -IssueTypeMappings $mappings
+
 #end tests
 
 #close the Jira session
