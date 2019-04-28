@@ -9,9 +9,9 @@ function Invoke-JiraGetAvatars {
         $Type,
 
         # The ID of the issuetype or project to retrieve avatars for
-        [Parameter(Mandatory,Position=1)]
+        [Parameter(Mandatory,Position=1,ValueFromPipeline,ValueFromPipelineByPropertyName)]
         [string]
-        $EntityId,
+        $Id,
 
         # The JiraConnection object to use for the request
         [Parameter(Position=2)]
@@ -19,7 +19,7 @@ function Invoke-JiraGetAvatars {
         $JiraConnection
     )
     process {
-        $functionPath = "/rest/api/2/universal_avatar/type/$Type/owner/$EntityId"
+        $functionPath = "/rest/api/2/universal_avatar/type/$Type/owner/$Id"
         $verb = "GET"
 
         Invoke-JiraRestMethod $JiraConnection $functionPath $verb

@@ -14,9 +14,9 @@ function Invoke-JiraDeleteAvatar {
         $EntityId,
 
         # The ID of the avatar to delete
-        [Parameter(Mandatory,Position=2)]
+        [Parameter(Mandatory,Position=2,ValueFromPipeline,ValueFromPipelineByPropertyName)]
         [int64]
-        $AvatarId,
+        $Id,
 
         # The JiraConnection object to use for the request
         [Parameter(Position=3)]
@@ -24,7 +24,7 @@ function Invoke-JiraDeleteAvatar {
         $JiraConnection
     )
     process {
-        $functionPath = "/rest/api/2/universal_avatar/type/$Type/owner/$EntityId/avatar/$AvatarId"
+        $functionPath = "/rest/api/2/universal_avatar/type/$Type/owner/$EntityId/avatar/$Id"
         $verb = "DELETE"
 
         Invoke-JiraRestMethod $JiraConnection $functionPath $verb

@@ -14,7 +14,7 @@ function Invoke-JiraAddAvatar {
         $EntityId,
 
         # Avatar image file (use the output of a Get-Item call)
-        [Parameter(Mandatory,Position=2)]
+        [Parameter(Mandatory,Position=2,ValueFromPipeline)]
         [object]
         $Avatar,
 

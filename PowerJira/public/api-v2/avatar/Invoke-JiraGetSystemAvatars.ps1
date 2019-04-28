@@ -3,7 +3,7 @@ function Invoke-JiraGetSystemAvatars {
     [CmdletBinding()]
     param (
         # The type of avatars to get
-        [Parameter(Mandatory,Position=0)]
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName)]
         [ValidateSet("issuetype","project","user")]
         [string]
         $Type,
