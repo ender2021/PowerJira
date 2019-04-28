@@ -15,6 +15,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #ADD FIELD TO DEFAULT SCREEN
 #Invoke-JiraAddFieldToDefaultScreen customfield_10003
 
+#GET AVAILABLE SCREEN FIELDS
+#Invoke-JiraGetAvailableScreenFields 1
+
 #end tests
 
 #close the Jira session
