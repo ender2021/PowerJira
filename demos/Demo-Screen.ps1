@@ -39,6 +39,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #REMOVE SCREEN TAB FIELD
 #Invoke-JiraRemoveScreenTabField 2 10001 versions
 
+#REORDER SCREEN TAB
+#Invoke-JiraReorderScreenTab 1 10107 1
+
 #end tests
 
 #close the Jira session
