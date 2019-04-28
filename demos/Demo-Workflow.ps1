@@ -21,6 +21,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET WORKFLOW SCHEME DRAFT
 #Invoke-JiraGetWorkflowSchemeDraft 10000
 
+#GET DRAFT DEFAULT WORKFLOW 
+Invoke-JiraGetDraftDefaultWorkflow 10000
+
 #end tests
 
 #close the Jira session
