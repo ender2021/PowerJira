@@ -3,7 +3,7 @@ function Invoke-JiraGetAttachmentSettings {
     [CmdletBinding()]
     param (
         # The JiraConnection object to use for the request
-        [Parameter()]
+        [Parameter(Position=0)]
         [hashtable]
         $JiraConnection
     )

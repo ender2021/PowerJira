@@ -14,12 +14,16 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # $png = Get-Item -Path (Join-Path -Path $PSScriptRoot -ChildPath \SampleAttachment2.png)
 # Invoke-JiraAddAttachment JPT-1 $txt
 # Invoke-JiraAddAttachment JPT-1 $png
+#Get-Item -Path $PSScriptRoot\SampleAttachment* | Invoke-JiraAddAttachment JPT-3
+#@("JPT-3","JPT-4") | Invoke-JiraAddAttachment -Attachment (Get-Item -Path $PSScriptRoot\SampleAttachment*)
 
 #DELETE ATTACHMENT
 #Invoke-JiraDeleteAttachment 10001
+#Get-Item -Path $PSScriptRoot\SampleAttachment* | Invoke-JiraAddAttachment JPT-3 | Invoke-JiraDeleteAttachment
 
 #GET ATTACHMENT METADATA
 #Invoke-JiraGetAttachmentMetadata 10000
+#@(10038,10037,10035) | Invoke-JiraGetAttachmentMetadata
 
 #GET JIRA ATTACHMENT SETTINGS
 #Invoke-JiraGetAttachmentSettings

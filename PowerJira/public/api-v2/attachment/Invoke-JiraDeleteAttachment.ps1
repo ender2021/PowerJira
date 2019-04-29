@@ -3,19 +3,25 @@ function Invoke-JiraDeleteAttachment {
     [CmdletBinding()]
     param (
         # THe ID of the attachment to delete
-        [Parameter(Mandatory,Position=0)]
-        [string]
-        $AttachmentId,
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName)]
+        [int64]
+        $id,
 
         # The JiraConnection object to use for the request
         [Parameter(Position=1)]
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
-        $functionPath = "/rest/api/2/attachment/$AttachmentId"
+        $functionPath = "/rest/api/2/attachment/$id"
         $verb = "DELETE"
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+    }
+    end {
+        #$results
     }
 }
