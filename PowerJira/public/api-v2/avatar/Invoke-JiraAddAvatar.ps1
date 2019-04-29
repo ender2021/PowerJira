@@ -38,6 +38,9 @@ function Invoke-JiraAddAvatar {
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
         $functionPath = "/rest/api/2/universal_avatar/type/$Type/owner/$EntityId"
         $verb = "POST"
@@ -63,6 +66,9 @@ function Invoke-JiraAddAvatar {
 
         $file = $Avatar
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Headers $headers -Query $query -File $file
+        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Headers $headers -Query $query -File $file
+    }
+    end {
+        $results
     }
 }

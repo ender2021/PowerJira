@@ -23,10 +23,16 @@ function Invoke-JiraDeleteAvatar {
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
         $functionPath = "/rest/api/2/universal_avatar/type/$Type/owner/$EntityId/avatar/$Id"
         $verb = "DELETE"
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $results = Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+    }
+    end {
+        #$results
     }
 }

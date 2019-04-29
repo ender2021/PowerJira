@@ -18,10 +18,16 @@ function Invoke-JiraGetAvatars {
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
         $functionPath = "/rest/api/2/universal_avatar/type/$Type/owner/$Id"
         $verb = "GET"
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+    }
+    end {
+        $results
     }
 }

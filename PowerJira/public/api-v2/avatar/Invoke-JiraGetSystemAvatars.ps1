@@ -13,10 +13,16 @@ function Invoke-JiraGetSystemAvatars {
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @{}
+    }
     process {
         $functionPath = "/rest/api/2/avatar/$Type/system"
         $verb = "GET"
 
-        (Invoke-JiraRestMethod $JiraConnection $functionPath $verb).system
+        $results += (Invoke-JiraRestMethod $JiraConnection $functionPath $verb).system
+    }
+    end {
+        $results
     }
 }

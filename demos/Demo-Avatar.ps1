@@ -15,7 +15,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #GET AVATARS
 #(Invoke-JiraGetAvatars "issuetype" 10000).custom
-#(Invoke-JiraGetProject 10000).issuetypes | Invoke-JiraGetAvatars issuetype
+(Invoke-JiraGetProject 10000).issuetypes | Invoke-JiraGetAvatars issuetype
 
 #ADD AVATAR
 #Get-Item $PSScriptRoot\icon.png | Invoke-JiraAddAvatar "issuetype" 10000
