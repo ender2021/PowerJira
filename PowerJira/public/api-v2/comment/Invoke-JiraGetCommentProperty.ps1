@@ -2,26 +2,36 @@
 function Invoke-JiraGetCommentProperty {
     [CmdletBinding()]
     param (
-        # The issue Id or Key
-        [Parameter(Mandatory,Position=0)]
-        [string]
-        $CommentId,
+        # The comment id
+        [Parameter(Mandatory,Position=0,ValueFromPipelineByPropertyName)]
+        [int64]
+        $Id,
 
         # The key name for the property
-        [Parameter(Mandatory,Position=1)]
-        [ValidateLength(1,255)]
-        [string]
-        $Key,
+        [Parameter(Mandatory,Position=1,ValueFromPipelineByPropertyName)]
+        [AllowEmptyCollection()]
+        [string[]]
+        $Keys,
 
         # The JiraConnection object to use for the request
         [Parameter(Position=3)]
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
-        $functionPath = "/rest/api/2/comment/$CommentId/properties/$Key"
-        $verb = "GET"
-
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        if ($Keys.Count -gt 0) {
+            $Keys | ForEach-Object {
+                $functionPath = "/rest/api/2/comment/$Id/properties/$_"
+                $verb = "GET"
+        
+                $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+            }
+        }
+    }
+    end {
+        $results
     }
 }

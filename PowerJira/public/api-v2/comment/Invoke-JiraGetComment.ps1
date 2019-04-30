@@ -25,10 +25,16 @@ function Invoke-JiraGetComment {
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/comment/$CommentId"
         $verb = "GET"
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+    }
+    end {
+        $results
     }
 }

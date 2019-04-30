@@ -5,11 +5,11 @@ function Invoke-JiraGetCommentsByIds {
     [CmdletBinding()]
     param (
         # A list of comment ids to return. Maximum of 1000 entries
-        [Parameter(Mandatory,Position=0)]
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()]
         [ValidateScript({$_.Count -le 1000})]
         [int64[]]
-        $CommentIds,
+        $Id,
 
         # Used to expand additional attributes
         [Parameter(Position=1)]
@@ -22,7 +22,13 @@ function Invoke-JiraGetCommentsByIds {
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $idList = @()
+    }
     process {
+        $idList += $Id
+    }
+    end {
         $functionPath = "/rest/api/2/comment/list"
         $verb = "POST"
 
@@ -30,9 +36,9 @@ function Invoke-JiraGetCommentsByIds {
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
         $body=@{
-            ids = $CommentIds
+            ids = $idList
         }
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+        (Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body).values
     }
 }

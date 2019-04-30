@@ -5,9 +5,10 @@ function Invoke-JiraGetComments {
     [CmdletBinding()]
     param (
         # The issue Id or Key
-        [Parameter(Mandatory,Position=0)]
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName)]
+        [Alias("Id")]
         [string]
-        $IssueIdOrKey,
+        $Key,
 
         # The index of the first item to return in the page of results (page offset). The base index is 0.
         [Parameter(Position=1)]
@@ -37,8 +38,11 @@ function Invoke-JiraGetComments {
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
-        $functionPath = "/rest/api/2/issue/$IssueIdOrKey/comment"
+        $functionPath = "/rest/api/2/issue/$Key/comment"
         $verb = "GET"
 
         $query=@{
@@ -48,6 +52,11 @@ function Invoke-JiraGetComments {
         if($PSBoundParameters.ContainsKey("OrderBy")){$query.Add("orderBy",$OrderBy)}
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $return = Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $return.comments | Add-Member (IIF (Test-Id $Key) "IssueId" "IssueKey")  $Key
+        $results += $return.comments
+    }
+    end {
+        $results
     }
 }

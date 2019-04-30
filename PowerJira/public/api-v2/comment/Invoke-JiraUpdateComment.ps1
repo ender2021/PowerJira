@@ -4,20 +4,21 @@ $JiraCommentExpand = @("renderedBody")
 function Invoke-JiraUpdateComment {
     [CmdletBinding()]
     param (
-        # The issue Id or Key
+        # The comment body
         [Parameter(Mandatory,Position=0)]
         [string]
-        $IssueIdOrKey,
-
-        # The ID of the comment to update
-        [Parameter(Mandatory,Position=1)]
-        [string]
-        $CommentId,
-
-        # The comment body
-        [Parameter(Mandatory,Position=2)]
-        [string]
         $CommentBody,
+
+        # The issue Id or Key
+        [Parameter(Mandatory,Position=1,ValueFromPipeline,ValueFromPipelineByPropertyName)]
+        [Alias("IssueId")]
+        [string]
+        $IssueKey,
+
+        # The ID of the comment to retrieve
+        [Parameter(Mandatory,Position=2,ValueFromPipeline,ValueFromPipelineByPropertyName)]
+        [int64]
+        $Id,
 
         # Set the visibility of the comment.  Use New-JiraVisibility
         [Parameter(Position=3)]
@@ -45,8 +46,11 @@ function Invoke-JiraUpdateComment {
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
-        $functionPath = "/rest/api/2/issue/$IssueIdOrKey/comment/$CommentId"
+        $functionPath = "/rest/api/2/issue/$IssueKey/comment/$Id"
         $verb = "PUT"
 
         $query = @{}
@@ -59,6 +63,9 @@ function Invoke-JiraUpdateComment {
         if($PSBoundParameters.ContainsKey("JsdHide")){$body.Add("jsdPublic",$false)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+    }
+    end {
+        $results
     }
 }

@@ -2,18 +2,19 @@ $JiraCommentExpand = @("renderedBody")
 
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-issue-issueIdOrKey-comment-post
 function Invoke-JiraAddComment {
-    [CmdletBinding(DefaultParameterSetName="Role")]
+    [CmdletBinding()]
     param (
-        # The issue Id or Key
-        [Parameter(Mandatory,Position=0)]
-        [string]
-        $IssueIdOrKey,
-
         # The comment body
-        [Parameter(Mandatory,Position=1)]
+        [Parameter(Mandatory,Position=0)]
         [string]
         $CommentBody,
 
+        # The issue Id or Key
+        [Parameter(Mandatory,Position=1,ValueFromPipeline,ValueFromPipelineByPropertyName)]
+        [Alias("Id")]
+        [string]
+        $Key,
+        
         # Used to expand additional attributes
         [Parameter(Position=2)]
         [ValidateScript({ Compare-StringArraySubset $JiraCommentExpand $_ })]
@@ -40,8 +41,11 @@ function Invoke-JiraAddComment {
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
-        $functionPath = "/rest/api/2/issue/$IssueIdOrKey/comment"
+        $functionPath = "/rest/api/2/issue/$Key/comment"
         $verb = "POST"
 
         $query = @{}
@@ -54,6 +58,9 @@ function Invoke-JiraAddComment {
         if($PSBoundParameters.ContainsKey("JsdHide")){$body.Add("jsdPublic",$false)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+    }
+    end {
+        $results
     }
 }
