@@ -3,18 +3,18 @@ function Invoke-JiraSetCommentProperty {
     [CmdletBinding()]
     param (
         # The issue Id or Key
-        [Parameter(Mandatory,Position=0)]
+        [Parameter(Mandatory,Position=0, ValueFromPipelineByPropertyName)]
         [string]
         $CommentId,
 
         # A key name for the property. Max length is 255
-        [Parameter(Mandatory,Position=1)]
+        [Parameter(Mandatory,Position=1, ValueFromPipelineByPropertyName)]
         [ValidateLength(1,255)]
         [string]
         $Key,
 
         # Supply any hashtable that can be converted to valid JSON.  The maximum serialized length is 32768 characters.
-        [Parameter(Mandatory,Position=2)]
+        [Parameter(Mandatory,Position=2, ValueFromPipelineByPropertyName)]
         [ValidateScript({ (ConvertTo-Json $_).Length -le 32768 })]
         [hashtable]
         $Value,
@@ -24,12 +24,18 @@ function Invoke-JiraSetCommentProperty {
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
         $functionPath = "/rest/api/2/comment/$CommentId/properties/$Key"
         $verb = "PUT"
 
         $body=$Value
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+    }
+    end {
+        $results
     }
 }

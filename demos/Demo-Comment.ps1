@@ -38,6 +38,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #SET COMMENT PROPERTY
 #Invoke-JiraSetCommentProperty 10010 "twoOnOne" @{someProperty="text";anArray=@("one","two","three")}
+#[pscustomobject]@{key="uniqueKey";value=@{someProperty="text";anArray=@("one","two","three")}} | Invoke-JiraSetCommentProperty 10010
 
 #GET COMMENT PROPERTY
 #Invoke-JiraGetCommentProperty 10000 "this.is.cool"
