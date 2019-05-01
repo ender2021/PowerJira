@@ -2,7 +2,7 @@
 function Invoke-JiraSetCommentProperty {
     [CmdletBinding()]
     param (
-        # The issue Id or Key
+        # The comment ID
         [Parameter(Mandatory,Position=0, ValueFromPipelineByPropertyName)]
         [string]
         $CommentId,

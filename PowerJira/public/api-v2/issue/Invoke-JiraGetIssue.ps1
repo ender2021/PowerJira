@@ -4,12 +4,12 @@ $JiraIssueExpand = @("renderedFields","names","schema","transitions","editmeta",
 function Invoke-JiraGetIssue {
     [CmdletBinding(DefaultParameterSetName="Id")]
     param (
-        # The ID or Key of the issue
+        # The ID of the issue
         [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Id")]
         [int32]
         $Id,
 
-        # The ID or Key of the issue
+        # The key of the issue
         [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Key")]
         [string]
         $Key,
@@ -29,7 +29,8 @@ function Invoke-JiraGetIssue {
         $results = @()
     }
     process {
-        $functionPath = "/rest/api/2/issue/$Id$Key"
+        $issueToken = IIF ($PSCmdlet.ParameterSetName -eq "Id") $Id $Key
+        $functionPath = "/rest/api/2/issue/$issueToken"
         $verb = "GET"
      
         $query = @{}

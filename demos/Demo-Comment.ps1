@@ -19,6 +19,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #GET COMMENT
 #Invoke-JiraGetComment JPT-1 10000
+ #@(10010,10013) | Invoke-JiraGetComment "JPT-1"
 
 #GET COMMENTS BY ID
 #(Invoke-JiraGetCommentsByIds @(10013,10010,10012) -Expand @("properties")).values

@@ -5,12 +5,12 @@ function Invoke-JiraUpdateComment {
     [CmdletBinding()]
     param (
         # The comment body
-        [Parameter(Mandatory,Position=0)]
+        [Parameter(Mandatory,Position=0,ValueFromPipelineByPropertyName)]
         [string]
-        $CommentBody,
+        $Body,
 
         # The issue Id or Key
-        [Parameter(Mandatory,Position=1,ValueFromPipeline,ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,Position=1,ValueFromPipelineByPropertyName)]
         [Alias("IssueId")]
         [string]
         $IssueKey,
@@ -57,7 +57,7 @@ function Invoke-JiraUpdateComment {
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
         $body=@{
-            body = $CommentBody
+            body = $Body
         }
         if($PSBoundParameters.ContainsKey("Visibility")){$body.Add("visibility",$Visibility)}
         if($PSBoundParameters.ContainsKey("JsdHide")){$body.Add("jsdPublic",$false)}

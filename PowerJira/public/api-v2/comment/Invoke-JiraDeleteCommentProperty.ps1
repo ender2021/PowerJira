@@ -4,7 +4,7 @@ function Invoke-JiraDeleteCommentProperty {
     param (
         # The id of the comment with the property
         [Parameter(Mandatory,Position=0,ValueFromPipelineByPropertyName)]
-        [string]
+        [int64]
         $Id,
 
         # The key name for the property

@@ -2,11 +2,15 @@ $JiraCommentExpand = @("renderedBody")
 
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-issue-issueIdOrKey-comment-get
 function Invoke-JiraGetComments {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Id")]
     param (
-        # The issue Id or Key
-        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName)]
-        [Alias("Id")]
+        # The ID of the issue
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Id")]
+        [int32]
+        $Id,
+
+        # The key of the issue
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Key")]
         [string]
         $Key,
 
@@ -42,7 +46,8 @@ function Invoke-JiraGetComments {
         $results = @()
     }
     process {
-        $functionPath = "/rest/api/2/issue/$Key/comment"
+        $issueToken = IIF ($PSCmdlet.ParameterSetName -eq "Id") $Id $Key
+        $functionPath = "/rest/api/2/issue/$issueToken/comment"
         $verb = "GET"
 
         $query=@{
@@ -53,7 +58,11 @@ function Invoke-JiraGetComments {
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
         $return = Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
-        $return.comments | Add-Member (IIF (Test-Id $Key) "IssueId" "IssueKey")  $Key
+        if ($PSCmdlet.ParameterSetName -eq "Id") {
+            $return.comments | Add-Member "IssueId" $Id
+        } else {
+            $return.comments | Add-Member "IssueKey" $Key
+        }
         $results += $return.comments
     }
     end {

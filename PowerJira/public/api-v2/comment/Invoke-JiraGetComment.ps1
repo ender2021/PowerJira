@@ -5,14 +5,15 @@ function Invoke-JiraGetComment {
     [CmdletBinding()]
     param (
         # The issue Id or Key
-        [Parameter(Mandatory,Position=0)]
+        [Parameter(Mandatory,Position=0,ValueFromPipelineByPropertyName)]
+        [Alias("IssueId")]
         [string]
-        $IssueIdOrKey,
+        $IssueKey,
 
         # The ID of the comment to retrieve
-        [Parameter(Mandatory,Position=1)]
-        [string]
-        $CommentId,
+        [Parameter(Mandatory,Position=1,ValueFromPipeline,ValueFromPipelineByPropertyName)]
+        [int64]
+        $Id,
 
         # Used to expand additional attributes
         [Parameter(Position=2)]
@@ -29,7 +30,7 @@ function Invoke-JiraGetComment {
         $results = @()
     }
     process {
-        $functionPath = "/rest/api/2/issue/$IssueIdOrKey/comment/$CommentId"
+        $functionPath = "/rest/api/2/issue/$IssueKey/comment/$Id"
         $verb = "GET"
 
         $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb

@@ -9,9 +9,13 @@ function Invoke-JiraAddComment {
         [string]
         $CommentBody,
 
-        # The issue Id or Key
-        [Parameter(Mandatory,Position=1,ValueFromPipeline,ValueFromPipelineByPropertyName)]
-        [Alias("Id")]
+        # The ID of the issue
+        [Parameter(Mandatory,Position=1,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Id")]
+        [int32]
+        $Id,
+
+        # The key of the issue
+        [Parameter(Mandatory,Position=1,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Key")]
         [string]
         $Key,
         
@@ -45,7 +49,8 @@ function Invoke-JiraAddComment {
         $results = @()
     }
     process {
-        $functionPath = "/rest/api/2/issue/$Key/comment"
+        $issueToken = IIF ($PSCmdlet.ParameterSetName -eq "Id") $Id $Key
+        $functionPath = "/rest/api/2/issue/$issueToken/comment"
         $verb = "POST"
 
         $query = @{}

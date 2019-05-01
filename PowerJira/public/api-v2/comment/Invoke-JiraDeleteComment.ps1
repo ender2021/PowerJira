@@ -3,14 +3,14 @@ function Invoke-JiraDeleteComment {
     [CmdletBinding()]
     param (
         # The issue Id or Key
-        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,Position=0,ValueFromPipelineByPropertyName)]
         [Alias("IssueId")]
         [string]
         $IssueKey,    
 
         # The ID of the comment to retrieve
         [Parameter(Mandatory,Position=1,ValueFromPipeline,ValueFromPipelineByPropertyName)]
-        [int64]
+        [int32]
         $Id,
 
         # The JiraConnection object to use for the request
