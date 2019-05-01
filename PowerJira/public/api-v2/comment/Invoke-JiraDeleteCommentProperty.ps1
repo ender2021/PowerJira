@@ -2,26 +2,36 @@
 function Invoke-JiraDeleteCommentProperty {
     [CmdletBinding()]
     param (
-        # The issue Id or Key
-        [Parameter(Mandatory,Position=0)]
+        # The id of the comment with the property
+        [Parameter(Mandatory,Position=0,ValueFromPipelineByPropertyName)]
         [string]
-        $CommentId,
+        $Id,
 
         # The key name for the property
-        [Parameter(Mandatory,Position=1)]
+        [Parameter(Mandatory,Position=1,ValueFromPipeline,ValueFromPipelineByPropertyName)]
         [ValidateLength(1,255)]
-        [string]
-        $Key,
+        [string[]]
+        $Keys,
 
         # The JiraConnection object to use for the request
         [Parameter(Position=3)]
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
-        $functionPath = "/rest/api/2/comment/$CommentId/properties/$Key"
-        $verb = "DELETE"
+        if ($Keys.Count -gt 0) {
+            $Keys | ForEach-Object {
+                $functionPath = "/rest/api/2/comment/$Id/properties/$_"
+                $verb = "DELETE"
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+                $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+            }
+        }
+    }
+    end {
+        #$results
     }
 }

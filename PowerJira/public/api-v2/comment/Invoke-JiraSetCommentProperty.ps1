@@ -36,6 +36,6 @@ function Invoke-JiraSetCommentProperty {
         $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
     }
     end {
-        $results
+        #$results
     }
 }

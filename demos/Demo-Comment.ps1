@@ -46,6 +46,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #DELETE COMMENT PROPERTY
 #Invoke-JiraDeleteCommentProperty 10000 "this.is.cool"
+#Invoke-JiraGetCommentPropertyKeys 10010 | Invoke-JiraDeleteCommentProperty
 
 #end tests
 
