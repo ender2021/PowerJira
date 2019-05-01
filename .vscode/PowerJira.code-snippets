@@ -76,5 +76,25 @@
 			"Read-Host -Prompt \"Press any key to continue or CTRL+C to quit\""
 		],
 		"description": "Insert a breakpoint"
+	},
+	"Default PowerJira begin clause": {
+		"scope":"powershell",
+		"prefix": "jbegin",
+		"body": [
+			"begin {",
+			"\t\\$results = @()",
+			"}"
+		],
+		"description": "The default cmdlet begin clause for PowerJira cmdlets"
+	},
+	"Default PowerJira end clause": {
+		"scope":"powershell",
+		"prefix": "jend",
+		"body": [
+			"end {",
+			"\t\\$results",
+			"}"
+		],
+		"description": "The default cmdlet end clause for PowerJira cmdlets"
 	}
 }

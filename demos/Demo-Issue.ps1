@@ -14,7 +14,12 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$meta.projects[0].issuetypes[0].fields
 
 #GET ISSUE
-Invoke-JiraGetIssue JPT-1 
+$issues = @(
+  [pscustomobject]@{id=10000},
+  [pscustomobject]@{id=10002},
+  [pscustomobject]@{id=10003;key="JPT-4"}
+  )
+$issues| Invoke-JiraGetIssue
 
 #CREATE ISSUE
 $createFields = @{
