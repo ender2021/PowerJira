@@ -2,20 +2,32 @@
 function Invoke-JiraAddVote {
     [CmdletBinding()]
     param (
-        # The issue Id or Key
-        [Parameter(Mandatory,Position=0)]
+        # The ID of the issue
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Id")]
+        [int32]
+        $Id,
+
+        # The key of the issue
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Key")]
         [string]
-        $IssueIdOrKey,
+        $Key,
 
         # The JiraConnection object to use for the request
         [Parameter(Position=1)]
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
-        $functionPath = "/rest/api/2/issue/$IssueIdOrKey/votes"
+        $issueToken = IIF ($PSCmdlet.ParameterSetName -eq "Id") $Id $Key
+        $functionPath = "/rest/api/2/issue/$issueToken/votes"
         $verb = "POST"
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+    }
+    end {
+        $results
     }
 }

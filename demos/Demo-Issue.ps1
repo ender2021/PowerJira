@@ -14,12 +14,11 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$meta.projects[0].issuetypes[0].fields
 
 #GET ISSUE
-$issues = @(
-  [pscustomobject]@{id=10000},
-  [pscustomobject]@{id=10002},
-  [pscustomobject]@{id=10003;key="JPT-4"}
-  )
-$issues| Invoke-JiraGetIssue
+# @(
+#   [pscustomobject]@{id=10000},
+#   [pscustomobject]@{id=10002},
+#   [pscustomobject]@{id=10003;key="JPT-4"}
+#   ) | Invoke-JiraGetIssue
 
 #CREATE ISSUE
 $createFields = @{
@@ -89,7 +88,11 @@ $createFields = @{
 
 #ADD VOTE
 #Invoke-JiraAddVote JPT-1
-#Invoke-JiraGetVotes JPT-1
+# @(
+#   [pscustomobject]@{id=10000},
+#   [pscustomobject]@{id=10002},
+#   [pscustomobject]@{id=10003;key="JPT-4"}
+#   ) | Invoke-JiraAddVote
 
 #DELETE VOTE
 # Clear-Host
