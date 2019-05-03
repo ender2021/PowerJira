@@ -160,6 +160,11 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #GET ISSUE CHANGELOGS
 #(Invoke-JiraGetIssueChangelogs JPT-1).values | fl
+# @(
+#   [pscustomobject]@{id=10000},
+#   [pscustomobject]@{id=10002},
+#   [pscustomobject]@{id=10003;key="JPT-4"}
+#   ) | Invoke-JiraGetIssueChangelogs
 
 #GET ISSUE PROPERTY KEYS
 #Invoke-JiraGetIssuePropertyKeys JPT-1
