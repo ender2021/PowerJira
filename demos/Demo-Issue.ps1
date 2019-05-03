@@ -57,6 +57,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #DELETE ISSUE
 #Invoke-JiraDeleteIssue JPT-2
+# @(
+#   [pscustomobject]@{id=10006},
+#   [pscustomobject]@{id=10007;deleteSubtasks=$true}
+#   ) | Invoke-JiraDeleteIssue
 
 #GET EDIT ISSUE METADATA
 #(Invoke-JiraGetIssueEditMetadata JPT-1).fields

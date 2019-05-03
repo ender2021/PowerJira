@@ -2,13 +2,18 @@
 function Invoke-JiraDeleteIssue {
     [CmdletBinding()]
     param (
-        # The issue Id or Key
-        [Parameter(Mandatory,Position=0)]
+        # The ID of the issue
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Id")]
+        [int32]
+        $Id,
+
+        # The key of the issue
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Key")]
         [string]
-        $IssueIdOrKey,
+        $Key,
 
         # Set this flag to delete the issue's subtasks
-        [Parameter()]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]
         $DeleteSubtasks,
 
@@ -17,13 +22,21 @@ function Invoke-JiraDeleteIssue {
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
-        $functionPath = "/rest/api/2/issue/$IssueIdOrKey"
+        $issueToken = IIF ($PSCmdlet.ParameterSetName -eq "Id") $Id $Key
+        $functionPath = "/rest/api/2/issue/$issueToken"
         $verb = "DELETE"
 
-        $query=@{}
-        if($PSBoundParameters.ContainsKey("DeleteSubtasks")){$query.Add("deleteSubtasks",$true)}
+        $query=@{
+            deleteSubtasks = $DeleteSubtasks
+        }
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+    }
+    end {
+        #$results
     }
 }
