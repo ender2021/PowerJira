@@ -1,21 +1,40 @@
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-issue-issueIdOrKey-properties-get
 function Invoke-JiraGetIssuePropertyKeys {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Id")]
     param (
-        # The issue Id or Key
-        [Parameter(Mandatory,Position=0)]
+        # The ID of the issue
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Id")]
+        [int32]
+        $Id,
+
+        # The key of the issue
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Key")]
         [string]
-        $IssueIdOrKey,
+        $Key,
 
         # The JiraConnection object to use for the request
         [Parameter(Position=1)]
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
-        $functionPath = "/rest/api/2/issue/$IssueIdOrKey/properties"
+        $issueToken = IIF ($PSCmdlet.ParameterSetName -eq "Id") $Id $Key
+        $functionPath = "/rest/api/2/issue/$issueToken/properties"
         $verb = "GET"
 
-        (Invoke-JiraRestMethod $JiraConnection $functionPath $verb).keys
+        $obj = [PSCustomObject]@{
+            keys = @()
+        }
+        if($PSBoundParameters.ContainsKey("Id")){$obj | Add-Member "IssueId" $Id}
+        if($PSBoundParameters.ContainsKey("Key")){$obj | Add-Member "IssueKey" $Key}
+
+        $obj.keys += (Invoke-JiraRestMethod $JiraConnection $functionPath $verb).keys | ForEach-Object {$_.key}
+        $results += $obj
+    }
+    end {
+        $results
     }
 }

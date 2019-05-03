@@ -160,6 +160,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #GET ISSUE PROPERTY KEYS
 #Invoke-JiraGetIssuePropertyKeys JPT-1
+#@("JPT-1") | Invoke-JiraGetIssuePropertyKeys
 
 #SET ISSUE PROPERTY
 #Invoke-JiraSetIssueProperty JPT-1 "this.is.cool" @{someProperty="text";anArray=@("one","two","three")}
@@ -169,6 +170,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #DELETE ISSUE PROPERTY
 #Invoke-JiraDeleteIssueProperty JPT-1 "this.is.cool"
+$toDelete = @("JPT-1") | Invoke-JiraGetIssuePropertyKeys | Invoke-JiraDeleteIssueProperty
 
 #end tests
 
