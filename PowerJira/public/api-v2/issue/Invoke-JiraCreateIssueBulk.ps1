@@ -3,7 +3,7 @@ function Invoke-JiraCreateIssueBulk {
     [CmdletBinding()]
     param (
         # An array of hashtables containing instructions for setting fields and updating the issues
-        [Parameter(Mandatory,Position=0)]
+        [Parameter(Mandatory,Position=0,ValueFromPipeline)]
         [hashtable[]]
         $Issues,
 
@@ -12,12 +12,18 @@ function Invoke-JiraCreateIssueBulk {
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
         $functionPath = "/rest/api/2/issue/bulk"
         $verb = "POST"
 
         $body=@{issueUpdates=$Issues}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+    }
+    end {
+        $results
     }
 }

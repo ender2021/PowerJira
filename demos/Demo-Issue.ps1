@@ -101,6 +101,24 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #     }
 # }
 # Invoke-JiraCreateIssueBulk $issues
+# @(
+#  @{fields=@{
+#     issuetype = @{id=10001} #story
+#     summary = "Issue that will be deleted 5"
+#     project = @{id=10000}
+#   }},
+#   @{fields=@{
+#     issuetype = @{id=10001} #story
+#     summary = "Issue that will be deleted 6"
+#     project = @{id=10000}
+#   }},
+#   @{fields=@{
+#     issuetype = @{id=10002} #task
+#     summary = "Issue that will be deleted 7"
+#     project = @{id=10000}
+#   }}
+# ) | Invoke-JiraCreateIssueBulk
+
 
 #DELETE WATCHER
 # $josh = (Invoke-JiraFindUsers Josh)[0].accountId
