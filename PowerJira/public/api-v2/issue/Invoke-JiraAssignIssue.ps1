@@ -1,24 +1,24 @@
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-issue-issueIdOrKey-assignee-put
 function Invoke-JiraAssignIssue {
-    [CmdletBinding(DefaultParameterSetName="Assignee")]
+    [CmdletBinding(DefaultParameterSetName="Id")]
     param (
-        # The Key or ID of the issue
-        [Parameter(Mandatory,Position=0)]
+        # The ID of the issue
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Id")]
+        [int32]
+        $Id,
+
+        # The key of the issue
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Key")]
         [string]
-        $IssueIdOrKey,
+        $Key,
 
         # The account ID of the user to assign
-        [Parameter(Mandatory,Position=1,ParameterSetName="Assignee")]
+        [Parameter(Position=1,ValueFromPipelineByPropertyName)]
         [string]
-        $AssigneeAccountId,
-
-        # Set this flag to unassign this issue
-        [Parameter(Mandatory,Position=1,ParameterSetName="Unassign")]
-        [switch]
-        $Unassign,
+        $AccountId,
 
         # Set this flag to assign the issue to the default assignee for the project
-        [Parameter(Mandatory,Position=1,ParameterSetName="ProjectDefault")]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]
         $ProjectDefault,
 
@@ -27,16 +27,22 @@ function Invoke-JiraAssignIssue {
         [hashtable]
         $JiraConnection
     )
-    
+    begin {
+        $results = @()
+    }
     process {
-        $functionPath = "/rest/api/2/issue/$IssueIdOrKey/assignee"
+        $issueToken = IIF ($PSCmdlet.ParameterSetName -eq "Id") $Id $Key
+        $functionPath = "/rest/api/2/issue/$issueToken/assignee"
         $verb = "PUT"
 
-        $body=@{}
-        if($PSBoundParameters.ContainsKey("AssigneeAccountId")){$body.Add("accountId",$AssigneeAccountId)}
-        if($PSBoundParameters.ContainsKey("Unassign")){$body.Add("accountId",$null)}
-        if($PSBoundParameters.ContainsKey("ProjectDefault")){$body.Add("accountId","-1")}
+        $body=@{
+            accountId = IIF $PSBoundParameters.ContainsKey("AccountId") $AccountId $null
+        }
+        if($PSBoundParameters.ContainsKey("ProjectDefault")){$body.accountId = "-1"}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+    }
+    end {
+        #$results
     }
 }

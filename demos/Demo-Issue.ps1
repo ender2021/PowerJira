@@ -50,9 +50,14 @@ $createFields = @{
 #Invoke-JiraTransitionIssue JPT-1 71
 
 #ASSIGN ISSUE
-#Invoke-JiraAssignIssue JPT-1 -AssigneeAccountId (Invoke-JiraGetCurrentUser).accountId
-#Invoke-JiraAssignIssue JPT-1 -Unassign
+#Invoke-JiraAssignIssue JPT-1 (Invoke-JiraGetCurrentUser).accountId
+#Invoke-JiraAssignIssue JPT-1 
 #Invoke-JiraAssignIssue JPT-1 -ProjectDefault
+ @(
+  [pscustomobject]@{id=10000},
+  [pscustomobject]@{id=10002},
+  [pscustomobject]@{id=10003;key="JPT-4"}
+  ) | Invoke-JiraAssignIssue
 
 #ADD WATCHER
 #Invoke-JiraAddWatcher JPT-1 
