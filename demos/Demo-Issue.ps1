@@ -10,8 +10,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #GET CREATE ISSUE METADATA
-#$meta = Invoke-JiraGetIssueCreateMetadata -ProjectKeys @("JPT")
-#$meta.projects[0].issuetypes[0].fields
+# $meta = Invoke-JiraGetIssueCreateMetadata -Key "JPT" -TypeIds @(10001,10002)
+# $meta.projects[0].issuetypes[0].fields
+# $meta = (Invoke-JiraGetProjects).values | Invoke-JiraGetIssueCreateMetadata -TypeIds @(10001,10002)
+# $meta
 
 #GET ISSUE
 # @(

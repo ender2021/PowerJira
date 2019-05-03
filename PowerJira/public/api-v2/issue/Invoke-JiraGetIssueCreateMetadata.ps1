@@ -5,24 +5,28 @@ function Invoke-JiraGetIssueCreateMetadata {
     [CmdletBinding()]
     param (
         # IDs of projects to return metadata for
-        [Parameter(Position=0)]
-        [int32[]]
-        $ProjectIds,
+        [Parameter(Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName)]
+        [Alias("ProjectId")]
+        [int32]
+        $Id,
 
         # Keys of projcts to return metadata for
-        [Parameter(Position=1)]
-        [string[]]
-        $ProjectKeys,
+        [Parameter(Position=1,ValueFromPipeline,ValueFromPipelineByPropertyName)]
+        [Alias("ProjectKey")]
+        [string]
+        $Key,
 
         # IDs of issue types to return metadata for
-        [Parameter(Position=2)]
+        [Parameter(Position=2,ValueFromPipelineByPropertyName)]
+        [Alias("IssueTypeIds")]
         [int32[]]
-        $IssueTypeIds,
+        $TypeIds,
 
         # Names of issue types to return metadata for
-        [Parameter(Position=3)]
+        [Parameter(Position=3,ValueFromPipelineByPropertyName)]
+        [Alias("IssueTypeNames")]
         [string[]]
-        $IssueTypeNames,
+        $TypeNames,
 
         # Used to expand additional attributes
         [Parameter(Position=4)]
@@ -35,15 +39,27 @@ function Invoke-JiraGetIssueCreateMetadata {
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $ProjectIds = @()
+        $ProjectKeys = @()
+        $AllTypeIds = @()
+        $AllTypeNames = @()
+    }
     process {
+        if($PSBoundParameters.ContainsKey("Id")){$ProjectIds += $Id}
+        if($PSBoundParameters.ContainsKey("Key")){$ProjectKeys += $Key}
+        if($PSBoundParameters.ContainsKey("TypeIds")){$AllTypeIds += $TypeIds}
+        if($PSBoundParameters.ContainsKey("TypeNames")){$AllTypeNames += $TypeNames}
+    }
+    end {
         $functionPath = "/rest/api/2/issue/createmeta"
         $verb = "GET"
         
         $query = @{}
-        if($PSBoundParameters.ContainsKey("ProjectIds")){$query.Add("projectIds",$ProjectIds -join ",")}
-        if($PSBoundParameters.ContainsKey("ProjectKeys")){$query.Add("projectKeys",$ProjectKeys -join ",")}
-        if($PSBoundParameters.ContainsKey("IssueTypeIds")){$query.Add("issuetypeIds",$IssueTypeIds -join ",")}
-        if($PSBoundParameters.ContainsKey("IssueTypeNames")){$query.Add("issuetypeNames",$IssueTypeNames  -join ",")}
+        if($ProjectIds.Length -gt 0){$query.Add("projectIds",$ProjectIds -join ",")}
+        if($ProjectKeys.Length -gt 0){$query.Add("projectKeys",$ProjectKeys -join ",")}
+        if($AllTypeIds.Length -gt 0){$query.Add("issuetypeIds",$AllTypeIds -join ",")}
+        if($AllTypeNames.Length -gt 0){$query.Add("issuetypeNames",$AllTypeNames  -join ",")}
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
         Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
