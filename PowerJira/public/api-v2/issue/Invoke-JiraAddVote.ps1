@@ -1,6 +1,6 @@
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-issue-issueIdOrKey-votes-post
 function Invoke-JiraAddVote {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Id")]
     param (
         # The ID of the issue
         [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Id")]
@@ -28,6 +28,6 @@ function Invoke-JiraAddVote {
         $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb
     }
     end {
-        $results
+        #$results
     }
 }

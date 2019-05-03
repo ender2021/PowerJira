@@ -94,9 +94,7 @@ $createFields = @{
 #ADD VOTE
 #Invoke-JiraAddVote JPT-1
 # @(
-#   [pscustomobject]@{id=10000},
-#   [pscustomobject]@{id=10002},
-#   [pscustomobject]@{id=10003;key="JPT-4"}
+#   [pscustomobject]@{id=10004;key="JPT-5"}
 #   ) | Invoke-JiraAddVote
 
 #DELETE VOTE
