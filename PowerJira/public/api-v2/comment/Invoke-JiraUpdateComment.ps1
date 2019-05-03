@@ -58,9 +58,9 @@ function Invoke-JiraUpdateComment {
 
         $body=@{
             body = $Body
+            jsdPublic = !$JsdHide
         }
         if($PSBoundParameters.ContainsKey("Visibility")){$body.Add("visibility",$Visibility)}
-        if($PSBoundParameters.ContainsKey("JsdHide")){$body.Add("jsdPublic",$false)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
 
         $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
