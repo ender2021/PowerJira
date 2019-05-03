@@ -21,14 +21,29 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #   ) | Invoke-JiraGetIssue
 
 #CREATE ISSUE
-$createFields = @{
-  issuetype = @{id=10001} #task
-  summary = "Issue that will be deleted"
-  project = @{id=10000}
-  #reporter = @{id=(Invoke-JiraGetCurrentUser).accountId}
-}
-
+# $createFields = @{
+#   issuetype = @{id=10001} #task
+#   summary = "Issue that will be deleted"
+#   project = @{id=10000}
+# }
 #Invoke-JiraCreateIssue -Fields $createFields
+# @(
+#   @{
+#     issuetype = @{id=10001} #story
+#     summary = "Issue that will be deleted 1"
+#     project = @{id=10000}
+#   },
+#   @{
+#     issuetype = @{id=10001} #story
+#     summary = "Issue that will be deleted 2"
+#     project = @{id=10000}
+#   },
+#   @{
+#     issuetype = @{id=10002} #task
+#     summary = "Issue that will be deleted 3"
+#     project = @{id=10000}
+#   }
+# ) | Invoke-JiraCreateIssue
 
 #UPDATE ISSUE
 # $updateFields = @{
@@ -53,11 +68,11 @@ $createFields = @{
 #Invoke-JiraAssignIssue JPT-1 (Invoke-JiraGetCurrentUser).accountId
 #Invoke-JiraAssignIssue JPT-1 
 #Invoke-JiraAssignIssue JPT-1 -ProjectDefault
- @(
-  [pscustomobject]@{id=10000},
-  [pscustomobject]@{id=10002},
-  [pscustomobject]@{id=10003;key="JPT-4"}
-  ) | Invoke-JiraAssignIssue
+#  @(
+#   [pscustomobject]@{id=10000},
+#   [pscustomobject]@{id=10002},
+#   [pscustomobject]@{id=10003;key="JPT-4"}
+#   ) | Invoke-JiraAssignIssue
 
 #ADD WATCHER
 #Invoke-JiraAddWatcher JPT-1 

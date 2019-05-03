@@ -3,37 +3,37 @@ function Invoke-JiraCreateIssue {
     [CmdletBinding()]
     param (
         # Used to make simple updates to fields on this issue
-        [Parameter(Position=0)]
+        [Parameter(Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName)]
         [hashtable]
         $Fields,
 
         # Used to make complex updates to issue fields
-        [Parameter(Position=1)]
+        [Parameter(Position=1,ValueFromPipelineByPropertyName)]
         [hashtable]
         $Update,
 
         # ID of a Transition to apply
-        [Parameter(Position=2)]
+        [Parameter(Position=2,ValueFromPipelineByPropertyName)]
         [int32]
         $TransitionId,
 
         # Optional history metadata
-        [Parameter(Position=3)]
+        [Parameter(Position=3,ValueFromPipelineByPropertyName)]
         [hashtable]
         $HistoryMetadata,
 
         # Add/set arbitrary issue properties
-        [Parameter(Position=4)]
+        [Parameter(Position=4,ValueFromPipelineByPropertyName)]
         [hashtable]
         $Properties,
         
         # Indicates whether the creating user's history should be updated to show the project the issue is created in
-        [Parameter(Position=5)]
+        [Parameter(Position=5,ValueFromPipelineByPropertyName)]
         [Switch]
         $UpdateUserHistory,
 
-        # DDisables issue notifications for this update
-        [Parameter(Position=6)]
+        # Disables issue notifications for this update
+        [Parameter(Position=6,ValueFromPipelineByPropertyName)]
         [Switch]
         $DisableNotifications,
 
@@ -42,6 +42,9 @@ function Invoke-JiraCreateIssue {
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
         $functionPath = "/rest/api/2/issue"
         $verb = "POST"
@@ -57,6 +60,9 @@ function Invoke-JiraCreateIssue {
         if($PSBoundParameters.ContainsKey("HistoryMetadata")){$body.Add("historyMetadata",$HistoryMetadata)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+    }
+    end {
+        $results
     }
  }
