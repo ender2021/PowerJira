@@ -45,15 +45,19 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #   }
 # ) | Invoke-JiraCreateIssue
 
-#UPDATE ISSUE
+#EDIT ISSUE
 # $updateFields = @{
 #   issuetype = @{id=10001} #task
 #   summary = "PJ Test Issue 1"
 #   project = @{id=13324}
 #   reporter = @{id=(Invoke-JiraGetCurrentUser).accountId}
 # }
-
 #Invoke-JiraEditIssue JPT-1 $updateFields
+# @(
+#   [pscustomobject]@{id=10000},
+#   [pscustomobject]@{id=10002},
+#   [pscustomobject]@{id=10003;key="JPT-4"}
+#   ) | Invoke-JiraEditIssue -Fields @{summary="overwritten summary!"}
 
 #DELETE ISSUE
 #Invoke-JiraDeleteIssue JPT-2
