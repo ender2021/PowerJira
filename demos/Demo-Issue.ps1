@@ -140,12 +140,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #   ) | Invoke-JiraAddVote
 
 #DELETE VOTE
-# Clear-Host
-# Invoke-JiraGetVotes JPT-1
-# Invoke-JiraAddVote JPT-1
-# Invoke-JiraGetVotes JPT-1
 # Invoke-JiraDeleteVote JPT-1
-# Invoke-JiraGetVotes JPT-1
+@(
+  [pscustomobject]@{id=10004;key="JPT-5"}
+  ) | Invoke-JiraDeleteVote
 
 #SEND ISSUE NOTIFICATION
 # $me = Invoke-JiraGetCurrentUser
@@ -170,7 +168,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #DELETE ISSUE PROPERTY
 #Invoke-JiraDeleteIssueProperty JPT-1 "this.is.cool"
-$toDelete = @("JPT-1") | Invoke-JiraGetIssuePropertyKeys | Invoke-JiraDeleteIssueProperty
+#$toDelete = @("JPT-1") | Invoke-JiraGetIssuePropertyKeys | Invoke-JiraDeleteIssueProperty
 
 #end tests
 
