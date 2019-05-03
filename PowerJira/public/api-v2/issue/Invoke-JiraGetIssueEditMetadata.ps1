@@ -1,21 +1,36 @@
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-issue-issueIdOrKey-editmeta-get
 function Invoke-JiraGetIssueEditMetadata {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Id")]
     param (
-        # IDs of projects to return metadata for
-        [Parameter(Mandatory,Position=0)]
+        # The ID of the issue
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Id")]
+        [int32]
+        $Id,
+
+        # The key of the issue
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Key")]
         [string]
-        $IssueIdOrKey,
+        $Key,
         
         # The JiraConnection object to use for the request
         [Parameter(Position=1)]
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
-        $functionPath = "/rest/api/2/issue/$IssueIdOrKey/editmeta"
+        $issueToken = IIF ($PSCmdlet.ParameterSetName -eq "Id") $Id $Key
+        $functionPath = "/rest/api/2/issue/$issueToken/editmeta"
         $verb = "GET"
         
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $obj = Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        if($PSBoundParameters.ContainsKey("Id")){$obj | Add-Member "Id" $Id}
+        if($PSBoundParameters.ContainsKey("Key")){$obj | Add-Member "Key" $Key}
+        $results += $obj
+    }
+    end {
+        $results
     }
 }

@@ -70,6 +70,11 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #GET EDIT ISSUE METADATA
 #(Invoke-JiraGetIssueEditMetadata JPT-1).fields
+# @(
+#   [pscustomobject]@{id=10000},
+#   [pscustomobject]@{id=10002},
+#   [pscustomobject]@{id=10003;key="JPT-4"}
+#   ) | Invoke-JiraGetIssueEditMetadata
 
 #TRANSITION ISSUE
 #Invoke-JiraTransitionIssue JPT-1 71
