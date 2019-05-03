@@ -164,6 +164,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #GET ISSUE PICKER SUGGESTIONS
 #(Invoke-JiraGetIssuePickerSuggestions "test").sections | fl
+# [PSCustomObject]@{
+#     projectId = 10000
+#     TextFilter = "test"
+# } | Invoke-JiraGetIssuePickerSuggestions
 
 #GET ISSUE CHANGELOGS
 #(Invoke-JiraGetIssueChangelogs JPT-1).values | fl

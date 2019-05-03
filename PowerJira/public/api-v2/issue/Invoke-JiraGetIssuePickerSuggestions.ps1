@@ -3,32 +3,32 @@ function Invoke-JiraGetIssuePickerSuggestions {
     [CmdletBinding()]
     param (
         # A string to match against text fields in the issue such as title, description, or comments.
-        [Parameter(Position=0)]
+        [Parameter(Position=0,ValueFromPipelineByPropertyName)]
         [string]
         $TextFilter,
 
         # A JQL string defining the set of issues from which to make suggestions
-        [Parameter(Position=1)]
+        [Parameter(Position=1,ValueFromPipelineByPropertyName)]
         [string]
         $JqlFilter,
 
         # The ID of a project to which an issue must belong in order to be included in the suggestions
-        [Parameter(Position=2)]
-        [string]
-        $ProjectFilter,
+        [Parameter(Position=2,ValueFromPipelineByPropertyName)]
+        [int32]
+        $ProjectId,
 
         # Provide a single issue key to be excluded from results.  Useful if using this in the context of an issue.
-        [Parameter(Position=3)]
+        [Parameter(Position=3,ValueFromPipelineByPropertyName)]
         [string]
         $ExcludeIssueKey,
 
         # Set this flag to exclude the parent issue from results if ExcludeIssueKey is a subtask
-        [Parameter()]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]
         $HideSubTaskParent,        
 
         # Set this flag to exclude subtasks from the suggestion list
-        [Parameter()]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]
         $HideSubTasks,        
 
@@ -37,21 +37,25 @@ function Invoke-JiraGetIssuePickerSuggestions {
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
         $functionPath = "/rest/api/2/issue/picker"
         $verb = "GET"
 
         $query=@{
-            showSubTasks = $true
-            showSubTaskParent = $true
+            showSubTasks = !$HideSubTasks
+            showSubTaskParent = !$HideSubTaskParent
         }
         if($PSBoundParameters.ContainsKey("TextFilter")){$query.Add("query",$TextFilter)}
         if($PSBoundParameters.ContainsKey("JqlFilter")){$query.Add("currentJQL",$JqlFilter)}
         if($PSBoundParameters.ContainsKey("ProjectFilter")){$query.Add("currentProjectId",$ProjectFilter)}
         if($PSBoundParameters.ContainsKey("ExcludeIssueKey")){$query.Add("currentIssueKey",$ExcludeIssueKey)}
-        if($PSBoundParameters.ContainsKey("HideSubTaskParent")){$query.showSubTaskParent = $false}
-        if($PSBoundParameters.ContainsKey("HideSubTasks")){$query.showSubTasks = $false}
 
-      Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+    }
+    end {
+        $results
     }
 }
