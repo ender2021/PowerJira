@@ -78,14 +78,6 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #   [pscustomobject]@{id=10003;key="JPT-4"}
 #   ) | Invoke-JiraAssignIssue
 
-#ADD WATCHER
-#Invoke-JiraAddWatcher JPT-1 
-#  @(
-#   [pscustomobject]@{id=10000},
-#   [pscustomobject]@{id=10002},
-#   [pscustomobject]@{id=10003;key="JPT-4"}
-#   ) | Invoke-JiraAddWatcher
-
 #GET ISSUE WATCHERS
 #(Invoke-JiraGetIssueWatchers JPT-1).watchers
 
@@ -123,12 +115,21 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #   }}
 # ) | Invoke-JiraCreateIssueBulk
 
+#ADD WATCHER
+#Invoke-JiraAddWatcher JPT-1 
+#  @(
+#   [pscustomobject]@{id=10000},
+#   [pscustomobject]@{id=10002},
+#   [pscustomobject]@{id=10003;key="JPT-4"}
+#   ) | Invoke-JiraAddWatcher
 
 #DELETE WATCHER
-# $josh = (Invoke-JiraFindUsers Josh)[0].accountId
-# Invoke-JiraAddWatcher JPT-1 $josh
-# Read-Host -Prompt "Press any key to continue or CTRL+C to quit"
 # Invoke-JiraDeleteWatcher JPT-1 $josh
+#  @(
+#   [pscustomobject]@{id=10000},
+#   [pscustomobject]@{id=10002},
+#   [pscustomobject]@{id=10003;key="JPT-4"}
+#   ) | Invoke-JiraDeleteWatcher -AccountId (Invoke-JiraGetCurrentUser).accountId
 
 #GET VOTES
 #Invoke-JiraGetVotes JPT-1
@@ -141,9 +142,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #DELETE VOTE
 # Invoke-JiraDeleteVote JPT-1
-@(
-  [pscustomobject]@{id=10004;key="JPT-5"}
-  ) | Invoke-JiraDeleteVote
+# @(
+#   [pscustomobject]@{id=10004;key="JPT-5"}
+#   ) | Invoke-JiraDeleteVote
 
 #SEND ISSUE NOTIFICATION
 # $me = Invoke-JiraGetCurrentUser

@@ -1,30 +1,42 @@
 #https://developer.atlassian.com/cloud/jira/platform/rest/v2/#api-rest-api-2-issue-issueIdOrKey-watchers-delete
 function Invoke-JiraDeleteWatcher {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Id")]
     param (
-        # The issue Id or Key
-        [Parameter(Mandatory,Position=0)]
+        # The ID of the issue
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Id")]
+        [int32]
+        $Id,
+
+        # The key of the issue
+        [Parameter(Mandatory,Position=0,ValueFromPipeline,ValueFromPipelineByPropertyName,ParameterSetName="Key")]
         [string]
-        $IssueIdOrKey,
+        $Key,
 
         # The account ID of the watcher to delete
-        [Parameter(Mandatory,Position=1)]
+        [Parameter(Mandatory,Position=1,ValueFromPipelineByPropertyName)]
         [string]
-        $WatcherAccountId,
+        $AccountId,
 
         # The JiraConnection object to use for the request
         [Parameter(Position=2)]
         [hashtable]
         $JiraConnection
     )
+    begin {
+        $results = @()
+    }
     process {
-        $functionPath = "/rest/api/2/issue/$IssueIdOrKey/watchers"
+        $issueToken = IIF ($PSCmdlet.ParameterSetName -eq "Id") $Id $Key
+        $functionPath = "/rest/api/2/issue/$issueToken/watchers"
         $verb = "DELETE"
 
         $query=@{
-            accountId = $WatcherAccountId
+            accountId = $AccountId
         }
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+    }
+    end {
+        #$results
     }
 }
