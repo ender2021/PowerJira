@@ -8,11 +8,13 @@ function IIf {
 
         # Value if true
         [Parameter(Mandatory,Position=1)]
+        [AllowNull()]
         [object]
         $TrueValue,
 
         # Value if false
         [Parameter(Mandatory,Position=2)]
+        [AllowNull()]
         [object]
         $FalseValue
     )
