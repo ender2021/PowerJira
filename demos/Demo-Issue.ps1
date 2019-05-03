@@ -56,6 +56,11 @@ $createFields = @{
 
 #ADD WATCHER
 #Invoke-JiraAddWatcher JPT-1 
+#  @(
+#   [pscustomobject]@{id=10000},
+#   [pscustomobject]@{id=10002},
+#   [pscustomobject]@{id=10003;key="JPT-4"}
+#   ) | Invoke-JiraAddWatcher
 
 #GET ISSUE WATCHERS
 #(Invoke-JiraGetIssueWatchers JPT-1).watchers

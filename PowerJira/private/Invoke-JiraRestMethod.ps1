@@ -54,7 +54,7 @@ function Invoke-JiraRestMethod {
         [Parameter(Mandatory,ParameterSetName="SimpleBody",Position=4)]
         [Parameter(Mandatory,ParameterSetName="SimpleBody-HashQuery",Position=5)]
         [Parameter(Mandatory,ParameterSetName="SimpleBody-ArrayQuery",Position=5)]
-        [ValidateNotNullOrEmpty()]
+        [AllowEmptyString()]
         [string]
         $LiteralBody,
 
