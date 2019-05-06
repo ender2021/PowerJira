@@ -19,7 +19,7 @@
 		"scope":"powershell",
 		"prefix":"checkparam",
 		"body" : [
-			"if(\\$PSBoundParameters.ContainsKey(\"${1}\")){\\$$RestArgs.{3}.Add(\"${2}\",\\$${1})}"
+			"if(\\$PSBoundParameters.ContainsKey(\"${1}\")){\\$RestArgs.${3}.Add(\"${2}\",\\$${1})}"
 		],
 		"description": "Snippet for adding an item to a hashtable if a named function parameter is set"
 	},
