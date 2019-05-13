@@ -24,7 +24,7 @@ GUID = '3f4b7dcb-70b5-4c11-8ad5-353ce5fcc1b4'
 Author = 'Justin Mead'
 
 # Company or vendor of this module
-CompanyName = 'Unknown'
+CompanyName = 'ender2021'
 
 # Copyright statement for this module
 Copyright = '(c) Justin Mead. All rights reserved.'
@@ -95,13 +95,13 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        # Tags = @()
+        Tags = @("Jira","Atlassian","REST")
 
         # A URL to the license for this module.
-        # LicenseUri = ''
+        LicenseUri = 'https://github.com/ender2021/PowerJira/blob/master/LICENSE.md'
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/ender2021/PowerJira'
 
         # A URL to an icon representing this module.
         # IconUri = ''
