@@ -81,6 +81,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #GET USERS FOR PICKER
 #Invoke-JiraGetUsersForPicker "ju" -ShowAvatar
 
+#GET ALL USERS
+#Invoke-JiraGetAllUsers -MaxResults 1000
+
 #end tests
 
 #close the Jira session
