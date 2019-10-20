@@ -1,0 +1,61 @@
+class BodyRestMethod : BaseRestMethod {
+
+    #####################
+    # HIDDEN PROPERTIES #
+    #####################
+    
+    #####################
+    # PUBLIC PROPERTIES #
+    #####################
+
+    # Parameters to be supplied to the method in the body
+    [RestMethodBody]
+    $Body
+
+    ################
+    # CONSTRUCTORS #
+    ################
+
+    #body only
+    BodyRestMethod(
+        [string]$FunctionPath,
+        [string]$HttpMethod,
+        [RestMethodBody]$Body
+    ) : base($FunctionPath,$HttpMethod) {
+        $this.Body = $Body
+    }
+
+    #body + query
+    BodyRestMethod(
+        [string]$FunctionPath,
+        [string]$HttpMethod,
+        [RestMethodQueryParams]$Query,
+        [RestMethodBody]$Body
+    ) : base($FunctionPath,$HttpMethod,$Query) {
+        $this.Body = $Body
+    }
+
+    ##################
+    # HIDDEN METHODS #
+    ##################
+
+    
+
+    ##################
+    # PUBLIC METHODS #
+    ##################
+
+    [object]
+    Invoke(
+        [JiraContext]$JiraContext
+    ){
+        $invokeSplat = @{
+            Uri = $this.Uri($JiraContext)
+            Method = $this.HttpMethod
+            ContentType = $this.ContentType 
+            Headers = $this.HeadersToSend($JiraContext) 
+            Body = $this.Body.ToString()
+        }
+        return Invoke-RestMethod @invokeSplat
+    }
+}
