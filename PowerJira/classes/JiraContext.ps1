@@ -1,6 +1,21 @@
 class JiraContext {
-    [pscustomobject]$AuthHeader
-    [string]$HostName
+    #####################
+    # HIDDEN PROPERTIES #
+    #####################
+    
+    #####################
+    # PUBLIC PROPERTIES #
+    #####################
+
+    [pscustomobject]
+    $AuthHeader
+
+    [string]
+    $HostName
+
+    ################
+    # CONSTRUCTORS #
+    ################
 
     JiraContext(
         [string]$UserName,
@@ -21,4 +36,12 @@ class JiraContext {
         $this.AuthHeader = @{Authorization="Basic $encodedCredentials"}
         $this.HostName = $formattedHost
     }
+
+    ##################
+    # HIDDEN METHODS #
+    ##################
+
+    ##################
+    # PUBLIC METHODS #
+    ##################
 }
