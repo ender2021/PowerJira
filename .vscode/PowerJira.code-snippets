@@ -35,7 +35,7 @@
 		"scope":"powershell",
 		"prefix":"ijcmdlet",
 		"body" : [
-			"#",
+			"\\#",
 			"function Invoke-Jira$1 {",
 			"\t[CmdletBinding()]",
 			"\tparam (\n\n\n",
@@ -82,5 +82,29 @@
 			"}"
 		],
 		"description": "The default cmdlet end clause for PowerJira cmdlets"
+	},
+	"Basic powershell class snippet": {
+		"scope":"powershell",
+		"prefix": "pclass",
+		"body": [
+			"class $1 {\n",
+			"\t#####################",
+			"\t# HIDDEN PROPERTIES #",
+			"\t#####################\n\n\t\n",
+			"\t#####################",
+			"\t# PUBLIC PROPERTIES #",
+			"\t#####################\n\n\t\n",
+			"\t#####################",
+			"\t# CONSTRUCTORS      #",
+			"\t#####################\n\n\t\n",
+			"\t#####################",
+			"\t# HIDDEN METHODS    #",
+			"\t#####################\n\n\t\n",
+			"\t#####################",
+			"\t# PUBLIC METHODS    #",
+			"\t#####################\n\n\t\n",
+			"}"
+		],
+		"description": "Creates an outline of a class with comment sections for each member type"
 	}
 }
