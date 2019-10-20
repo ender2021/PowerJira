@@ -66,8 +66,8 @@ function Invoke-JiraUpdateVersion {
         if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("Name")){$body.Add("name",$Name)}
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
-        if($PSBoundParameters.ContainsKey("StartDate")){$body.Add("startDate",(Format-JiraRestDateTime $StartDate))}
-        if($PSBoundParameters.ContainsKey("ReleaseDate")){$body.Add("releaseDate",(Format-JiraRestDateTime $ReleaseDate))}
+        if($PSBoundParameters.ContainsKey("StartDate")){$body.Add("startDate",[JiraDateTime]::ComplexFormat($StartDate))}
+        if($PSBoundParameters.ContainsKey("ReleaseDate")){$body.Add("releaseDate",[JiraDateTime]::ComplexFormat($ReleaseDate))}
         if($PSBoundParameters.ContainsKey("Archived")){$body.Add("archived",$Archived)}
         if($PSBoundParameters.ContainsKey("Released")){$body.Add("released",$Released)}
         if($PSBoundParameters.ContainsKey("UnfixedIssuesVersionId")) {$body.Add("moveUnfixedIssuesTo",$UnfixedIssuesVersionId)}

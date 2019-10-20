@@ -45,8 +45,8 @@ function Invoke-JiraGetAuditRecords {
         if($PSBoundParameters.ContainsKey("StartAt")){$query.Add("offset",$StartAt)}
         if($PSBoundParameters.ContainsKey("MaxResults")){$query.Add("limit",$MaxResults)}
         if($PSBoundParameters.ContainsKey("From")){
-            $query.Add("from",(Format-JiraRestDateTime $From -Simple))
-            $query.Add("to",(Format-JiraRestDateTime $To -Simple))
+            $query.Add("from",([JiraDateTime]::SimpleFormat($From)))
+            $query.Add("to",([JiraDateTime]::SimpleFormat($To)))
         }
 
         Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query

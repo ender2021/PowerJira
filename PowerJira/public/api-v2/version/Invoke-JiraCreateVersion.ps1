@@ -51,8 +51,8 @@ function Invoke-JiraCreateVersion {
         }
         if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
-        if($PSBoundParameters.ContainsKey("StartDate")){$body.Add("startDate",(Format-JiraRestDateTime $StartDate))}
-        if($PSBoundParameters.ContainsKey("ReleaseDate")){$body.Add("releaseDate",(Format-JiraRestDateTime $ReleaseDate))}
+        if($PSBoundParameters.ContainsKey("StartDate")){$body.Add("startDate",[JiraDateTime]::ComplexFormat($StartDate))}
+        if($PSBoundParameters.ContainsKey("ReleaseDate")){$body.Add("releaseDate",[JiraDateTime]::ComplexFormat($ReleaseDate))}
 
         Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
     }

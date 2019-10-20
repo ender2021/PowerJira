@@ -85,7 +85,7 @@ function Invoke-JiraUpdateWorklog {
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
         $body=@{}
-        if($PSBoundParameters.ContainsKey("Started")){$body.Add("",(Format-JiraRestDateTime $Started))}
+        if($PSBoundParameters.ContainsKey("Started")){$body.Add("",[JiraDateTime]::ComplexFormat($Started))}
         if($PSBoundParameters.ContainsKey("TimeSpent")){$body.Add("timeSpent",$TimeSpent)}
         if($PSBoundParameters.ContainsKey("TimeSpentSeconds")){$body.Add("timeSpentSeconds",$TimeSpentSeconds)}
         if($PSBoundParameters.ContainsKey("Comment")){$body.Add("comment",$Comment)}

@@ -91,7 +91,7 @@ function Invoke-JiraAddWorklog {
         if($PSBoundParameters.ContainsKey("ReduceBy")){$query.Add("reduceBy",$ReduceBy)}
 
         $body=@{
-            started = (Format-JiraRestDateTime $Started)
+            started = [JiraDateTime]::ComplexFormat($Started)
         }
         if($PSBoundParameters.ContainsKey("TimeSpent")){$body.Add("timeSpent",$TimeSpent)}
         if($PSBoundParameters.ContainsKey("TimeSpentSeconds")){$body.Add("timeSpentSeconds",$TimeSpentSeconds)}
