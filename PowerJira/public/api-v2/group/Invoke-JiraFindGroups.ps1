@@ -27,10 +27,10 @@ function Invoke-JiraFindGroups {
         $verb = "GET"
 
         $queryKvp = @(
-            Format-QueryKvp "query" $SearchTerm
+            [RestQueryKvp]::new("query", $SearchTerm)
         )
-        if($Exclude.Count -gt 0) { $Exclude | ForEach-Object {$queryKvp += Format-QueryKvp "exclude" $_} }
-        if($PSBoundParameters.ContainsKey("MaxResults")){$queryKvp += Format-QueryKvp "maxResults" $MaxResults}
+        if($Exclude.Count -gt 0) { $Exclude | ForEach-Object {$queryKvp += [RestQueryKvp]::new("exclude",$_)} }
+        if($PSBoundParameters.ContainsKey("MaxResults")){$queryKvp += [RestQueryKvp]::new("maxResults",$MaxResults)}
 
         Invoke-JiraRestMethod $JiraConnection $functionPath $verb -QueryKvp $queryKvp
     }

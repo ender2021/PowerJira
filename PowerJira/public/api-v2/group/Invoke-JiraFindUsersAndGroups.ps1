@@ -62,21 +62,21 @@ function Invoke-JiraFindUsersAndGroups {
         $verb = "GET"
 
         $queryKvp = @(
-            Format-QueryKvp "query" $SearchTerm
+            [RestQueryKvp]::new("query",$SearchTerm)
         )
 
         if($PSBoundParameters.ContainsKey("CustomFieldId")){
-            $queryKvp += Format-QueryKvp "fieldId" $CustomFieldId
-            if($PSBoundParameters.ContainsKey("Projects")){$Projects | ForEach-Object {$queryKvp += Format-QueryKvp "projectId" $_}}
-            if($PSBoundParameters.ContainsKey("IssueTypes")){$IssueTypes | ForEach-Object {$queryKvp += Format-QueryKvp "issueTypeId" $_}}
+            $queryKvp += [RestQueryKvp]::new("fieldId",$CustomFieldId)
+            if($PSBoundParameters.ContainsKey("Projects")){$Projects | ForEach-Object {$queryKvp += [RestQueryKvp]::new("projectId",$_)}}
+            if($PSBoundParameters.ContainsKey("IssueTypes")){$IssueTypes | ForEach-Object {$queryKvp += [RestQueryKvp]::new("issueTypeId",$_)}}
         }
-        if($PSBoundParameters.ContainsKey("MaxResults")){$queryKvp += Format-QueryKvp "maxResults" $MaxResults}
-        if(!$PSBoundParameters.ContainsKey("CaseSensitiveGroups")){$queryKvp += Format-QueryKvp "caseInsensitive" $true}
+        if($PSBoundParameters.ContainsKey("MaxResults")){$queryKvp += [RestQueryKvp]::new("maxResults",$MaxResults)}
+        if(!$PSBoundParameters.ContainsKey("CaseSensitiveGroups")){$queryKvp += [RestQueryKvp]::new("caseInsensitive",$true)}
         if($PSBoundParameters.ContainsKey("ShowAvatar")){
-            $queryKvp += Format-QueryKvp "showAvatar" $true
-            $queryKvp += Format-QueryKvp "avatarSize" $AvatarSize
+            $queryKvp += [RestQueryKvp]::new("showAvatar",$true)
+            $queryKvp += [RestQueryKvp]::new("avatarSize",$AvatarSize)
         }
-        if($PSBoundParameters.ContainsKey("ExcludeConnectAddons")){$queryKvp += Format-QueryKvp "excludeConnectAddons" $true}
+        if($PSBoundParameters.ContainsKey("ExcludeConnectAddons")){$queryKvp += [RestQueryKvp]::new("excludeConnectAddons",$true)}
 
         Invoke-JiraRestMethod $JiraConnection $functionPath $verb -QueryKvp $queryKvp
     }
