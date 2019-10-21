@@ -1,16 +1,16 @@
-#import PowerJira
-Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira\PowerJira.psm1) -Force
+Using Module ..\PowerJira\PowerJira.psm1
 
 #import the variable $JiraCredentials
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \credentials\Credentials.psm1) -Force
 
 #open a new Jira session
-Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
+$context = [JiraContext]::new($JiraCredentials.UserName,$JiraCredentials.ApiToken,$JiraCredentials.HostName)
+$context.OpenSession()
 
 #do tests here
 
 #GET ALL PROJECT CATEGORIES
-#Invoke-JiraGetAllProjectCategories
+Invoke-JiraGetAllProjectCategories
 
 #CREATE PROJECT CATEGORY
 #Invoke-JiraCreateProjectCategory "new category" "this is a description"
@@ -27,4 +27,4 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #end tests
 
 #close the Jira session
-Close-JiraSession
+$context.CloseSession()
