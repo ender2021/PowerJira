@@ -1,4 +1,8 @@
-class FileRestMethod : BaseRestMethod {
+using module ..\JiraContext.psm1
+using module .\RestMethodQueryParams.psm1
+using module .\RestMethod.psm1
+
+class FormRestMethod : RestMethod {
 
     #####################
     # HIDDEN PROPERTIES #
@@ -8,31 +12,31 @@ class FileRestMethod : BaseRestMethod {
     # PUBLIC PROPERTIES #
     #####################
 
-    # The path to the file, when POST-ing or PUT-ing a file
-    [string]
-    $FilePath
+    # Form values for a multipart request
+    [hashtable]
+    $Form
 
     ################
     # CONSTRUCTORS #
     ################
 
-    #file only
-    FileRestMethod(
+    #form only
+    FormRestMethod(
         [string]$FunctionPath,
         [string]$HttpMethod,
-        [string]$FilePath
+        [hashtable]$Form
     ) : base($FunctionPath,$HttpMethod) {
-        $this.FileInit($FilePath)
+        $this.FormInit($Form)
     }
 
-    #file + query
-    FileRestMethod(
+    #form + query
+    FormRestMethod(
         [string]$FunctionPath,
         [string]$HttpMethod,
         [RestMethodQueryParams]$Query,
-        [string]$FilePath
+        [hashtable]$Form
     ) : base($FunctionPath,$HttpMethod,$Query) {
-        $this.FileInit($FilePath)
+        $this.FormInit($Form)
     }
 
     ##################
@@ -41,8 +45,8 @@ class FileRestMethod : BaseRestMethod {
 
     hidden
     [void]
-    FileInit([string]$FilePath){
-        $this.FilePath = $FilePath
+    FormInit([hashtable]$Form){
+        $this.Form = $Form
         if(!$this.Headers.ContainsKey("X-Atlassian-Token")) {
             $this.Headers.Add("X-Atlassian-Token","no-check")
         }
@@ -56,11 +60,12 @@ class FileRestMethod : BaseRestMethod {
     Invoke(
         [JiraContext]$JiraContext
     ){
+        $JiraContext = $this.FillJiraContext($JiraContext)
         $invokeSplat = @{
             Uri = $this.Uri($JiraContext)
             Method = $this.HttpMethod
             Headers = $this.HeadersToSend($JiraContext) 
-            InFile = $this.FilePath
+            Form = $this.Form
         }
         return Invoke-RestMethod @invokeSplat
     }

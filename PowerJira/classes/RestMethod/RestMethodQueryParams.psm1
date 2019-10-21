@@ -1,3 +1,5 @@
+using module .\RestQueryKvp.psm1
+
 class RestMethodQueryParams {
     
     #####################

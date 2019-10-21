@@ -1,4 +1,8 @@
-class BodyRestMethod : BaseRestMethod {
+using module ..\JiraContext.psm1
+using module .\RestMethodQueryParams.psm1
+using module .\RestMethod.psm1
+
+class FileRestMethod : RestMethod {
 
     #####################
     # HIDDEN PROPERTIES #
@@ -8,38 +12,45 @@ class BodyRestMethod : BaseRestMethod {
     # PUBLIC PROPERTIES #
     #####################
 
-    # Parameters to be supplied to the method in the body
-    [RestMethodBody]
-    $Body
+    # The path to the file, when POST-ing or PUT-ing a file
+    [string]
+    $FilePath
 
     ################
     # CONSTRUCTORS #
     ################
 
-    #body only
-    BodyRestMethod(
+    #file only
+    FileRestMethod(
         [string]$FunctionPath,
         [string]$HttpMethod,
-        [RestMethodBody]$Body
+        [string]$FilePath
     ) : base($FunctionPath,$HttpMethod) {
-        $this.Body = $Body
+        $this.FileInit($FilePath)
     }
 
-    #body + query
-    BodyRestMethod(
+    #file + query
+    FileRestMethod(
         [string]$FunctionPath,
         [string]$HttpMethod,
         [RestMethodQueryParams]$Query,
-        [RestMethodBody]$Body
+        [string]$FilePath
     ) : base($FunctionPath,$HttpMethod,$Query) {
-        $this.Body = $Body
+        $this.FileInit($FilePath)
     }
 
     ##################
     # HIDDEN METHODS #
     ##################
 
-    
+    hidden
+    [void]
+    FileInit([string]$FilePath){
+        $this.FilePath = $FilePath
+        if(!$this.Headers.ContainsKey("X-Atlassian-Token")) {
+            $this.Headers.Add("X-Atlassian-Token","no-check")
+        }
+    }
 
     ##################
     # PUBLIC METHODS #
@@ -49,12 +60,12 @@ class BodyRestMethod : BaseRestMethod {
     Invoke(
         [JiraContext]$JiraContext
     ){
+        $JiraContext = $this.FillJiraContext($JiraContext)
         $invokeSplat = @{
             Uri = $this.Uri($JiraContext)
             Method = $this.HttpMethod
-            ContentType = $this.ContentType 
             Headers = $this.HeadersToSend($JiraContext) 
-            Body = $this.Body.ToString()
+            InFile = $this.FilePath
         }
         return Invoke-RestMethod @invokeSplat
     }

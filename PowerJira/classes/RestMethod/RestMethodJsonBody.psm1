@@ -1,3 +1,5 @@
+using module .\RestMethodBody.psm1
+
 class RestMethodJsonBody : RestMethodBody {
     
     #####################

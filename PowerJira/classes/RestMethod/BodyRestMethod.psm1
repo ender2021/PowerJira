@@ -1,4 +1,9 @@
-class FormRestMethod : BaseRestMethod {
+using module ..\JiraContext.psm1
+using module .\RestMethodQueryParams.psm1
+using module .\RestMethod.psm1
+using module .\RestMethodBody.psm1
+
+class BodyRestMethod : RestMethod {
 
     #####################
     # HIDDEN PROPERTIES #
@@ -8,45 +13,38 @@ class FormRestMethod : BaseRestMethod {
     # PUBLIC PROPERTIES #
     #####################
 
-    # Form values for a multipart request
-    [hashtable]
-    $Form
+    # Parameters to be supplied to the method in the body
+    [RestMethodBody]
+    $Body
 
     ################
     # CONSTRUCTORS #
     ################
 
-    #form only
-    FormRestMethod(
+    #body only
+    BodyRestMethod(
         [string]$FunctionPath,
         [string]$HttpMethod,
-        [hashtable]$Form
+        [RestMethodBody]$Body
     ) : base($FunctionPath,$HttpMethod) {
-        $this.FormInit($Form)
+        $this.Body = $Body
     }
 
-    #form + query
-    FormRestMethod(
+    #body + query
+    BodyRestMethod(
         [string]$FunctionPath,
         [string]$HttpMethod,
         [RestMethodQueryParams]$Query,
-        [hashtable]$Form
+        [RestMethodBody]$Body
     ) : base($FunctionPath,$HttpMethod,$Query) {
-        $this.FormInit($Form)
+        $this.Body = $Body
     }
 
     ##################
     # HIDDEN METHODS #
     ##################
 
-    hidden
-    [void]
-    FormInit([hashtable]$Form){
-        $this.Form = $Form
-        if(!$this.Headers.ContainsKey("X-Atlassian-Token")) {
-            $this.Headers.Add("X-Atlassian-Token","no-check")
-        }
-    }
+    
 
     ##################
     # PUBLIC METHODS #
@@ -56,11 +54,13 @@ class FormRestMethod : BaseRestMethod {
     Invoke(
         [JiraContext]$JiraContext
     ){
+        $JiraContext = $this.FillJiraContext($JiraContext)
         $invokeSplat = @{
             Uri = $this.Uri($JiraContext)
             Method = $this.HttpMethod
+            ContentType = $this.ContentType 
             Headers = $this.HeadersToSend($JiraContext) 
-            Form = $this.Form
+            Body = $this.Body.ToString()
         }
         return Invoke-RestMethod @invokeSplat
     }

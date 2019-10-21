@@ -1,4 +1,7 @@
-class BaseRestMethod {
+using module ..\JiraContext.psm1
+using module .\RestMethodQueryParams.psm1
+
+class RestMethod {
 
     #####################
     # HIDDEN PROPERTIES #
@@ -34,7 +37,7 @@ class BaseRestMethod {
     ################
 
     #no params
-    RestMethodInput(
+    RestMethod(
         [string]$FunctionPath,
         [string]$HttpMethod
     ){
@@ -42,7 +45,7 @@ class BaseRestMethod {
     }
 
     #query params only
-    RestMethodInput(
+    RestMethod(
         [string]$FunctionPath,
         [string]$HttpMethod,
         [RestMethodQueryParams]$Query
@@ -55,12 +58,27 @@ class BaseRestMethod {
     # HIDDEN METHODS #
     ##################
 
-    hidden Init(
+    hidden
+    [void]
+    Init(
         [string]$FunctionPath,
         [string]$HttpMethod
     ){
         $this.FunctionPath = $FunctionPath
         $this.HttpMethod = $HttpMethod
+    }
+
+    hidden
+    static
+    [JiraContext]
+    FillContext(
+        [JiraContext]$JiraContext
+    ){
+        if ($null -eq $JiraContext) {
+            return $Global:PowerJira.Context
+        } else {
+            return $JiraContext
+        }
     }
 
     ##################
@@ -90,9 +108,15 @@ class BaseRestMethod {
     }
 
     [object]
+    Invoke(){
+        return $this.Invoke($Global:PowerJira.Context)
+    }
+
+    [object]
     Invoke(
         [JiraContext]$JiraContext
     ){
+        $JiraContext = $this.FillJiraContext($JiraContext)
         $invokeSplat = @{
             Uri = $this.Uri($JiraContext)
             Method = $this.HttpMethod

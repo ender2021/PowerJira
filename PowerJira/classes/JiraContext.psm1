@@ -44,4 +44,15 @@ class JiraContext {
     ##################
     # PUBLIC METHODS #
     ##################
+
+    [void]
+    OpenSession(){
+        $Global:PowerJira.Context = $this
+    }
+
+    static
+    [void]
+    CloseSession(){
+        $Global:PowerJira.Context = $null
+    }
 }
