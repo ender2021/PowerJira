@@ -95,7 +95,7 @@ class RestMethod {
         [JiraContext]$JiraContext
     ){
         $uri = $JiraContext.HostName + "/" + $this.FunctionPath
-        if ($this.Query -and $this.Query.Values.Count -gt 0) {
+        if ($this.Query -and $this.Query.Params -and $this.Query.Params.Count -gt 0) {
             $uri += $this.Query.ToString()
         }
         return $uri

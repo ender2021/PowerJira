@@ -10,7 +10,6 @@ class RestMethodQueryParams {
     # PUBLIC PROPERTIES #
     #####################
 
-    [ValidateNotNullOrEmpty()]
     [RestQueryKvp[]]
     $Params
 
@@ -54,6 +53,7 @@ class RestMethodQueryParams {
     
     [string]
     ToString(){
-        return '?' + [RestQueryKvp]::JoinKvp($this.Params)
+        $joined = ([RestQueryKvp]::JoinKvp($this.Params,'&','='))
+        return '?' + $joined
     }
 }
