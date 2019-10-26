@@ -11,11 +11,9 @@ using module .\classes\RestMethod\FileRestMethod.psm1
 using module .\classes\RestMethod\FormRestMethod.psm1
 
 # grab classes and functions from files
-$classes = Get-ChildItem -Path $PSScriptRoot\classes -Recurse -Include *.psm1 -ErrorAction SilentlyContinue
 $privateFiles = Get-ChildItem -Path $PSScriptRoot\private -Recurse -Include *.ps1 -ErrorAction SilentlyContinue
 $publicFiles = Get-ChildItem -Path $PSScriptRoot\public -Recurse -Include *.ps1 -ErrorAction SilentlyContinue
 
-if(@($privaclassesteFiles).Count -gt 0) { $classes.FullName | ForEach-Object { . $_ } }
 if(@($privateFiles).Count -gt 0) { $privateFiles.FullName | ForEach-Object { . $_ } }
 if(@($publicFiles).Count -gt 0) { $publicFiles.FullName | ForEach-Object { . $_ } }
 
