@@ -17,7 +17,9 @@ class RestMethodJsonBody : RestMethodBody {
     # CONSTRUCTORS #
     ################
 
-    RestMethodJsonBody(){}
+    RestMethodJsonBody(){
+        $this.Values = @{}
+    }
 
     RestMethodJsonBody(
         [hashtable]$Values
