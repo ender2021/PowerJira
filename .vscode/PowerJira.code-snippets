@@ -39,17 +39,18 @@
 			"function Invoke-Jira$1 {",
 			"\t[CmdletBinding()]",
 			"\tparam (\n\n\n",
-			"\t\t# The JiraConnection object to use for the request",
+			"\t\t# The JiraContext object to use for the request",
 			"\t\t[Parameter()]",
 			"\t\t[hashtable]",
-			"\t\t\\$JiraConnection",
+			"\t\t\\$JiraContext",
 			"\t)",
 			"\tprocess {",
 			"\t\t\\$functionPath = \"\"",
 			"\t\t\\$verb = \"\"\n",
-			"\t\t\\$query=@{}",
-			"\t\t\\$body=@{}\n",
-			"\t\tInvoke-JiraRestMethod \\$JiraConnection \\$functionPath \\$verb -Query \\$query -Body \\$body",
+			"\t\t\\$query = [RestMethodQueryParams]::new()",
+			"\t\t\\$body = [RestMethodJsonBody]::new()\n",
+			"\t\t\\$method = [BodyRestMethod]::new(\\$functionPath,\\$verb,\\$query,\\$body)",
+			"\t\t\\$method.Invoke(\\$JiraContext)",
 			"\t}",
 			"}",
 		],
@@ -106,5 +107,24 @@
 			"}"
 		],
 		"description": "Creates an outline of a class with comment sections for each member type"
+	},
+	"PowerJira RestMethod invocation": {
+		"scope":"powershell",
+		"prefix": "jrest",
+		"body": [
+			"\\$method = [RestMethod]::new(\\$functionPath,\\$verb)",
+			"\\$method.Invoke(\\$JiraContext)"
+		],
+		"description": "Default invocation of a rest method"
+	},
+	"PowerJira BodyRestMethod invocation": {
+		"scope":"powershell",
+		"prefix": "jbrest",
+		"body": [
+			"\\$method = [BodyRestMethod]::new(\\$functionPath,\\$verb,\\$body)",
+			"\\$method.Invoke(\\$JiraContext)"
+		],
+		"description": "Default invocation of a rest method"
 	}
+	
 }
