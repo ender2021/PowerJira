@@ -12,9 +12,6 @@ class PowerJiraGlobal {
     # PUBLIC PROPERTIES #
     #####################
 
-    [object]
-    $Session=$null
-
     [JiraContext]
     $Context=$null
 
@@ -34,6 +31,16 @@ class PowerJiraGlobal {
     # PUBLIC METHODS    #
     #####################
 
-    
+    [void]
+    OpenSession(
+        [JiraContext]$JiraContext
+    ){
+        $this.Context = $JiraContext
+    }
+
+    [void]
+    CloseSession(){
+        $this.Context = $null
+    }
 
 }

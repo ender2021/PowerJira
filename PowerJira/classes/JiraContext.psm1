@@ -47,11 +47,11 @@ class JiraContext {
 
     [void]
     OpenSession(){
-        $Global:PowerJira.Context = $this
+        $Global:PowerJira.OpenSession($this)
     }
 
     [void]
     CloseSession(){
-        $Global:PowerJira.Context = $null
+        $Global:PowerJira.CloseSession()
     }
 }
