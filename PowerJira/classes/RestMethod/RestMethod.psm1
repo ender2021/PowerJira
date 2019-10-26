@@ -75,7 +75,12 @@ class RestMethod {
         [JiraContext]$JiraContext
     ){
         if ($null -eq $JiraContext) {
-            return $Global:PowerJira.Context
+            $toReturn = $Global:PowerJira.Context
+            if ($null -eq $toReturn) {
+                throw "`$JiraContext was not provided when invoking a REST method"
+            } else {
+                return $toReturn
+            }
         } else {
             return $JiraContext
         }
@@ -116,7 +121,7 @@ class RestMethod {
     Invoke(
         [JiraContext]$JiraContext
     ){
-        $JiraContext = $this.FillJiraContext($JiraContext)
+        $JiraContext = [RestMethod]::FillContext($JiraContext)
         $invokeSplat = @{
             Uri = $this.Uri($JiraContext)
             Method = $this.HttpMethod

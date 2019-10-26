@@ -7,7 +7,7 @@ class JiraContext {
     # PUBLIC PROPERTIES #
     #####################
 
-    [pscustomobject]
+    [hashtable]
     $AuthHeader
 
     [string]
@@ -50,7 +50,6 @@ class JiraContext {
         $Global:PowerJira.Context = $this
     }
 
-    static
     [void]
     CloseSession(){
         $Global:PowerJira.Context = $null
