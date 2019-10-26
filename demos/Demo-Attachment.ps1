@@ -5,7 +5,7 @@ Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira\PowerJira.
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \credentials\Credentials.psm1) -Force
 
 #open a new Jira session
-Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
+$context = Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
 
 #do tests here
 
@@ -18,11 +18,11 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #@("JPT-3","JPT-4") | Invoke-JiraAddAttachment -Attachment (Get-Item -Path $PSScriptRoot\SampleAttachment*)
 
 #DELETE ATTACHMENT
-#Invoke-JiraDeleteAttachment 10001
+#Invoke-JiraDeleteAttachment 10040
 #Get-Item -Path $PSScriptRoot\SampleAttachment* | Invoke-JiraAddAttachment JPT-3 | Invoke-JiraDeleteAttachment
 
 #GET ATTACHMENT METADATA
-#Invoke-JiraGetAttachmentMetadata 10000
+#Invoke-JiraGetAttachmentMetadata 10039
 #@(10038,10037,10035) | Invoke-JiraGetAttachmentMetadata
 
 #GET JIRA ATTACHMENT SETTINGS
