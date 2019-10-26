@@ -11,7 +11,7 @@ class RestMethodJsonBody : RestMethodBody {
     #####################
 
     [hashtable]
-    $Values = @{}
+    $Values
 
     ################
     # CONSTRUCTORS #

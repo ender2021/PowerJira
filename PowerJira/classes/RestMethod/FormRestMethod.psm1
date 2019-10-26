@@ -60,7 +60,7 @@ class FormRestMethod : RestMethod {
     Invoke(
         [JiraContext]$JiraContext
     ){
-        $JiraContext = $this.FillJiraContext($JiraContext)
+        $JiraContext = [RestMethod]::FillContext($JiraContext)
         $invokeSplat = @{
             Uri = $this.Uri($JiraContext)
             Method = $this.HttpMethod
