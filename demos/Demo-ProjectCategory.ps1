@@ -1,10 +1,11 @@
-Using Module ..\PowerJira\PowerJira.psm1
+#import PowerJira
+Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira\PowerJira.psm1) -Force
 
 #import the variable $JiraCredentials
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \credentials\Credentials.psm1) -Force
 
 #open a new Jira session
-$context = [JiraContext]::new($JiraCredentials.UserName,$JiraCredentials.ApiToken,$JiraCredentials.HostName)
+$context = New-JiraContext $JiraCredentials.UserName $JiraCredentials.ApiToken $JiraCredentials.HostName
 $context.OpenSession()
 
 #do tests here
