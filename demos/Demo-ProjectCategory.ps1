@@ -11,19 +11,19 @@ $context.OpenSession()
 #do tests here
 
 #GET ALL PROJECT CATEGORIES
-Invoke-JiraGetAllProjectCategories
+#Invoke-JiraGetAllProjectCategories
 
 #CREATE PROJECT CATEGORY
 #Invoke-JiraCreateProjectCategory "new category" "this is a description"
 
 #GET PROJECT CATEGORY
-#Invoke-JiraGetProjectCategory 10000
+#Invoke-JiraGetProjectCategory 10001
 
 #UPDATE PROJECT CATEGORY
-#Invoke-JiraUpdateProjectCategory 10000 "name change"
+#Invoke-JiraUpdateProjectCategory 10001 "name change"
 
 #DELETE PROJECT CATEGORY
-#Invoke-JiraDeleteProjectCategory 10000
+#Invoke-JiraDeleteProjectCategory 10001
 
 #end tests
 

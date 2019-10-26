@@ -7,15 +7,16 @@ function Invoke-JiraGetProjectCategory {
         [int64]
         $CategoryId,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/projectCategory/$CategoryId"
         $verb = "GET"
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $method = [RestMethod]::new($functionPath,$verb)
+        $method.Invoke($JiraContext)
     }
 }
