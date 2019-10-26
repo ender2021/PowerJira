@@ -12,13 +12,15 @@ class RestMethodQueryParams {
 
     [ValidateNotNullOrEmpty()]
     [RestQueryKvp[]]
-    $Params = @()
+    $Params
 
     ################
     # CONSTRUCTORS #
     ################
 
-    RestMethodQueryParams(){}
+    RestMethodQueryParams(){
+        $this.Params = @()
+    }
 
     RestMethodQueryParams(
         [RestQueryKvp[]]$Params
