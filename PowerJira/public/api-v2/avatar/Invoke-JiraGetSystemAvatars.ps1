@@ -8,19 +8,20 @@ function Invoke-JiraGetSystemAvatars {
         [string]
         $Type,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
-        $results = @{}
+        $results = @()
     }
     process {
         $functionPath = "/rest/api/2/avatar/$Type/system"
         $verb = "GET"
 
-        $results += (Invoke-JiraRestMethod $JiraConnection $functionPath $verb).system
+        $method = [RestMethod]::new($functionPath,$verb)
+        $results += $method.Invoke($JiraContext).system
     }
     end {
         $results

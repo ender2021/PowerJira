@@ -5,7 +5,7 @@ Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira\PowerJira.
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \credentials\Credentials.psm1) -Force
 
 #open a new Jira session
-Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
+$context = Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
 
 #do tests here
 
@@ -15,13 +15,13 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #GET AVATARS
 #(Invoke-JiraGetAvatars "issuetype" 10000).custom
-(Invoke-JiraGetProject 10000).issuetypes | Invoke-JiraGetAvatars issuetype
+#(Invoke-JiraGetProject 10000).issuetypes | Invoke-JiraGetAvatars issuetype
 
 #ADD AVATAR
 #Get-Item $PSScriptRoot\icon.png | Invoke-JiraAddAvatar "issuetype" 10000
 
 #DELETE AVATAR
-#Invoke-JiraDeleteAvatar "issuetype" 10000 10514
+#Invoke-JiraDeleteAvatar "issuetype" 10000 10518
 #(Invoke-JiraGetAvatars "issuetype" 10000).custom | Invoke-JiraDeleteAvatar "issuetype" 10000
 
 #end tests

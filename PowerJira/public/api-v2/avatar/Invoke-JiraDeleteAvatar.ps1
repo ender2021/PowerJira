@@ -18,10 +18,10 @@ function Invoke-JiraDeleteAvatar {
         [int64]
         $Id,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=3)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $results = @()
@@ -30,7 +30,8 @@ function Invoke-JiraDeleteAvatar {
         $functionPath = "/rest/api/2/universal_avatar/type/$Type/owner/$EntityId/avatar/$Id"
         $verb = "DELETE"
 
-        $results = Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $method = [RestMethod]::new($functionPath,$verb)
+        $results += $method.Invoke($JiraContext)
     }
     end {
         #$results
