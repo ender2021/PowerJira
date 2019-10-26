@@ -12,15 +12,16 @@ function Invoke-JiraGetIssueProperty {
         [string]
         $Key,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/properties/$Key"
         $verb = "GET"
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $method = [RestMethod]::new($functionPath,$verb)
+        $method.Invoke($JiraContext)
     }
 }

@@ -17,10 +17,10 @@ function Invoke-JiraAddWatcher {
         [string]
         $AccountId,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $results = @()
@@ -30,10 +30,11 @@ function Invoke-JiraAddWatcher {
         $functionPath = "/rest/api/2/issue/$issueToken/watchers"
         $verb = "POST"
 
-        $body=""
-        if($PSBoundParameters.ContainsKey("AccountId")){$body = """$AccountId"""}
+        $body = [RestMethodBody]::new()
+        if($PSBoundParameters.ContainsKey("AccountId")){$body.BodyString = """$AccountId"""}
 
-        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -LiteralBody $body
+        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $results += $method.Invoke($JiraContext)
     }
     end {
         #$results

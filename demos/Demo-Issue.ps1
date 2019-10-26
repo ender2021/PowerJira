@@ -5,13 +5,13 @@ Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira\PowerJira.
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \credentials\Credentials.psm1) -Force
 
 #open a new Jira session
-Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
+$context = Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
 
 #do tests here
 
 #GET CREATE ISSUE METADATA
-# $meta = Invoke-JiraGetIssueCreateMetadata -Key "JPT" -TypeIds @(10001,10002)
-# $meta.projects[0].issuetypes[0].fields
+# $meta = Invoke-JiraGetIssueCreateMetadata -Key "JPT" -TypeIds @(10001,10002) -Expand "projects.issuetypes.fields"
+# $meta.projects[0].issuetypes[1].fields
 # $meta = (Invoke-JiraGetProjects).values | Invoke-JiraGetIssueCreateMetadata -TypeIds @(10001,10002)
 # $meta
 
@@ -28,7 +28,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #   summary = "Issue that will be deleted"
 #   project = @{id=10000}
 # }
-#Invoke-JiraCreateIssue -Fields $createFields
+# Invoke-JiraCreateIssue -Fields $createFields
 # @(
 #   @{
 #     issuetype = @{id=10001} #story
@@ -52,9 +52,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #   issuetype = @{id=10001} #task
 #   summary = "PJ Test Issue 1"
 #   project = @{id=13324}
-#   reporter = @{id=(Invoke-JiraGetCurrentUser).accountId}
+#   #reporter = @{id=(Invoke-JiraGetCurrentUser).accountId}
 # }
-#Invoke-JiraEditIssue JPT-1 $updateFields
+# Invoke-JiraEditIssue JPT-12 $updateFields
 # @(
 #   [pscustomobject]@{id=10000},
 #   [pscustomobject]@{id=10002},
@@ -62,7 +62,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #   ) | Invoke-JiraEditIssue -Fields @{summary="overwritten summary!"}
 
 #DELETE ISSUE
-#Invoke-JiraDeleteIssue JPT-2
+#Invoke-JiraDeleteIssue JPT-12
 # @(
 #   [pscustomobject]@{id=10006},
 #   [pscustomobject]@{id=10007;deleteSubtasks=$true}
@@ -102,8 +102,8 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #         fields = @{
 #             issuetype = @{id=10001} #task
 #             summary = "PJ Test Issue Bulk Create $i"
-#             project = @{id=13324}
-#             reporter = @{id=(Invoke-JiraGetCurrentUser).accountId}
+#             project = @{id=10000}
+#             #reporter = @{id=(Invoke-JiraGetCurrentUser).accountId}
 #         }
 #     }
 # }
@@ -135,7 +135,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #   ) | Invoke-JiraAddWatcher
 
 #DELETE WATCHER
-# Invoke-JiraDeleteWatcher JPT-1 $josh
+#Invoke-JiraDeleteWatcher JPT-1 
 #  @(
 #   [pscustomobject]@{id=10000},
 #   [pscustomobject]@{id=10002},
@@ -158,9 +158,9 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #   ) | Invoke-JiraDeleteVote
 
 #SEND ISSUE NOTIFICATION
-# $me = Invoke-JiraGetCurrentUser
 # $message = "This is a test message, let me know if you get it -Justin"
-# Invoke-JiraSendIssueNotification JPT-1 $message -Subject "SYSTEMS CHANGE NOTICE" 
+# $me = Invoke-JiraGetCurrentUser
+# Invoke-JiraSendIssueNotification JPT-1 $message -Subject "SYSTEMS CHANGE NOTICE"
 
 #GET ISSUE PICKER SUGGESTIONS
 #(Invoke-JiraGetIssuePickerSuggestions "test").sections | fl

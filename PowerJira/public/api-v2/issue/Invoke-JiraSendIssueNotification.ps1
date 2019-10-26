@@ -67,10 +67,10 @@ function Invoke-JiraSendIssueNotification {
         [switch]
         $SkipAllDefault,
 
-        # The JiraConnection object to use for the request
+        # The JiraContext object to use for the request
         [Parameter()]
-        [hashtable]
-        $JiraConnection
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/notify"
@@ -109,14 +109,15 @@ function Invoke-JiraSendIssueNotification {
         if($PSBoundParameters.ContainsKey("RestrictGroups")){$RestrictGroups | ForEach-Object {$restrict.groups += @{name=$_}}}
         if($PSBoundParameters.ContainsKey("RestrictPermissions")){$restrict.permissions += $RestrictPermissions}
 
-        $body=@{
+        $body = [RestMethodJsonBody]::new(@{
             htmlBody = $HtmlBody
             to = $to
-        }
+        })
         if($PSBoundParameters.ContainsKey("PlainBody")){$body.Add("textBody",$PlainBody)}
         if($PSBoundParameters.ContainsKey("Subject")){$body.Add("subject",$Subject)}
         if(($restrict.groups.Count -gt 0) -or ($restrict.permissions.Count -gt 0)) {$body.Add("restrict",$restrict)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body -BodyDepth 5
+        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }

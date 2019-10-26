@@ -22,10 +22,10 @@ function Invoke-JiraAssignIssue {
         [switch]
         $ProjectDefault,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $results = @()
@@ -35,12 +35,13 @@ function Invoke-JiraAssignIssue {
         $functionPath = "/rest/api/2/issue/$issueToken/assignee"
         $verb = "PUT"
 
-        $body=@{
+        $body = [RestMethodJsonBody]::new(@{
             accountId = IIF $PSBoundParameters.ContainsKey("AccountId") $AccountId $null
-        }
-        if($PSBoundParameters.ContainsKey("ProjectDefault")){$body.accountId = "-1"}
+        })
+        if($PSBoundParameters.ContainsKey("ProjectDefault")){$body.Values.accountId = "-1"}
 
-        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $results += $method.Invoke($JiraContext)
     }
     end {
         #$results

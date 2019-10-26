@@ -32,10 +32,10 @@ function Invoke-JiraGetIssuePickerSuggestions {
         [switch]
         $HideSubTasks,        
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=4)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $results = @()
@@ -44,16 +44,17 @@ function Invoke-JiraGetIssuePickerSuggestions {
         $functionPath = "/rest/api/2/issue/picker"
         $verb = "GET"
 
-        $query=@{
+        $query = [RestMethodQueryParams]::new(@{
             showSubTasks = !$HideSubTasks
             showSubTaskParent = !$HideSubTaskParent
-        }
+        })
         if($PSBoundParameters.ContainsKey("TextFilter")){$query.Add("query",$TextFilter)}
         if($PSBoundParameters.ContainsKey("JqlFilter")){$query.Add("currentJQL",$JqlFilter)}
         if($PSBoundParameters.ContainsKey("ProjectFilter")){$query.Add("currentProjectId",$ProjectFilter)}
         if($PSBoundParameters.ContainsKey("ExcludeIssueKey")){$query.Add("currentIssueKey",$ExcludeIssueKey)}
 
-        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $results += $method.Invoke($JiraContext)
     }
     end {
         $results

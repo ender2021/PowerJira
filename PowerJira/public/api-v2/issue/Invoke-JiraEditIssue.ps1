@@ -37,10 +37,10 @@ function Invoke-JiraEditIssue {
         [Switch]
         $DisableNotifications,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=6)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $results = @()
@@ -50,17 +50,18 @@ function Invoke-JiraEditIssue {
         $functionPath = "/rest/api/2/issue/$issueToken"
         $verb = "PUT"
 
-        $query = @{
+        $query = [RestMethodQueryParams]::new(@{
             notifyUsers = !$DisableNotifications
-        }
+        })
 
-        $body=@{}
+        $body = [RestMethodJsonBody]::new()
         if($PSBoundParameters.ContainsKey("Fields")){$body.Add("fields",$Fields)}
         if($PSBoundParameters.ContainsKey("Update")){$body.Add("update",$Update)}
         if($PSBoundParameters.ContainsKey("HistoryMetadata")){$body.Add("historyMetadata",$HistoryMetadata)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
 
-        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+        $method = [BodyRestMethod]::new($functionPath,$verb,$query,$body)
+        $results += $method.Invoke($JiraContext)
     }
     end {
         $results
