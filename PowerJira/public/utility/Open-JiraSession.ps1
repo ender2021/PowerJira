@@ -17,6 +17,8 @@ function Open-JiraSession {
         $HostName
     )
     process {
-        $Global:PowerJira.Session = New-JiraConnection -UserName $UserName -Password $Password -HostName $HostName
+        $context = New-JiraContext $JiraCredentials.UserName $JiraCredentials.ApiToken $JiraCredentials.HostName
+        $context.OpenSession()
+        $context
     }
 }
