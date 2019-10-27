@@ -17,21 +17,22 @@ function Invoke-JiraFindGroups {
         [int32]
         $MaxResults,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=3)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/groups/picker"
         $verb = "GET"
 
-        $queryKvp = @(
-            New-Object RestQueryKvp @("query", $SearchTerm)
-        )
-        if($Exclude.Count -gt 0) { $Exclude | ForEach-Object {$queryKvp += New-Object RestQueryKvp @("exclude",$_)} }
-        if($PSBoundParameters.ContainsKey("MaxResults")){$queryKvp += New-Object RestQueryKvp @("maxResults",$MaxResults)}
+        $query = New-Object RestMethodQueryParams @{
+            query = $SearchTerm
+        }
+        if($Exclude.Count -gt 0) { $Exclude | ForEach-Object {$query.Add("exclude",$_)} }
+        if($PSBoundParameters.ContainsKey("MaxResults")){$query.Add("maxResults",$MaxResults)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -QueryKvp $queryKvp
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

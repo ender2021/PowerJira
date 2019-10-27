@@ -12,20 +12,21 @@ function Invoke-JiraRemoveUserFromGroup {
         [string]
         $User,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/group/user"
         $verb = "DELETE"
 
-        $query=@{
+        $query = New-Object RestMethodQueryParams @{
             groupname = $Name
             accountId = $User
         }
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

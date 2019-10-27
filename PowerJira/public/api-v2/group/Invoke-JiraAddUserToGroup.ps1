@@ -12,23 +12,24 @@ function Invoke-JiraAddUserToGroup {
         [string]
         $User,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/group/user"
         $verb = "POST"
 
-        $query = @{
+        $query = New-Object RestMethodQueryParams @{
             groupname = $Name
         }
 
-        $body=@{
+        $body = New-Object RestMethodJsonBody @{
             accountId = $User
         }
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
+        $method.Invoke($JiraContext)
     }
 }
