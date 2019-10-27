@@ -31,7 +31,7 @@ function Invoke-JiraSetCommentProperty {
         $functionPath = "/rest/api/2/comment/$CommentId/properties/$Key"
         $verb = "PUT"
 
-        $body = New-Object RestMethodJsonBody $Value)
+        $body = New-Object RestMethodJsonBody $Value
 
         $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $results += $method.Invoke($JiraContext)

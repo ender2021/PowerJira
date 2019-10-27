@@ -32,7 +32,7 @@ function Invoke-JiraSetDashboardItemProperty {
         $functionPath = "/rest/api/2/dashboard/$DashboardId/items/$ItemId/properties/$PropertyKey"
         $verb = "PUT"
 
-        $body = New-Object RestMethodJsonBody $Value)
+        $body = New-Object RestMethodJsonBody $Value
 
         $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $method.Invoke($JiraContext)

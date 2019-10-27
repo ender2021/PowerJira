@@ -30,7 +30,7 @@ function Invoke-JiraSetUserProperty {
             accountId = $User
         }
 
-        $body = New-Object RestMethodJsonBody $PropertyValue)
+        $body = New-Object RestMethodJsonBody $PropertyValue
 
         $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
         $method.Invoke($JiraContext)
