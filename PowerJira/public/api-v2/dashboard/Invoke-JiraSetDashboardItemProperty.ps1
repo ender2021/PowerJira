@@ -23,17 +23,18 @@ function Invoke-JiraSetDashboardItemProperty {
         [hashtable]
         $Value,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=4)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/dashboard/$DashboardId/items/$ItemId/properties/$PropertyKey"
         $verb = "PUT"
 
-        $body=$Value
+        $body = [RestMethodJsonBody]::new($Value)
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }
