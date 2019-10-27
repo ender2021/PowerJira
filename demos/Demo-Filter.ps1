@@ -10,7 +10,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #do tests here
 
 #CREATE FILTER
-#Invoke-JiraCreateFilter "test filter 6" "project = JPT ORDER BY Summary" -Favourite -Expand @("sharedUsers")
+#Invoke-JiraCreateFilter "test filter 8" "project = JPT ORDER BY Summary" -Favourite -Expand @("sharedUsers")
 
 #GET DEFAULT SHARE SCOPE
 #Invoke-JiraGetDefaultShareScope
@@ -25,27 +25,27 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetMyFilters -Favourites
 
 #SEARCH FILTERS
-#Invoke-JiraSearchFilters "4" -OwnerAccountId (Invoke-JiraGetCurrentUser).accountId
+#Invoke-JiraSearchFilters "8" -OwnerAccountId (Invoke-JiraGetCurrentUser).accountId
 
 #GET FILTER
-#Invoke-JiraGetFilter 10004
+#Invoke-JiraGetFilter 10008
 
 #UPDATE FILTER
-#Invoke-JiraUpdateFilter 10004 -SharePermissions @((New-JiraFilterSharePermission "authenticated"))
+#Invoke-JiraUpdateFilter 10008 -SharePermissions @((New-JiraFilterSharePermission "authenticated"))
 #Invoke-JiraGetProject 10000
 
 #DELETE FILTER
 #Invoke-JiraGetFilter 10005
-#Invoke-JiraDeleteFilter 10005
+#Invoke-JiraDeleteFilter 10008
 
 #GET FILTER SHARE PERMISSIONS
 #Invoke-JiraGetFilterSharePermissions 10004
 
 #GET FILTER SHARE PERMISSION
-#Invoke-JiraGetFilterSharePermission 10004 10102
+#Invoke-JiraGetFilterSharePermission 10004 10103
 
 #DELETE FILTER SHARE PERMISSION
-#Invoke-JiraDeleteFilterSharePermission 10004 10102
+#Invoke-JiraDeleteFilterSharePermission 10004 10103
 
 #ADD FILTER SHARE PERMISSION
 #Invoke-JiraAddFilterSharePermission 10004 (New-JiraFilterSharePermission "authenticated")

@@ -15,19 +15,20 @@ function Invoke-JiraGetMyFilters {
         [string[]]
         $Expand,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/filter/my"
         $verb = "GET"
 
-        $query=@{}
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("Favourites")){$query.Add("includeFavourites",$true)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

@@ -13,19 +13,20 @@ function Invoke-JiraSetFilterColumns {
         [string[]]
         $Columns,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/filter/$FilterId/columns"
         $verb = "PUT"
 
-        $body = @{
+        $body = New-Object RestMethodJsonBody @{
             columns = $Columns
         }
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }
