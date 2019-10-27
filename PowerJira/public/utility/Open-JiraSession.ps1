@@ -14,11 +14,16 @@ function Open-JiraSession {
         # The hostname of the Jira instance to interact with (e.g. https://yourjirasite.atlassian.net/)
         [Parameter(Mandatory,Position=2)]
         [string]
-        $HostName
+        $HostName,
+
+        # Set this switch to return the context object that is created for the session
+        [Parameter()]
+        [switch]
+        $ReturnContext
     )
     process {
         $context = New-JiraContext $JiraCredentials.UserName $JiraCredentials.ApiToken $JiraCredentials.HostName
         $context.OpenSession()
-        $context
+        if ($ReturnContext) { $context }
     }
 }
