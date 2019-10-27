@@ -27,22 +27,23 @@ function Invoke-JiraGetWorkflowTransitionProperties {
         [switch]
         $IncludeReserved,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=3)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/workflow/transitions/$TransitionId/properties"
         $verb = "GET"
 
-        $query=@{
+        $query = [RestMethodQueryParams]::new(@{
             workflowName = $WorkflowName
-        }
+        })
         if($PSBoundParameters.ContainsKey("PropertyKey")){$query.Add("key",$PropertyKey)}
         if($PSBoundParameters.ContainsKey("Draft")){$query.Add("workflowMode","draft")}
         if($PSBoundParameters.ContainsKey("IncludeReserved")){$query.Add("includeReservedKeys",$IncludeReserved)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

@@ -17,18 +17,19 @@ function Invoke-JiraGetIssueTypeWorkflow {
         [switch]
         $Draft,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/workflowscheme/$SchemeId/issuetype/$IssueTypeId"
         $verb = "GET"
 
-        $query=@{}
+        $query = [RestMethodQueryParams]::new()
         if($PSBoundParameters.ContainsKey("Draft")){$query.Add("returnDraftIfExists",$true)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

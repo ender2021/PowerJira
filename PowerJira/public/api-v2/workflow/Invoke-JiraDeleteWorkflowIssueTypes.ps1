@@ -17,20 +17,21 @@ function Invoke-JiraDeleteWorkflowIssueTypes {
         [switch]
         $UpdateDraft,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/workflowscheme/$SchemeId/workflow"
         $verb = "DELETE"
 
-        $query=@{
+        $query = [RestMethodQueryParams]::new(@{
             workflowName = $WorkflowName
-        }
+        })
         if($PSBoundParameters.ContainsKey("UpdateDraft")){$query.Add("updateDraftIfNeeded",$true)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

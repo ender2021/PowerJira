@@ -22,25 +22,26 @@ function Invoke-JiraSetDraftWorkflowIssueTypes {
         [switch]
         $Default,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=3)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/workflowscheme/$SchemeId/draft/workflow"
         $verb = "PUT"
 
-        $query=@{
+        $query = [RestMethodQueryParams]::new(@{
             workflowName = $WorkflowName
-        }
+        })
 
-        $body = @{
+        $body = [RestMethodJsonBody]::new(@{
             issueTypes = $IssueTypeIds
             workflow = $WorkflowName
-        }
+        })
         if($PSBoundParameters.ContainsKey("Default")){$body.Add("defaultMapping",$true)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+        $method = [BodyRestMethod]::new($functionPath,$verb,$query,$body)
+        $method.Invoke($JiraContext)
     }
 }

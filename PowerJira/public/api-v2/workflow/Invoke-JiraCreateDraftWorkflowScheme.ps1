@@ -7,15 +7,16 @@ function Invoke-JiraCreateDraftWorkflowScheme {
         [int64]
         $SchemeId,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/workflowscheme/$SchemeId/createdraft"
         $verb = "POST"
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $method = [RestMethod]::new($functionPath,$verb)
+        $method.Invoke($JiraContext)
     }
 }

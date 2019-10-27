@@ -12,19 +12,20 @@ function Invoke-JiraUpdateDraftDefaultWorkflow {
         [string]
         $DefaultWorkflow,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/workflowscheme/$SchemeId/draft/default"
         $verb = "PUT"
 
-        $body=@{
+        $body = [RestMethodJsonBody]::new(@{
             workflow = $DefaultWorkflow
-        }
+        })
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }
