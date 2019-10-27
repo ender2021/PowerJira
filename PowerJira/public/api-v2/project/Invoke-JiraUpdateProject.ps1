@@ -71,19 +71,19 @@ function Invoke-JiraUpdateProject {
         [string[]]
         $Expand,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=13)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey"
         $verb = "PUT"
 
-        $query = @{}
+        $query = [RestMethodQueryParams]::new()
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $body=@{}
+        $body = [RestMethodJsonBody]::new()
         if($PSBoundParameters.ContainsKey("Key")){$body.Add("key",$Key)}
         if($PSBoundParameters.ContainsKey("Name")){$body.Add("name",$Name)}
         if($PSBoundParameters.ContainsKey("ProjectLead")){$body.Add("leadAccountId",$ProjectLead)}
@@ -96,6 +96,7 @@ function Invoke-JiraUpdateProject {
         if($PSBoundParameters.ContainsKey("CategoryId")){$body.Add("categoryId",$CategoryId)}
         if($PSBoundParameters.ContainsKey("DefaultAssignee")){$body.Add("assigneeType",$DefaultAssignee)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+        $method = [BodyRestMethod]::new($functionPath,$verb,$query,$body)
+        $method.Invoke($JiraContext)
     }
 }

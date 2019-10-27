@@ -15,16 +15,17 @@ function Invoke-JiraGetProject {
         [string[]]
         $Expand,
         
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     $functionPath = "/rest/api/2/project/$ProjectIdOrKey"
     $verb = "GET"
     
-    $query = @{}
+    $query = [RestMethodQueryParams]::new()
     if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-    Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+    $method = [RestMethod]::new($functionPath,$verb,$query)
+    $method.Invoke($JiraContext)
 }

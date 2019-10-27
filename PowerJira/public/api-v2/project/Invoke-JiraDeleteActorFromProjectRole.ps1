@@ -22,19 +22,20 @@ function Invoke-JiraDeleteActorFromProjectRole {
         [string]
         $Group,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=3)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/role/$RoleId"
         $verb = "DELETE"
 
-        $query = @{}
+        $query = [RestMethodQueryParams]::new()
         if($PSBoundParameters.ContainsKey("User")){$query.Add("user",$User)}
         if($PSBoundParameters.ContainsKey("Group")){$query.Add("group",$Group)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

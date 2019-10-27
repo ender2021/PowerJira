@@ -20,22 +20,23 @@ function Invoke-JiraSetProjectPermissionScheme {
         [string[]]
         $Expand,
         
-        # The JiraConnection object to use for the request
-        [Parameter(Position=3)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/permissionscheme"
         $verb = "PUT"
 
-        $query = @{}
+        $query = [RestMethodQueryParams]::new()
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $body = @{
+        $body = [RestMethodJsonBody]::new(@{
             id = $PermissionScheme
-        }
+        })
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+        $method = [BodyRestMethod]::new($functionPath,$verb,$query,$body)
+        $method.Invoke($JiraContext)
     }
 }

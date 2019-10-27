@@ -7,19 +7,20 @@ function Invoke-JiraGetValidProjectName {
         [string]
         $Name,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/projectvalidate/validProjectName"
         $verb = "GET"
 
-        $query=@{
+        $query = [RestMethodQueryParams]::new(@{
             name = $Name
-        }
+        })
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }
