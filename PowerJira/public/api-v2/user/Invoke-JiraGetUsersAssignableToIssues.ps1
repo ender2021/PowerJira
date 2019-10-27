@@ -42,26 +42,25 @@ function Invoke-JiraGetUsersAssignableToIssues {
         [int32]
         $MaxResults=50,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=4,ParameterSetName="Project")]
-        [Parameter(Position=4,ParameterSetName="Issue")]
-        [Parameter(Position=5,ParameterSetName="IssueTransition")]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "rest/api/2/user/assignable/search"
         $verb = "GET"
 
-        $query=@{
+        $query = [RestMethodQueryParams]::new(@{
             startAt = $StartAt
             maxResults = $MaxResults
-        }
+        })
         if($PSBoundParameters.ContainsKey("ProjectIdOrKey")){$query.Add("project",$ProjectIdOrKey)}
         if($PSBoundParameters.ContainsKey("IssueKey")){$query.Add("issueKey",$IssueKey)}
         if($PSBoundParameters.ContainsKey("TransitionId")){$query.Add("actionDescriptorId",$TransitionId)}
         if($PSBoundParameters.ContainsKey("Filter")){$query.Add("query",$Filter)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

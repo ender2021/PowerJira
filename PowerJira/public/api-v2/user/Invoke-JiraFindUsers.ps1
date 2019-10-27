@@ -18,21 +18,22 @@ function Invoke-JiraFindUsers {
         [int32]
         $MaxResults=50,
 
-        # The JiraConnection object to use for the request
+        # The JiraContext object to use for the request
         [Parameter()]
-        [hashtable]
-        $JiraConnection
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/user/search"
         $verb = "GET"
 
-        $query=@{
+        $query = [RestMethodQueryParams]::new(@{
             query = $SearchTerm
             startAt = $StartAt
             maxResults = $MaxResults
-        }
+        })
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

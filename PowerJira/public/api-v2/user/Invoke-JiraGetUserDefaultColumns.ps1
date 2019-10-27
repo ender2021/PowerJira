@@ -7,18 +7,19 @@ function Invoke-JiraGetUserDefaultColumns {
         [string]
         $User,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/user/columns"
         $verb = "GET"
 
-        $query=@{}
+        $query = [RestMethodQueryParams]::new()
         if($PSBoundParameters.ContainsKey("User")){$query.Add("accountId",$User)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }
