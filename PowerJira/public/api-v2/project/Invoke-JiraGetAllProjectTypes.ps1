@@ -11,7 +11,7 @@ function Invoke-JiraGetAllProjectTypes {
         $functionPath = "/rest/api/2/project/type"
         $verb = "GET"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

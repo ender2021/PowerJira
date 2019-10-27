@@ -16,7 +16,7 @@ function Invoke-JiraResetDraftDefaultWorkflow {
         $functionPath = "/rest/api/2/workflowscheme/$SchemeId/draft/default"
         $verb = "DELETE"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

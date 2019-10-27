@@ -41,10 +41,10 @@ function Invoke-JiraGetIssueChangelogs {
         $functionPath = "/rest/api/2/issue/$issueToken/changelog"
         $verb = "GET"
 
-        $query=[RestMethodQueryParams]::new(@{
+        $query=New-Object RestMethodQueryParams @{
             startAt = $StartAt
             maxResults = $MaxResults
-        })
+        }
 
         if($PSBoundParameters.ContainsKey("Id")){
             $issueMemberName = "IssueId"
@@ -54,7 +54,7 @@ function Invoke-JiraGetIssueChangelogs {
             $issueMemberValue = $Key
         }
         
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $obj = $method.Invoke($JiraContext)
         $obj | Add-Member $issueMemberName $issueMemberValue
         $obj.values | ForEach-Object {$_ | Add-Member $issueMemberName $issueMemberValue}

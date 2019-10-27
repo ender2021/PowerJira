@@ -27,7 +27,7 @@ function Invoke-JiraAddAttachment {
         foreach($item in $Attachments) {
             $form = @{file=$item}
 
-            $method = [FormRestMethod]::new($functionPath,$verb,$form)
+            $method = New-Object FormRestMethod @($functionPath,$verb,$form)
             $results += $method.Invoke($JiraContext)
         }
     }

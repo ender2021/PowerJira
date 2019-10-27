@@ -25,7 +25,7 @@ function Invoke-JiraDeleteComment {
         $functionPath = "/rest/api/2/issue/$IssueKey/comment/$Id"
         $verb = "DELETE"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $results += $method.Invoke($JiraContext)
     }
     end {

@@ -31,11 +31,11 @@ function Invoke-JiraDeleteActorFromProjectRole {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/role/$RoleId"
         $verb = "DELETE"
 
-        $query = [RestMethodQueryParams]::new()
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("User")){$query.Add("user",$User)}
         if($PSBoundParameters.ContainsKey("Group")){$query.Add("group",$Group)}
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }

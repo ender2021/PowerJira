@@ -25,7 +25,7 @@ function Invoke-JiraGetAvatars {
         $functionPath = "/rest/api/2/universal_avatar/type/$Type/owner/$Id"
         $verb = "GET"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $results += $method.Invoke($JiraContext)
     }
     end {

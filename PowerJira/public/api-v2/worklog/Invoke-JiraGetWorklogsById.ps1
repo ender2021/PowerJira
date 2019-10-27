@@ -25,14 +25,14 @@ function Invoke-JiraGetWorklogsById {
         $functionPath = "/rest/api/2/worklog/list"
         $verb = "POST"
 
-        $query = [RestMethodQueryParams]::new()
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $body = [RestMethodJsonBody]::new(@{
+        $body = New-Object RestMethodJsonBody @{
             ids = $WorklogIds
-        })
+        }
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$query,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
         $method.Invoke($JiraContext)
     }
 }

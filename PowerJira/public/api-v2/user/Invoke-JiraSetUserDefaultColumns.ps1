@@ -22,14 +22,14 @@ function Invoke-JiraSetUserDefaultColumns {
         $functionPath = "/rest/api/2/user/columns"
         $verb = "PUT"
 
-        $query = [RestMethodQueryParams]::new()
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("User")){$query.Add("accountId",$User)}
 
-        $body = [RestMethodJsonBody]::new(@{
+        $body = New-Object RestMethodJsonBody @{
             columns = $Columns
-        })
+        }
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$query,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
         $method.Invoke($JiraContext)
     }
 }

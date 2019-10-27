@@ -31,13 +31,13 @@ function Invoke-JiraSetIssueTypeWorkflow {
         $functionPath = "/rest/api/2/workflowscheme/$SchemeId/issuetype/$IssueTypeId"
         $verb = "PUT"
 
-        $body = [RestMethodJsonBody]::new(@{
+        $body = New-Object RestMethodJsonBody @{
             issueType = $IssueTypeId
             workflow = $WorkflowName
-        })
+        }
         if($PSBoundParameters.ContainsKey("UpdateDraft")){$body.Add("updateDraftIfNeeded",$true)}
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $method.Invoke($JiraContext)
     }
 }

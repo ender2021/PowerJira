@@ -17,11 +17,11 @@ function Invoke-JiraSetCurrentUserLocale {
         $functionPath = "/rest/api/2/mypreferences/locale"
         $verb = "PUT"
 
-        $body = [RestMethodJsonBody]::new(@{
+        $body = New-Object RestMethodJsonBody @{
             locale = $Locale
-        })
+        }
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $method.Invoke($JiraContext)
     }
 }

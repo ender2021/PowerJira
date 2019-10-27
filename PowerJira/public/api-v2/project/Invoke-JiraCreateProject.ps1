@@ -95,14 +95,14 @@ function Invoke-JiraCreateProject {
         $functionPath = "/rest/api/2/project"
         $verb = "POST"
 
-        $body = [RestMethodJsonBody]::new(@{
+        $body = New-Object RestMethodJsonBody @{
             key = $Key
             name = $Name
             projectTypeKey = $Type
             projectTemplateKey = $Template
             leadAccountId = $ProjectLead
             assigneeType = if($AssignProjectLead) {"PROJECT_LEAD"} else {"UNASSIGNED"}
-        })
+        }
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("Url")){$body.Add("url",$Url)}
         if($PSBoundParameters.ContainsKey("AvatarId")){$body.Add("avatarId",$AvatarId)}
@@ -111,7 +111,7 @@ function Invoke-JiraCreateProject {
         if($PSBoundParameters.ContainsKey("NotificationScheme")){$body.Add("notificationScheme",$NotificationScheme)}
         if($PSBoundParameters.ContainsKey("CategoryId")){$body.Add("categoryId",$CategoryId)}
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $method.Invoke($JiraContext)
     }
 }

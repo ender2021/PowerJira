@@ -16,7 +16,7 @@ function Invoke-JiraGetVotes {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/votes"
         $verb = "GET"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

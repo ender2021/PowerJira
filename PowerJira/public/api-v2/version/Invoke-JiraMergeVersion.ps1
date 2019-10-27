@@ -21,7 +21,7 @@ function Invoke-JiraMergeVersion {
         $functionPath = "/rest/api/2/version/$SourceVersionId/mergeto/$TargetVersionId"
         $verb = "PUT"
     
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

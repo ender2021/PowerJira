@@ -109,15 +109,15 @@ function Invoke-JiraSendIssueNotification {
         if($PSBoundParameters.ContainsKey("RestrictGroups")){$RestrictGroups | ForEach-Object {$restrict.groups += @{name=$_}}}
         if($PSBoundParameters.ContainsKey("RestrictPermissions")){$restrict.permissions += $RestrictPermissions}
 
-        $body = [RestMethodJsonBody]::new(@{
+        $body = New-Object RestMethodJsonBody @{
             htmlBody = $HtmlBody
             to = $to
-        })
+        }
         if($PSBoundParameters.ContainsKey("PlainBody")){$body.Add("textBody",$PlainBody)}
         if($PSBoundParameters.ContainsKey("Subject")){$body.Add("subject",$Subject)}
         if(($restrict.groups.Count -gt 0) -or ($restrict.permissions.Count -gt 0)) {$body.Add("restrict",$restrict)}
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $method.Invoke($JiraContext)
     }
 }

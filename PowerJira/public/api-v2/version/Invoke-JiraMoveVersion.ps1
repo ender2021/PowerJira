@@ -27,10 +27,10 @@ function Invoke-JiraMoveVersion {
         $functionPath = "/rest/api/2/version/$VersionId/move"
         $verb = "POST"
         
-        $body = [RestMethodJsonBody]::new()
+        $body = New-Object RestMethodJsonBody
         if($PSBoundParameters.ContainsKey("After")){$body.Add("after",$After)} else {$body.Add("position",$Position)}
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $method.Invoke($JiraContext)
     }
 }

@@ -51,16 +51,16 @@ function Invoke-JiraGetUsersAssignableToIssues {
         $functionPath = "rest/api/2/user/assignable/search"
         $verb = "GET"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             startAt = $StartAt
             maxResults = $MaxResults
-        })
+        }
         if($PSBoundParameters.ContainsKey("ProjectIdOrKey")){$query.Add("project",$ProjectIdOrKey)}
         if($PSBoundParameters.ContainsKey("IssueKey")){$query.Add("issueKey",$IssueKey)}
         if($PSBoundParameters.ContainsKey("TransitionId")){$query.Add("actionDescriptorId",$TransitionId)}
         if($PSBoundParameters.ContainsKey("Filter")){$query.Add("query",$Filter)}
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }

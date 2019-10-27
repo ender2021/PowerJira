@@ -16,7 +16,7 @@ function Invoke-JiraGetComponentIssuesCount {
         $functionPath = "/rest/api/2/component/$ComponentId/relatedIssueCounts"
         $verb = "GET"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

@@ -26,11 +26,11 @@ function Invoke-JiraUpdateProjectCategory {
         $functionPath = "/rest/api/2/projectCategory/$CategoryId"
         $verb = "PUT"
 
-        $body = [RestMethodJsonBody]::new()
+        $body = New-Object RestMethodJsonBody
         if($PSBoundParameters.ContainsKey("Name")){$body.Add("name",$Name)}
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $method.Invoke($JiraContext)
     }
 }

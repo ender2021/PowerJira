@@ -30,11 +30,11 @@ function Invoke-JiraDeleteWatcher {
         $functionPath = "/rest/api/2/issue/$issueToken/watchers"
         $verb = "DELETE"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             accountId = $AccountId
-        })
+        }
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $results += $method.Invoke($JiraContext)
     }
     end {

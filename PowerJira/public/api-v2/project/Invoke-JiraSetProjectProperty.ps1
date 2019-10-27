@@ -27,9 +27,9 @@ function Invoke-JiraSetProjectProperty {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/properties/$PropertyKey"
         $verb = "PUT"
 
-        $body = [RestMethodJsonBody]::new($Value)
+        $body = New-Object RestMethodJsonBody $Value)
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $method.Invoke($JiraContext)
     }
 }

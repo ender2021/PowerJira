@@ -35,12 +35,12 @@ function Invoke-JiraAssignIssue {
         $functionPath = "/rest/api/2/issue/$issueToken/assignee"
         $verb = "PUT"
 
-        $body = [RestMethodJsonBody]::new(@{
+        $body = New-Object RestMethodJsonBody @{
             accountId = IIF $PSBoundParameters.ContainsKey("AccountId") $AccountId $null
-        })
+        }
         if($PSBoundParameters.ContainsKey("ProjectDefault")){$body.Values.accountId = "-1"}
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $results += $method.Invoke($JiraContext)
     }
     end {

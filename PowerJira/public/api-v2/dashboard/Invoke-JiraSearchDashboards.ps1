@@ -57,18 +57,18 @@ function Invoke-JiraSearchDashboards {
         $functionPath = "/rest/api/2/dashboard/search"
         $verb = "GET"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             startAt = $StartAt
             maxResults = $MaxResults
             orderBy = $OrderBy
-        })
+        }
         if($PSBoundParameters.ContainsKey("Name")){$query.Add("dashboardName",$Name)}
         if($PSBoundParameters.ContainsKey("OwnerId")){$query.Add("accountId",$OwnerId)}
         if($PSBoundParameters.ContainsKey("GroupName")){$query.Add("groupname",$GroupName)}
         if($PSBoundParameters.ContainsKey("ProjectId")){$query.Add("projectId",$ProjectId)}
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }

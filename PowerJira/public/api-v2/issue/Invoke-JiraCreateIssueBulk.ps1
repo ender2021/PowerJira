@@ -19,9 +19,9 @@ function Invoke-JiraCreateIssueBulk {
         $functionPath = "/rest/api/2/issue/bulk"
         $verb = "POST"
 
-        $body = [RestMethodJsonBody]::new(@{issueUpdates=$Issues})
+        $body = New-Object RestMethodJsonBody @{issueUpdates=$Issues}
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $results += $method.Invoke($JiraContext)
     }
     end {

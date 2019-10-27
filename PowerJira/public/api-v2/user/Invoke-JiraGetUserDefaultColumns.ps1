@@ -16,10 +16,10 @@ function Invoke-JiraGetUserDefaultColumns {
         $functionPath = "/rest/api/2/user/columns"
         $verb = "GET"
 
-        $query = [RestMethodQueryParams]::new()
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("User")){$query.Add("accountId",$User)}
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }

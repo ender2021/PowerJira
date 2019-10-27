@@ -48,7 +48,7 @@ class RestMethodQueryParams {
         [string]$Key,
         [object]$Value
     ){
-        $this.Params += [RestQueryKvp]::new($Key, $Value)
+        $this.Params += New-Object RestQueryKvp @($Key, $Value)
     }
     
     [string]

@@ -33,7 +33,7 @@ function Invoke-JiraDeleteIssueProperty {
                 $functionPath = "/rest/api/2/issue/$issueToken/properties/$_"
                 $verb = "DELETE"
 
-                $method = [RestMethod]::new($functionPath,$verb)
+                $method = New-Object RestMethod @($functionPath,$verb)
                 $results += $method.Invoke($JiraContext)
             }
         }

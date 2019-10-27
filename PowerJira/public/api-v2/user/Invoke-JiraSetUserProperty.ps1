@@ -26,13 +26,13 @@ function Invoke-JiraSetUserProperty {
         $functionPath = "/rest/api/2/user/properties/$PropertyKey"
         $verb = "PUT"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             accountId = $User
-        })
+        }
 
-        $body = [RestMethodJsonBody]::new($PropertyValue)
+        $body = New-Object RestMethodJsonBody $PropertyValue)
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$query,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
         $method.Invoke($JiraContext)
     }
 }

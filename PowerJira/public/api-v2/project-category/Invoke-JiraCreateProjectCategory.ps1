@@ -21,12 +21,12 @@ function Invoke-JiraCreateProjectCategory {
         $functionPath = "/rest/api/2/projectCategory"
         $verb = "POST"
 
-        $body = [RestMethodJsonBody]::new(@{
+        $body = New-Object RestMethodJsonBody @{
             name = $Name
             description = $Description
-        })
+        }
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $method.Invoke($JiraContext)
     }
 }

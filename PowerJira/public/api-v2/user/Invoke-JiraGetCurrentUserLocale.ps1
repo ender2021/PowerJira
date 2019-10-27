@@ -11,7 +11,7 @@ function Invoke-JiraGetCurrentUserLocale {
         $functionPath = "/rest/api/2/mypreferences/locale"
         $verb = "GET"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

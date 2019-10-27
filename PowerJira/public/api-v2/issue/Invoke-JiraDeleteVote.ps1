@@ -25,7 +25,7 @@ function Invoke-JiraDeleteVote {
         $functionPath = "/rest/api/2/issue/$issueToken/votes"
         $verb = "DELETE"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $results += $method.Invoke($JiraContext)
     }
     end {

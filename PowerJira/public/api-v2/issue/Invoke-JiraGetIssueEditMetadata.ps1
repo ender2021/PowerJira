@@ -25,7 +25,7 @@ function Invoke-JiraGetIssueEditMetadata {
         $functionPath = "/rest/api/2/issue/$issueToken/editmeta"
         $verb = "GET"
         
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $obj = $method.Invoke($JiraContext)
         if($PSBoundParameters.ContainsKey("Id")){$obj | Add-Member "Id" $Id}
         if($PSBoundParameters.ContainsKey("Key")){$obj | Add-Member "Key" $Key}

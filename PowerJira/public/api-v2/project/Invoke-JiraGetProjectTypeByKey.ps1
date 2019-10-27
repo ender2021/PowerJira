@@ -23,7 +23,7 @@ function Invoke-JiraGetProjectTypeByKey {
         if($PSBoundParameters.ContainsKey("Accessible")){$functionPath += "/accessible"}
         $verb = "GET"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

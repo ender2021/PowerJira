@@ -21,11 +21,11 @@ function Invoke-JiraDeleteUserProperty {
         $functionPath = "/rest/api/2/user/properties/$PropertyKey"
         $verb = "DELETE"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             accountId = $User
-        })
+        }
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }

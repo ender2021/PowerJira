@@ -80,10 +80,10 @@ function Invoke-JiraUpdateProject {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey"
         $verb = "PUT"
 
-        $query = [RestMethodQueryParams]::new()
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $body = [RestMethodJsonBody]::new()
+        $body = New-Object RestMethodJsonBody
         if($PSBoundParameters.ContainsKey("Key")){$body.Add("key",$Key)}
         if($PSBoundParameters.ContainsKey("Name")){$body.Add("name",$Name)}
         if($PSBoundParameters.ContainsKey("ProjectLead")){$body.Add("leadAccountId",$ProjectLead)}
@@ -96,7 +96,7 @@ function Invoke-JiraUpdateProject {
         if($PSBoundParameters.ContainsKey("CategoryId")){$body.Add("categoryId",$CategoryId)}
         if($PSBoundParameters.ContainsKey("DefaultAssignee")){$body.Add("assigneeType",$DefaultAssignee)}
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$query,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
         $method.Invoke($JiraContext)
     }
 }

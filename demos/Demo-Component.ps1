@@ -10,7 +10,7 @@ $context = Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraC
 #do tests here
 
 #CREATE COMPONENT
-#Invoke-JiraCreateComponent JPT "Test Component 4" "This one has a description" (Invoke-JiraGetCurrentUser).accountId "COMPONENT_LEAD"
+Invoke-JiraCreateComponent JPT "Test Component 5" "This one has a description" (Invoke-JiraGetCurrentUser).accountId "COMPONENT_LEAD"
 
 #GET COMPONENT
 #Invoke-JiraGetComponent 10001

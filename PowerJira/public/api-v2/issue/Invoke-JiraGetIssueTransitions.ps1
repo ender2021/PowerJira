@@ -34,12 +34,12 @@ function Invoke-JiraGetIssueTransitions {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/transitions"
         $verb = "GET"
 
-        $query = [RestMethodQueryParams]::new()
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("ExpandFields")){$query.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("TransitionId")){$query.Add("transitionId",$TransitionId)}
         if($PSBoundParameters.ContainsKey("SkipHidden")){$query.Add("skipRemoteOnlyCondition",$true)}
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }

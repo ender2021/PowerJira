@@ -25,7 +25,7 @@ function Invoke-JiraAddVote {
         $functionPath = "/rest/api/2/issue/$issueToken/votes"
         $verb = "POST"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $results += $method.Invoke($JiraContext)
     }
     end {

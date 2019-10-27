@@ -11,7 +11,7 @@ function Invoke-JiraGetAllProjectCategories {
         $functionPath = "/rest/api/2/projectCategory"
         $verb = "GET"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

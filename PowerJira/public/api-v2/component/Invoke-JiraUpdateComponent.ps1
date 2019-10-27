@@ -39,13 +39,13 @@ function Invoke-JiraUpdateComponent {
         $functionPath = "/rest/api/2/component/$ComponentId"
         $verb = "PUT"
 
-        $body = [RestMethodJsonBody]::new()
+        $body = New-Object RestMethodJsonBody
         if($PSBoundParameters.ContainsKey("Name")){$body.Add("name",$Name)}
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("LeadAccountId")){$body.Add("leadAccountId",$LeadAccountId)}
         if($PSBoundParameters.ContainsKey("DefaultAssignee")){$body.Add("assigneeType",$DefaultAssignee)}
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $method.Invoke($JiraContext)
     }
 }

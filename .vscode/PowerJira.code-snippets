@@ -47,9 +47,9 @@
 			"\tprocess {",
 			"\t\t\\$functionPath = \"\"",
 			"\t\t\\$verb = \"\"\n",
-			"\t\t\\$query = [RestMethodQueryParams]::new()",
-			"\t\t\\$body = [RestMethodJsonBody]::new()\n",
-			"\t\t\\$method = [BodyRestMethod]::new(\\$functionPath,\\$verb,\\$query,\\$body)",
+			"\t\t\\$query = New-Object RestMethodQueryParams",
+			"\t\t\\$body = New-Object RestMethodJsonBody\n",
+			"\t\t\\$method = New-Object BodyRestMethod @(\\$functionPath,\\$verb,\\$query,\\$body)",
 			"\t\t\\$method.Invoke(\\$JiraContext)",
 			"\t}",
 			"}",
@@ -112,7 +112,7 @@
 		"scope":"powershell",
 		"prefix": "jrest",
 		"body": [
-			"\\$method = [RestMethod]::new(\\$functionPath,\\$verb)",
+			"\\$method = New-Object RestMethod @(\\$functionPath,\\$verb)",
 			"\\$method.Invoke(\\$JiraContext)"
 		],
 		"description": "Default invocation of a rest method"
@@ -121,7 +121,7 @@
 		"scope":"powershell",
 		"prefix": "jbrest",
 		"body": [
-			"\\$method = [BodyRestMethod]::new(\\$functionPath,\\$verb,\\$body)",
+			"\\$method = New-Object BodyRestMethod @(\\$functionPath,\\$verb,\\$body)",
 			"\\$method.Invoke(\\$JiraContext)"
 		],
 		"description": "Default invocation of a rest method"
@@ -130,7 +130,7 @@
 		"scope":"powershell",
 		"prefix": "rmqp",
 		"body": [
-			"[RestMethodQueryParams]::new()"
+			"New-Object RestMethodQueryParams"
 		],
 		"description": "New instances of RestMethodQueryParams"
 	},
@@ -138,7 +138,7 @@
 		"scope":"powershell",
 		"prefix": "rmjb",
 		"body": [
-			"[RestMethodJsonBody]::new()"
+			"New-Object RestMethodJsonBody"
 		],
 		"description": "New instances of RestMethodJsonBody"
 	},
@@ -146,7 +146,7 @@
 		"scope":"powershell",
 		"prefix": "jqrest",
 		"body": [
-			"\\$method = [RestMethod]::new(\\$functionPath,\\$verb,\\$query)",
+			"\\$method = New-Object RestMethod @(\\$functionPath,\\$verb,\\$query)",
 			"\\$method.Invoke(\\$JiraContext)"
 		],
 		"description": "query invocation of a rest method"

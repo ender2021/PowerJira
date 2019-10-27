@@ -36,18 +36,18 @@ function Invoke-JiraSetWorkflowIssueTypes {
         $functionPath = "/rest/api/2/workflowscheme/$SchemeId/workflow"
         $verb = "PUT"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             workflowName = $WorkflowName
-        })
+        }
 
-        $body = [RestMethodJsonBody]::new(@{
+        $body = New-Object RestMethodJsonBody @{
             issueTypes = $IssueTypeIds
             workflow = $WorkflowName
-        })
+        }
         if($PSBoundParameters.ContainsKey("Default")){$body.Add("defaultMapping",$true)}
         if($PSBoundParameters.ContainsKey("UpdateDraft")){$body.Add("updateDraftIfNeeded",$true)}
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$query,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
         $method.Invoke($JiraContext)
     }
 }

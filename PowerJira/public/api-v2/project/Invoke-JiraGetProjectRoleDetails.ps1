@@ -21,10 +21,10 @@ function Invoke-JiraGetProjectRoleDetails {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/roledetails"
         $verb = "GET"
 
-        $query = [RestMethodQueryParams]::new()
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("MyRoles")){$query.Add("currentMember",$true)}
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }

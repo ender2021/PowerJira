@@ -21,7 +21,7 @@ function Invoke-JiraDeleteProjectAvatar {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/avatar/$AvatarId"
         $verb = "DELETE"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

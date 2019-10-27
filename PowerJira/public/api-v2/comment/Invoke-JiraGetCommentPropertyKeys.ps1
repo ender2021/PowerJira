@@ -24,7 +24,7 @@ function Invoke-JiraGetCommentPropertyKeys {
             keys = @()
         }
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $obj.keys += $method.Invoke($JiraContext).keys | ForEach-Object {$_.key}
         $results += $obj
 

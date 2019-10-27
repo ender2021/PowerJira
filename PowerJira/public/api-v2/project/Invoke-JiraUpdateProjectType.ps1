@@ -22,7 +22,7 @@ function Invoke-JiraUpdateProjectType {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/type/$ProjectType"
         $verb = "PUT"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

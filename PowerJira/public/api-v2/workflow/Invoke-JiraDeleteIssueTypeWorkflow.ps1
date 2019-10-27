@@ -26,10 +26,10 @@ function Invoke-JiraDeleteIssueTypeWorkflow {
         $functionPath = "/rest/api/2/workflowscheme/$SchemeId/issuetype/$IssueTypeId"
         $verb = "DELETE"
 
-        $query = [RestMethodQueryParams]::new()
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("UpdateDraft")){$query.Add("updateDraftIfNeeded",$true)}
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }

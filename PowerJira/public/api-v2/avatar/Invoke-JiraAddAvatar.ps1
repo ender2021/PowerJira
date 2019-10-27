@@ -58,15 +58,15 @@ function Invoke-JiraAddAvatar {
             "Content-Type" = "image/$ImageType"
         }
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             x = $CropX
             y = $CropY
-        })
+        }
         if($PSBoundParameters.ContainsKey("CropLength")){$query.Add("size",$CropLength)}
 
         $file = $Avatar.VersionInfo.FileName
 
-        $method = [FileRestMethod]::new($functionPath,$verb,$query,$file)
+        $method = New-Object FileRestMethod @($functionPath,$verb,$query,$file)
         $method.Headers += $headers
         $results += $method.Invoke($JiraContext)
     }

@@ -33,14 +33,14 @@ function Invoke-JiraGetUsersAssignableToProjects {
         $functionPath = "/rest/api/2/user/assignable/multiProjectSearch"
         $verb = "GET"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             projectKeys = $ProjectKeys -join ","
             startAt = $StartAt
             maxResults = $MaxResults
-        })
+        }
         if($PSBoundParameters.ContainsKey("Filter")){$query.Add("query",$Filter)}
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }

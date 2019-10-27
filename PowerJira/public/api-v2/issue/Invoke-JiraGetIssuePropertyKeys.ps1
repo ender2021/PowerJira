@@ -31,7 +31,7 @@ function Invoke-JiraGetIssuePropertyKeys {
         if($PSBoundParameters.ContainsKey("Id")){$obj | Add-Member "IssueId" $Id}
         if($PSBoundParameters.ContainsKey("Key")){$obj | Add-Member "IssueKey" $Key}
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $obj.keys += $method.Invoke($JiraContext).keys | ForEach-Object {$_.key}
         $results += $obj
     }

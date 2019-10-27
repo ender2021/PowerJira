@@ -16,7 +16,7 @@ function Invoke-JiraGetProjectPropertyKeys {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/properties"
         $verb = "GET"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext).keys
     }
 }

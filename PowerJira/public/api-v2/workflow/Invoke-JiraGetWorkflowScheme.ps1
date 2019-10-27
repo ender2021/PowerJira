@@ -16,7 +16,7 @@ function Invoke-JiraGetWorkflowScheme {
         $functionPath = "/rest/api/2/workflowscheme/$SchemeId"
         $verb = "GET"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

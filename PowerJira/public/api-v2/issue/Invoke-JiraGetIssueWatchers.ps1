@@ -16,7 +16,7 @@ function Invoke-JiraGetIssueWatchers {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/watchers"
         $verb = "GET"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

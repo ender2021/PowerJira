@@ -16,11 +16,11 @@ function Invoke-JiraGetUserPropertyKeys {
         $functionPath = "/rest/api/2/user/properties"
         $verb = "GET"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             accountId = $User
-        })
+        }
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext).keys
     }
 }

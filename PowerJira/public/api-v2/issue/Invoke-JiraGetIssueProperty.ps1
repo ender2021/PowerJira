@@ -21,7 +21,7 @@ function Invoke-JiraGetIssueProperty {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/properties/$Key"
         $verb = "GET"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

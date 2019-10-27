@@ -29,17 +29,17 @@ function Invoke-JiraSetCurrentUserPreference {
         $functionPath = "/rest/api/2/mypreferences"
         $verb = "PUT"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             key = $PreferenceKey
-        })
+        }
 
         $body = if ($PSCmdlet.ParameterSetName -eq "TextValue") {
-            [RestMethodBody]::new($ValueText)
+            New-Object RestMethodBody $ValueText
         } else {
-            [RestMethodJsonBody]::new($ValueJson)
+            New-Object RestMethodJsonBody $ValueJson
         }
         
-        $method = [BodyRestMethod]::new($functionPath,$verb,$query,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
         $method.Invoke($JiraContext)
     }
 }

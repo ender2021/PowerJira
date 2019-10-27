@@ -20,7 +20,7 @@ function Invoke-JiraGetSystemAvatars {
         $functionPath = "/rest/api/2/avatar/$Type/system"
         $verb = "GET"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $results += $method.Invoke($JiraContext).system
     }
     end {

@@ -18,7 +18,7 @@ function New-JiraContext {
     )
     begin {}
     process {
-        return [JiraContext]::new($UserName,$Password,$HostName)
+        return New-Object JiraContext @($UserName,$Password,$HostName)
     }
     end {}
 }

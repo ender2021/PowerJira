@@ -21,10 +21,10 @@ function Invoke-JiraGetDefaultWorkflow {
         $functionPath = "/rest/api/2/workflowscheme/$SchemeId/default"
         $verb = "GET"
 
-        $query = [RestMethodQueryParams]::new()
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("Draft")){$query.Add("returnDraftIfExists",$true)}
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }

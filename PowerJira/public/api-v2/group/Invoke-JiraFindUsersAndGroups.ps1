@@ -62,21 +62,21 @@ function Invoke-JiraFindUsersAndGroups {
         $verb = "GET"
 
         $queryKvp = @(
-            [RestQueryKvp]::new("query",$SearchTerm)
+            New-Object RestQueryKvp @("query",$SearchTerm)
         )
 
         if($PSBoundParameters.ContainsKey("CustomFieldId")){
-            $queryKvp += [RestQueryKvp]::new("fieldId",$CustomFieldId)
-            if($PSBoundParameters.ContainsKey("Projects")){$Projects | ForEach-Object {$queryKvp += [RestQueryKvp]::new("projectId",$_)}}
-            if($PSBoundParameters.ContainsKey("IssueTypes")){$IssueTypes | ForEach-Object {$queryKvp += [RestQueryKvp]::new("issueTypeId",$_)}}
+            $queryKvp += New-Object RestQueryKvp @("fieldId",$CustomFieldId)
+            if($PSBoundParameters.ContainsKey("Projects")){$Projects | ForEach-Object {$queryKvp += New-Object RestQueryKvp @("projectId",$_)}}
+            if($PSBoundParameters.ContainsKey("IssueTypes")){$IssueTypes | ForEach-Object {$queryKvp += New-Object RestQueryKvp @("issueTypeId",$_)}}
         }
-        if($PSBoundParameters.ContainsKey("MaxResults")){$queryKvp += [RestQueryKvp]::new("maxResults",$MaxResults)}
-        if(!$PSBoundParameters.ContainsKey("CaseSensitiveGroups")){$queryKvp += [RestQueryKvp]::new("caseInsensitive",$true)}
+        if($PSBoundParameters.ContainsKey("MaxResults")){$queryKvp += New-Object RestQueryKvp @("maxResults",$MaxResults)}
+        if(!$PSBoundParameters.ContainsKey("CaseSensitiveGroups")){$queryKvp += New-Object RestQueryKvp @("caseInsensitive",$true)}
         if($PSBoundParameters.ContainsKey("ShowAvatar")){
-            $queryKvp += [RestQueryKvp]::new("showAvatar",$true)
-            $queryKvp += [RestQueryKvp]::new("avatarSize",$AvatarSize)
+            $queryKvp += New-Object RestQueryKvp @("showAvatar",$true)
+            $queryKvp += New-Object RestQueryKvp @("avatarSize",$AvatarSize)
         }
-        if($PSBoundParameters.ContainsKey("ExcludeConnectAddons")){$queryKvp += [RestQueryKvp]::new("excludeConnectAddons",$true)}
+        if($PSBoundParameters.ContainsKey("ExcludeConnectAddons")){$queryKvp += New-Object RestQueryKvp @("excludeConnectAddons",$true)}
 
         Invoke-JiraRestMethod $JiraConnection $functionPath $verb -QueryKvp $queryKvp
     }

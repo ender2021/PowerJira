@@ -30,11 +30,11 @@ function Invoke-JiraDeleteIssue {
         $functionPath = "/rest/api/2/issue/$issueToken"
         $verb = "DELETE"
 
-        $query= [RestMethodQueryParams]::new(@{
+        $query= New-Object RestMethodQueryParams @{
             deleteSubtasks = $DeleteSubtasks
-        })
+        }
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $results += $method.Invoke($JiraContext)
     }
     end {

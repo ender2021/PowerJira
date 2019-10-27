@@ -44,15 +44,15 @@ function Invoke-JiraDeleteWorklog {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/worklog/$WorklogId"
         $verb = "DELETE"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             adjustEstimate = $AdjustMethod
             notifyUsers = $true
-        })
+        }
         if($PSBoundParameters.ContainsKey("NewEstimate")){$query.Add("newEstimate",$NewEstimate)}
         if($PSBoundParameters.ContainsKey("IncreaseBy")){$query.Add("increaseBy",$IncreaseBy)}
         if($PSBoundParameters.ContainsKey("DisableNotifications")){$query.notifyUsers = $false}
         
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }

@@ -28,9 +28,9 @@ function Invoke-JiraSetIssueProperty {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/properties/$Key"
         $verb = "PUT"
 
-        $body = [RestMethodJsonBody]::new($Value)
+        $body = New-Object RestMethodJsonBody $Value)
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $method.Invoke($JiraContext)
     }
 }

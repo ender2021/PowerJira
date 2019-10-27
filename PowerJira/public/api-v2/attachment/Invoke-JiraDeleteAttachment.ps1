@@ -19,7 +19,7 @@ function Invoke-JiraDeleteAttachment {
         $functionPath = "/rest/api/2/attachment/$id"
         $verb = "DELETE"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $results += $method.Invoke($JiraContext)
     }
     end {

@@ -36,14 +36,14 @@ function Invoke-JiraGetWorkflowTransitionProperties {
         $functionPath = "/rest/api/2/workflow/transitions/$TransitionId/properties"
         $verb = "GET"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             workflowName = $WorkflowName
-        })
+        }
         if($PSBoundParameters.ContainsKey("PropertyKey")){$query.Add("key",$PropertyKey)}
         if($PSBoundParameters.ContainsKey("Draft")){$query.Add("workflowMode","draft")}
         if($PSBoundParameters.ContainsKey("IncludeReserved")){$query.Add("includeReservedKeys",$IncludeReserved)}
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }

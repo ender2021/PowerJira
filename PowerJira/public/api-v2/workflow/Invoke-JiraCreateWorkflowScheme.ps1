@@ -34,14 +34,14 @@ function Invoke-JiraCreateWorkflowScheme {
         $functionPath = "/rest/api/2/workflowscheme"
         $verb = "POST"
 
-        $body = [RestMethodJsonBody]::new(@{
+        $body = New-Object RestMethodJsonBody @{
             name = $Name
-        })
+        }
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("DefaultWorkflow")){$body.Add("defaultWorkflow",$DefaultWorkflow)}
         if($PSBoundParameters.ContainsKey("IssueTypeMappings")){$body.Add("issueTypeMappings",($IssueTypeMappings | ForEach-Object {$h=@{}} {$type=$_.type;$h.Add("$type",$_.workflow)} {$h}))}
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $method.Invoke($JiraContext)
     }
 }

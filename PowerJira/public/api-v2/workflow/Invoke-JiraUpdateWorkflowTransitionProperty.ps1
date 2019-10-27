@@ -36,17 +36,17 @@ function Invoke-JiraUpdateWorkflowTransitionProperty {
         $functionPath = "/rest/api/2/workflow/transitions/$TransitionId/properties"
         $verb = "PUT"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             key = $PropertyKey
             workflowName = $WorkflowName
-        })
+        }
         if($PSBoundParameters.ContainsKey("Draft")){$query.Add("workflowMode","draft")}
 
-        $body = [RestMethodJsonBody]::new(@{
+        $body = New-Object RestMethodJsonBody @{
             value = $Value
-        })
+        }
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$query,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
         $method.Invoke($JiraContext)
     }
 }

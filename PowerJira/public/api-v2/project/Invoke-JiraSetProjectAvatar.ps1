@@ -21,11 +21,11 @@ function Invoke-JiraSetProjectAvatar {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/avatar"
         $verb = "PUT"
 
-        $body = [RestMethodJsonBody]::new(@{
+        $body = New-Object RestMethodJsonBody @{
             id = $AvatarId
-        })
+        }
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $method.Invoke($JiraContext)
     }
 }

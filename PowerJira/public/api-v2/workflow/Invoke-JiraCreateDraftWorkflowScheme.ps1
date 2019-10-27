@@ -16,7 +16,7 @@ function Invoke-JiraCreateDraftWorkflowScheme {
         $functionPath = "/rest/api/2/workflowscheme/$SchemeId/createdraft"
         $verb = "POST"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

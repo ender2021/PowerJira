@@ -27,7 +27,7 @@ function Invoke-JiraGetCommentProperty {
                 $functionPath = "/rest/api/2/comment/$Id/properties/$_"
                 $verb = "GET"
         
-                $method = [RestMethod]::new($functionPath,$verb)
+                $method = New-Object RestMethod @($functionPath,$verb)
                 $results += $method.Invoke($JiraContext)
             }
         }

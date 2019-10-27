@@ -44,16 +44,16 @@ function Invoke-JiraGetIssuePickerSuggestions {
         $functionPath = "/rest/api/2/issue/picker"
         $verb = "GET"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             showSubTasks = !$HideSubTasks
             showSubTaskParent = !$HideSubTaskParent
-        })
+        }
         if($PSBoundParameters.ContainsKey("TextFilter")){$query.Add("query",$TextFilter)}
         if($PSBoundParameters.ContainsKey("JqlFilter")){$query.Add("currentJQL",$JqlFilter)}
         if($PSBoundParameters.ContainsKey("ProjectFilter")){$query.Add("currentProjectId",$ProjectFilter)}
         if($PSBoundParameters.ContainsKey("ExcludeIssueKey")){$query.Add("currentIssueKey",$ExcludeIssueKey)}
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $results += $method.Invoke($JiraContext)
     }
     end {

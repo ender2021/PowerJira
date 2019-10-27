@@ -31,17 +31,17 @@ function Invoke-JiraSetDraftWorkflowIssueTypes {
         $functionPath = "/rest/api/2/workflowscheme/$SchemeId/draft/workflow"
         $verb = "PUT"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             workflowName = $WorkflowName
-        })
+        }
 
-        $body = [RestMethodJsonBody]::new(@{
+        $body = New-Object RestMethodJsonBody @{
             issueTypes = $IssueTypeIds
             workflow = $WorkflowName
-        })
+        }
         if($PSBoundParameters.ContainsKey("Default")){$body.Add("defaultMapping",$true)}
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$query,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
         $method.Invoke($JiraContext)
     }
 }

@@ -30,7 +30,7 @@ function Invoke-JiraDeleteAvatar {
         $functionPath = "/rest/api/2/universal_avatar/type/$Type/owner/$EntityId/avatar/$Id"
         $verb = "DELETE"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $results += $method.Invoke($JiraContext)
     }
     end {

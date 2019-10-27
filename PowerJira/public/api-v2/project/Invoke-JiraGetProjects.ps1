@@ -61,18 +61,18 @@ function Invoke-JiraGetProjects {
         $functionPath = "/rest/api/2/project/search"
         $verb = "GET"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             startAt = $StartAt
             maxResults = $MaxResults
             orderBy = $OrderBy
             typeKey = $ProjectTypes -join ","
             action = $ActionFilter
-        })
+        }
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("Filter")){$query.Add("query",$Filter)}
         if($PSBoundParameters.ContainsKey("CategoryId")){$query.Add("categoryId",$CategoryId)}
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }

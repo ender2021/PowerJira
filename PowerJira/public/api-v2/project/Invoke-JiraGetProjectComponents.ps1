@@ -16,7 +16,7 @@ function Invoke-JiraGetProjectComponents {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/components"
         $verb = "GET"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

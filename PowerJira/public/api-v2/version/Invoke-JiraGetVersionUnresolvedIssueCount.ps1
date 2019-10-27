@@ -16,7 +16,7 @@ function Invoke-JiraGetVersionUnresolvedIssueCount {
         $functionPath = "/rest/api/2/version/$VersionId/unresolvedIssueCount"
         $verb = "GET"
     
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

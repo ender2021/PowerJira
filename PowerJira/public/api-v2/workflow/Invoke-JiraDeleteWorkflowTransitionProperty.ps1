@@ -31,13 +31,13 @@ function Invoke-JiraDeleteWorkflowTransitionProperty {
         $functionPath = "/rest/api/2/workflow/transitions/$TransitionId/properties"
         $verb = "DELETE"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             key = $PropertyKey
             workflowName = $WorkflowName
-        })
+        }
         if($PSBoundParameters.ContainsKey("Draft")){$query.Add("workflowMode","draft")}
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }

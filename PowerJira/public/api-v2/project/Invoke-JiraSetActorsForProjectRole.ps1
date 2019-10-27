@@ -33,13 +33,13 @@ function Invoke-JiraSetActorsForProjectRole {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/role/$RoleId"
         $verb = "PUT"
 
-        $body = [RestMethodJsonBody]::new(@{
+        $body = New-Object RestMethodJsonBody @{
             categorisedActors = @{}
-        })
+        }
         if($PSBoundParameters.ContainsKey("Users")){$body.Values.categorisedActors.Add("atlassian-user-role-actor",$Users)}
         if($PSBoundParameters.ContainsKey("Groups")){$body.Values.categorisedActors.Add("atlassian-group-role-actor",$Groups)}
 
-        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         $method.Invoke($JiraContext)
     }
 }

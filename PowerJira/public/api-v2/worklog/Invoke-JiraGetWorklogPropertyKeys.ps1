@@ -21,7 +21,7 @@ function Invoke-JiraGetWorklogPropertyKeys {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/worklog/$WorklogId/properties"
         $verb = "GET"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext).keys
     }
 }

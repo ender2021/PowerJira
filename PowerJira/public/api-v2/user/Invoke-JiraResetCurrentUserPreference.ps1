@@ -18,11 +18,11 @@ function Invoke-JiraResetCurrentUserPreference {
         $functionPath = "/rest/api/2/mypreferences"
         $verb = "DELETE"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             key = $PreferenceKey
-        })
+        }
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }

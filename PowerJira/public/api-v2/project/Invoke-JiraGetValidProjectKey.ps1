@@ -16,11 +16,11 @@ function Invoke-JiraGetValidProjectKey {
         $functionPath = "/rest/api/2/projectvalidate/validProjectKey"
         $verb = "GET"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             key = $Key
-        })
+        }
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }

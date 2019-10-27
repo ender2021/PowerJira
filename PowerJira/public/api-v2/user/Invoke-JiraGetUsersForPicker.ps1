@@ -37,15 +37,15 @@ function Invoke-JiraGetUsersForPicker {
         $functionPath = "/rest/api/2/user/picker"
         $verb = "GET"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             maxResults = $MaxResults
             query = $Filter
-        })
+        }
         if($PSBoundParameters.ContainsKey("Exclude")){$query.Add("excludeAccountIds",$Exclude -join ",")}
         if($PSBoundParameters.ContainsKey("ShowAvatar")){$query.Add("showAvatar",$true)}
         if($PSBoundParameters.ContainsKey("ExcludeConnect")){$query.Add("excludeConnectUsers",$true)}
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext).users
     }
 }

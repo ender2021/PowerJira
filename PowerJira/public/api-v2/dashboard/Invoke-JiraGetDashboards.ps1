@@ -28,13 +28,13 @@ function Invoke-JiraGetDashboards {
         $functionPath = "/rest/api/2/dashboard"
         $verb = "GET"
 
-        $query = [RestMethodQueryParams]::new(@{
+        $query = New-Object RestMethodQueryParams @{
             startAt = $StartAt
             maxResults = $MaxResults
-        })
+        }
         if($PSBoundParameters.ContainsKey("Filter")){$query.Add("filter",$Filter)}
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext).dashboards
     }
 }

@@ -11,7 +11,7 @@ function Invoke-JiraGetAttachmentSettings {
         $functionPath = "/rest/api/2/attachment/meta"
         $verb = "GET"
 
-        $method = [RestMethod]::new($functionPath,$verb)
+        $method = New-Object RestMethod @($functionPath,$verb)
         $method.Invoke($JiraContext)
     }
 }

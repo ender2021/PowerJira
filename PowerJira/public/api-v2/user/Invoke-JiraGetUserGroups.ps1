@@ -16,9 +16,9 @@ function Invoke-JiraGetUserGroups {
         $functionPath = "/rest/api/2/user/groups"
         $verb = "GET"
 
-        $query = [RestMethodQueryParams]::new(@{accountId=$AccountId})
+        $query = New-Object RestMethodQueryParams @{accountId=$AccountId}
 
-        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
         $method.Invoke($JiraContext)
     }
 }
