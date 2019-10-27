@@ -125,6 +125,31 @@
 			"\\$method.Invoke(\\$JiraContext)"
 		],
 		"description": "Default invocation of a rest method"
-	}
+	},
+	"PowerJira new RestMethodQueryParams": {
+		"scope":"powershell",
+		"prefix": "rmqp",
+		"body": [
+			"[RestMethodQueryParams]::new()"
+		],
+		"description": "New instances of RestMethodQueryParams"
+	},
+	"PowerJira new RestMethodJsonBody": {
+		"scope":"powershell",
+		"prefix": "rmjb",
+		"body": [
+			"[RestMethodJsonBody]::new()"
+		],
+		"description": "New instances of RestMethodJsonBody"
+	},
+	"PowerJira RestMethod query invocation": {
+		"scope":"powershell",
+		"prefix": "jqrest",
+		"body": [
+			"\\$method = [RestMethod]::new(\\$functionPath,\\$verb,\\$query)",
+			"\\$method.Invoke(\\$JiraContext)"
+		],
+		"description": "query invocation of a rest method"
+	},
 	
 }
