@@ -29,23 +29,24 @@ function Invoke-JiraCreateComponent {
         [string]
         $DefaultAssignee="PROJECT_DEFAULT",
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=5)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/component"
         $verb = "POST"
 
-        $body=@{
+        $body = [RestMethodJsonBody]::new(@{
             project = $ProjectKey
             name = $Name
             assigneeType = $DefaultAssignee
-        }
+        })
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("LeadAccountId")){$body.Add("leadAccountId",$LeadAccountId)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }
