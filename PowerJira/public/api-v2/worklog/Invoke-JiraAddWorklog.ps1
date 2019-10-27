@@ -72,33 +72,34 @@ function Invoke-JiraAddWorklog {
         [hashtable[]]
         $Properties,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=10)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/worklog"
         $verb = "POST"
 
-        $query = @{
+        $query = [RestMethodQueryParams]::new(@{
             adjustEstimate = $AdjustMethod
             notifyUsers = $true
-        }
+        })
         if($PSBoundParameters.ContainsKey("NewEstimate")){$query.Add("newEstimate",$NewEstimate)}
         if($PSBoundParameters.ContainsKey("DisableNotifications")){$query.notifyUsers = $false}
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("ReduceBy")){$query.Add("reduceBy",$ReduceBy)}
 
-        $body=@{
+        $body = [RestMethodJsonBody]::new(@{
             started = [JiraDateTime]::ComplexFormat($Started)
-        }
+        })
         if($PSBoundParameters.ContainsKey("TimeSpent")){$body.Add("timeSpent",$TimeSpent)}
         if($PSBoundParameters.ContainsKey("TimeSpentSeconds")){$body.Add("timeSpentSeconds",$TimeSpentSeconds)}
         if($PSBoundParameters.ContainsKey("Comment")){$body.Add("comment",$Comment)}
         if($PSBoundParameters.ContainsKey("Visibility")){$body.Add("visibility",$Visibility)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
         
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body -Query $query
+        $method = [BodyRestMethod]::new($functionPath,$verb,$query,$body)
+        $method.Invoke($JiraContext)
     }
 }

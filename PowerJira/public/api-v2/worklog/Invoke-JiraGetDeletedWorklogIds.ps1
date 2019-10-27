@@ -12,19 +12,20 @@ function Invoke-JiraGetDeletedWorklogIds {
         [int64]
         $StartUnixStamp=0,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/worklog/deleted"
         $verb = "GET"
 
-        $query=@{}
+        $query = [RestMethodQueryParams]::new()
         if($PSCmdlet.ParameterSetName -eq "DateTime"){$query.Add("since",(Format-UnixTimestamp $StartDateTime))}
         if($PSCmdlet.ParameterSetName -eq "Unix"){$query.Add("since",$StartUnixStamp)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

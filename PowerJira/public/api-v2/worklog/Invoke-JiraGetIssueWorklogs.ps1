@@ -26,21 +26,22 @@ function Invoke-JiraGetIssueWorklogs {
         [string[]]
         $Expand,
 
-        # The JiraConnection object to use for the request
+        # The JiraContext object to use for the request
         [Parameter()]
-        [hashtable]
-        $JiraConnection
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/worklog"
         $verb = "GET"
 
-        $query=@{
+        $query = [RestMethodQueryParams]::new(@{
             startAt = $StartAt
             maxResults = $MaxResults
-        }
+        })
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Query $query
+        $method = [RestMethod]::new($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }
