@@ -43,20 +43,20 @@ class JiraDateTime {
     }
 
     static
-    [datetime]
+    [string]
     SimpleFormat(
         [datetime]$DateTime
     ){
         return Get-Date -Date $DateTime -Format "o"
     }
 
-    [datetime]
+    [string]
     ComplexFormat(){
         return $this.ComplexFormat($this.DateTime)
     }
 
     static
-    [datetime]
+    [string]
     ComplexFormat(
         [datetime]$DateTime
     ){
