@@ -26,10 +26,10 @@ function Invoke-JiraCreateCustomField {
         [switch]
         $Rangesearcher,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=3)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/field"
@@ -60,13 +60,14 @@ function Invoke-JiraCreateCustomField {
             Default {$null}
         }
 
-        $body=@{
+        $body = New-Object RestMethodJsonBody @{
             name = $Name
             type = "com.atlassian.jira.plugin.system.customfieldtypes:$Type"
             searcherKey = "com.atlassian.jira.plugin.system.customfieldtypes:$searcherKey"
         }
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }
