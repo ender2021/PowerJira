@@ -36,24 +36,25 @@ function Invoke-JiraCreateVersion {
         [string[]]
         $Expand,
         
-        # The JiraConnection object to use for the request
-        [Parameter(Position=6)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/version"
         $verb = "POST"
 
-        $body = @{
+        $body = [RestMethodJsonBody]::new(@{
             projectId = $ProjectId
             name = $Name
-        }
+        })
         if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("StartDate")){$body.Add("startDate",[JiraDateTime]::ComplexFormat($StartDate))}
         if($PSBoundParameters.ContainsKey("ReleaseDate")){$body.Add("releaseDate",[JiraDateTime]::ComplexFormat($ReleaseDate))}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }

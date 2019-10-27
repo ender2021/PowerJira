@@ -8,28 +8,29 @@ function Invoke-JiraDeleteVersion {
         $VersionId,
 
         # Replacement version for issues with this version in the fixVersions field
-        [Parameter(Mandatory,Position=1)]
+        [Parameter(Position=1)]
         [int32]
         $FixTargetVersionId,
 
         # Replacement version for issues with this version in the affectsVersions field
-        [Parameter(Mandatory,Position=2)]
+        [Parameter(Position=2)]
         [int32]
         $AffectedTargetVersionId,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=3)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/version/$VersionId/removeAndSwap"
         $verb = "POST"
         
-        $body = @{}
+        $body = [RestMethodJsonBody]::new()
         if($PSBoundParameters.ContainsKey("FixTargetVersionId")){$body.Add("moveFixIssuesTo",$FixTargetVersionId)}
         if($PSBoundParameters.ContainsKey("AffectedTargetVersionId")){$body.Add("moveAffectedIssuesTo",$AffectedTargetVersionId)}
         
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = [BodyRestMethod]::new($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }
