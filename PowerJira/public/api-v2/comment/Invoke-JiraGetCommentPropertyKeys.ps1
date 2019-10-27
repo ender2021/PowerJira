@@ -7,10 +7,10 @@ function Invoke-JiraGetCommentPropertyKeys {
         [int64]
         $Id,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $results = @()
@@ -23,7 +23,9 @@ function Invoke-JiraGetCommentPropertyKeys {
             id = $Id
             keys = @()
         }
-        $obj.keys += (Invoke-JiraRestMethod $JiraConnection $functionPath $verb).keys | ForEach-Object {$_.key}
+
+        $method = [RestMethod]::new($functionPath,$verb)
+        $obj.keys += $method.Invoke($JiraContext).keys | ForEach-Object {$_.key}
         $results += $obj
 
     }

@@ -13,10 +13,10 @@ function Invoke-JiraDeleteComment {
         [int32]
         $Id,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $results = @()
@@ -25,7 +25,8 @@ function Invoke-JiraDeleteComment {
         $functionPath = "/rest/api/2/issue/$IssueKey/comment/$Id"
         $verb = "DELETE"
 
-        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $method = [RestMethod]::new($functionPath,$verb)
+        $results += $method.Invoke($JiraContext)
     }
     end {
         #$results

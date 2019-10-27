@@ -17,10 +17,10 @@ function Invoke-JiraGetCommentsByIds {
         [string[]]
         $Expand,
         
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $idList = @()
@@ -32,13 +32,14 @@ function Invoke-JiraGetCommentsByIds {
         $functionPath = "/rest/api/2/comment/list"
         $verb = "POST"
 
-        $query = @{}
+        $query = [RestMethodQueryParams]::new()
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $body=@{
+        $body = [RestMethodJsonBody]::new(@{
             ids = $idList
-        }
+        })
 
-        (Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body).values
+        $method = [BodyRestMethod]::new($functionPath,$verb,$query,$body)
+        $method.Invoke($JiraContext).values
     }
 }
