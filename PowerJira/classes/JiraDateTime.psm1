@@ -37,9 +37,9 @@ class JiraDateTime {
     # PUBLIC METHODS    #
     #####################
 
-    [datetime]
+    [string]
     SimpleFormat(){
-        return $this.SimpleFormat($this.DateTime)
+        return [JiraDateTime]::SimpleFormat($this.DateTime)
     }
 
     static
@@ -52,7 +52,7 @@ class JiraDateTime {
 
     [string]
     ComplexFormat(){
-        return $this.ComplexFormat($this.DateTime)
+        return [JiraDateTime]::ComplexFormat($this.DateTime)
     }
 
     static
