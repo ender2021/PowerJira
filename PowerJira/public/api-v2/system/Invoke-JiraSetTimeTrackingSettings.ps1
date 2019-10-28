@@ -24,22 +24,23 @@ function Invoke-JiraSetTimeTrackingSettings {
         [string]
         $DefaultUnit,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=4)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/configuration/timetracking/options"
         $verb = "PUT"
 
-        $body=@{
+        $body = New-Object RestMethodJsonBody @{
             workingHoursPerDay = $WorkingHoursPerDay
             workingDaysPerWeek = $WorkingDaysPerWeek
             timeFormat = $TimeFormat
             defaultUnit = $DefaultUnit
         }
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }

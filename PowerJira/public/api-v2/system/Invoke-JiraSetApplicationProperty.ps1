@@ -12,20 +12,21 @@ function Invoke-JiraSetApplicationProperty {
         [string]
         $Value,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/application-properties/$PropertyId"
         $verb = "PUT"
 
-        $body=@{
+        $body = New-Object RestMethodJsonBody @{
             id = $PropertyId
             value = $Value
         }
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }

@@ -17,20 +17,21 @@ function Invoke-JiraGetApplicationProperty {
         [string]
         $PermissionLevel,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/application-properties"
         $verb = "GET"
 
-        $query=@{}
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("Key")){$query.Add("key",$Key)}
         if($PSBoundParameters.ContainsKey("KeyFilter")){$query.Add("keyFilter",$KeyFilter)}
         if($PSBoundParameters.ContainsKey("PermissionLevel")){$query.Add("permissionLevel",$PermissionLevel)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }
