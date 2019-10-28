@@ -36,6 +36,13 @@ class RestQueryKvp {
     # PUBLIC METHODS #
     ##################
 
+    [bool]
+    Equals(
+        [object]$obj
+    ){
+        return $obj.Key -eq $this.Key -and $obj.Value -eq $this.Value
+    }
+
     #Adapted from: https://www.powershellgallery.com/packages/PSApigeeEdge/0.2.4/Content/Private%5CConvertFrom-HashtableToQueryString.ps1
     static
     [string]
