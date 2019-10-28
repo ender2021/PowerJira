@@ -17,15 +17,16 @@ function Invoke-JiraRemoveScreenTabField {
         [string]
         $FieldId,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=3)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/screens/$ScreenId/tabs/$TabId/fields/$FieldId"
         $verb = "DELETE"
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $method = New-Object RestMethod @($functionPath,$verb)
+        $method.Invoke($JiraContext)
     }
 }
