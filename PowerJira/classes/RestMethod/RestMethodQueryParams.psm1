@@ -30,7 +30,7 @@ class RestMethodQueryParams {
     RestMethodQueryParams(
         [hashtable]$Params
     ){
-        foreach( $kv in $Params.GetEnumerator()) {
+        foreach( $kv in $Params.GetEnumerator() | Sort-Object Name,Value) {
             if($kv.Name) {$this.Add($kv.Name, $kv.Value)}
         }
     }
