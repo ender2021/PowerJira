@@ -13,7 +13,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetAllPermissions
 
 #GET BULK PERMISSIONS
-Invoke-JiraGetBulkPermissions -ProjectPermissions @("DELETE_OWN_WORKLOGS")
+#Invoke-JiraGetBulkPermissions -ProjectPermissions @("DELETE_OWN_WORKLOGS")
 
 #end tests
 
