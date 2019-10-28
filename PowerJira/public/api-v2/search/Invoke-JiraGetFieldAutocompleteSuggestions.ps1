@@ -22,23 +22,23 @@ function Invoke-JiraGetFieldAutocompleteSuggestions {
         [string]
         $PredicateValue,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2,ParameterSetName="FieldValue")]
-        [Parameter(Position=3,ParameterSetName="PredicateValue")]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/jql/autocompletedata/suggestions"
         $verb = "GET"
 
-        $query=@{
+        $query = New-Object RestMethodQueryParams @{
             fieldName = $FieldName
         }
         if($PSBoundParameters.ContainsKey("FieldValue")){$query.Add("fieldValue",$FieldValue)}
         if($PSBoundParameters.ContainsKey("PredicateName")){$query.Add("predicateName",$PredicateName)}
         if($PSBoundParameters.ContainsKey("PredicateValue")){$query.Add("predicateValue",$PredicateValue)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }
