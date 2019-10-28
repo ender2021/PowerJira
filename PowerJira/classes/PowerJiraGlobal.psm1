@@ -13,7 +13,7 @@ class PowerJiraGlobal {
     #####################
 
     [JiraContext]
-    $Context=$null
+    $Context
 
     #####################
     # CONSTRUCTORS      #
