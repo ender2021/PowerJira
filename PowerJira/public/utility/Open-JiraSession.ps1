@@ -23,7 +23,7 @@ function Open-JiraSession {
     )
     process {
         $context = New-JiraContext $JiraCredentials.UserName $JiraCredentials.ApiToken $JiraCredentials.HostName
-        $context.OpenSession()
+        $Global:PowerJira.OpenSession($context)
         if ($ReturnContext) { $context }
     }
 }

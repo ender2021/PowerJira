@@ -45,13 +45,5 @@ class JiraContext {
     # PUBLIC METHODS #
     ##################
 
-    [void]
-    OpenSession(){
-        $Global:PowerJira.OpenSession($this)
-    }
-
-    [void]
-    CloseSession(){
-        $Global:PowerJira.CloseSession()
-    }
+    
 }
