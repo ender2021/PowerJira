@@ -1,3 +1,5 @@
+. ..\..\..\PowerJira\private\Test-Id.ps1
+
 Describe "Private Test-Id tests" {
     Context "should return true" {
         It 'for an integer' {

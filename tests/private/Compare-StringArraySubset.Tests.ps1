@@ -1,3 +1,5 @@
+. ..\..\..\PowerJira\private\Compare-StringArraySubset.ps1
+
 Describe "Compare-StringArraySubset" {
     Context "Should return true (string compare)" {
         It "lists match exactly" {

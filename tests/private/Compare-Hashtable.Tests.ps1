@@ -1,4 +1,7 @@
 #https://gist.github.com/dbroeglin/c6ce3e4639979fa250cf#file-compare-hashtable-tests-ps1
+
+. ..\..\..\PowerJira\private\Compare-Hashtable.ps1
+
 Describe "Compare-Hashtable" {
   Context "When both are empty" {
     $Left, $Right = @{}, @{}
