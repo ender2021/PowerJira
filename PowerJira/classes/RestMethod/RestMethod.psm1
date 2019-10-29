@@ -12,6 +12,7 @@ class RestMethod {
     #####################
 
     # The URI path of function to invoke (do not include host name)
+    [ValidateNotNullOrEmpty()]
     [string]
     $FunctionPath
 
@@ -64,7 +65,7 @@ class RestMethod {
         [string]$FunctionPath,
         [string]$HttpMethod
     ){
-        $this.FunctionPath = $FunctionPath
+        $this.FunctionPath = if ($FunctionPath.StartsWith("/")) {$FunctionPath.Substring(1)} else {$FunctionPath}
         $this.HttpMethod = $HttpMethod
     }
 
