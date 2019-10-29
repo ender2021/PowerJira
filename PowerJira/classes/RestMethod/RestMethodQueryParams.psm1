@@ -43,6 +43,13 @@ class RestMethodQueryParams {
     # PUBLIC METHODS #
     ##################
 
+    [bool]
+    Equals(
+        [object]$obj
+    ){
+        return ($obj.PSobject.Properties.Name -contains "Params") -and ($obj.Params -eq $this.Params)
+    }
+
     [void]
     Add(
         [string]$Key,
