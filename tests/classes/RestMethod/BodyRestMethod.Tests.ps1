@@ -5,8 +5,8 @@ using module ..\..\..\PowerJira\classes\RestMethod\RestMethodBody.psm1
 using module ..\..\..\PowerJira\classes\RestMethod\RestMethodJsonBody.psm1
 using module ..\..\..\PowerJira\classes\RestMethod\RestMethodQueryParams.psm1
 
-. ..\..\..\PowerJira\private\Compare-Hashtable.ps1
-. ..\..\mocks\Mock-InvokeRestMethod.ps1
+. $PSScriptRoot\..\..\..\PowerJira\private\Compare-Hashtable.ps1
+. $PSScriptRoot\..\..\mocks\Mock-InvokeRestMethod.ps1
 
 Describe "BodyRestMethod (Class)" {
     $simplePath = "path"

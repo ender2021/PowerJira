@@ -3,8 +3,8 @@ using module ..\..\..\PowerJira\classes\PowerJiraGlobal.psm1
 using module ..\..\..\PowerJira\classes\RestMethod\FormRestMethod.psm1
 using module ..\..\..\PowerJira\classes\RestMethod\RestMethodQueryParams.psm1
 
-. ..\..\..\PowerJira\private\Compare-Hashtable.ps1
-. ..\..\mocks\Mock-InvokeRestMethod.ps1
+. $PSScriptRoot\..\..\..\PowerJira\private\Compare-Hashtable.ps1
+. $PSScriptRoot\..\..\mocks\Mock-InvokeRestMethod.ps1
 
 Describe "FormRestMethod (Class)" {
     $simplePath = "path"

@@ -1,6 +1,6 @@
 using module ..\..\..\PowerJira\classes\RestMethod\RestMethodJsonBody.psm1
 
-. ..\..\..\PowerJira\private\Compare-Hashtable.ps1
+. $PSScriptRoot\..\..\..\PowerJira\private\Compare-Hashtable.ps1
 
 Describe "RestMethodJsonBody (Class)" {
     $bodyHash1 = @{
