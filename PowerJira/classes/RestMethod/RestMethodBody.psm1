@@ -16,7 +16,9 @@ class RestMethodBody {
     # CONSTRUCTORS #
     ################
 
-    RestMethodBody(){}
+    RestMethodBody(){
+        $this.BodyString = ""
+    }
 
     RestMethodBody(
         [string]$BodyString
