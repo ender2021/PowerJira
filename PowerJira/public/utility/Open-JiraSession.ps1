@@ -14,9 +14,19 @@ function Open-JiraSession {
         # The hostname of the Jira instance to interact with (e.g. https://yourjirasite.atlassian.net/)
         [Parameter(Mandatory,Position=2)]
         [string]
-        $HostName
+        $HostName,
+
+        # Configure the number of retry attempts for rest calls
+        [Parameter(Position=3)]
+        [int32]
+        $Retries = 1,
+
+        # Configure the delay (in seconds) between retry attempts
+        [Parameter(Position=4)]
+        [int32]
+        $RetryDelay = 1
     )
     process {
-        $Global:PowerJira.Session = New-JiraConnection -UserName $UserName -Password $Password -HostName $HostName
+        $Global:PowerJira.Session = New-JiraConnection -UserName $UserName -Password $Password -HostName $HostName -Retries $Retries -RetryDelay $RetryDelay
     }
 }
