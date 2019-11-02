@@ -98,30 +98,40 @@ function Invoke-JiraRestMethod {
             $uri += '?' + (Format-KvpArrayToQueryString $QueryKvp)
         }
 
+        $restSplat = @{
+            Uri = $uri
+            Method = $HttpMethod
+            Headers = $sendHeaders
+            RetryIntervalSec = $JiraConnection.Retry.Delay
+            MaximumRetryCount = $JiraConnection.Retry.Max
+        }
         #select correct invocation depending on parameters provided
         switch ($PSCmdlet.ParameterSetName) {
             {($_ -match "NoBody") -or (($_ -match "JsonBody") -and ($Body.Count -eq 0))} {
-                Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType $contentType -Headers $sendHeaders                
+                $restSplat.Add("ContentType", $contentType)
              }
             {$_ -match "JsonBody"} {
                 $bodyDepth = Find-HashtableDepth $Body
                 $bodyJson = ConvertTo-Json $Body -Compress -Depth $bodyDepth
-                Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType $contentType -Headers $sendHeaders -Body $bodyJson
+                $restSplat.Add("ContentType", $contentType)
+                $restSplat.Add("Body", $bodyJson)
              }
             {$_ -match "SimpleBody"} { 
-                Invoke-RestMethod -Uri $uri -Method $HttpMethod -ContentType $contentType -Headers $sendHeaders -Body $LiteralBody
+                $restSplat.Add("ContentType", $contentType)
+                $restSplat.Add("Body", $LiteralBody)
              }
             {$_ -match "Multipart"} { 
-                $sendHeaders.Add("X-Atlassian-Token","no-check")
-                Invoke-RestMethod -Uri $uri -Method $HttpMethod -Headers $sendHeaders -Form $Form
+                $restSplat.Headers.Add("X-Atlassian-Token","no-check")
+                $restSplat.Add("Form", $Form)
              }
              {$_ -match "File"} { 
-                $sendHeaders.Add("X-Atlassian-Token","no-check")
-                Invoke-RestMethod -Uri $uri -Method $HttpMethod -Headers $sendHeaders -InFile $File
+                $restSplat.Headers.Add("X-Atlassian-Token","no-check")
+                $restSplat.Add("InFile", $File)
              }
             Default {
                 throw "Invalid Parameter Set: Unknown parameter set '$_' in Invoke-JiraRestMethod"
             }
         }
+        Invoke-RestMethod @restSplat
     }
 }
