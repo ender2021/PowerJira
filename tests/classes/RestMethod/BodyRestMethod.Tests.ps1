@@ -97,7 +97,7 @@ Describe "BodyRestMethod (Class)" {
     Context "Invoke Method (no query)" {
         $uri = "https://my-uri.com"
         $jc = New-Object JiraContext @("1","2",$uri)
-        Mock "Invoke-RestMethod" $MockInvokeRestMethod
+        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName BodyRestMethod
         $simpleRm = New-Object BodyRestMethod @($simplePath,$get,$simpleBody)
         $result = $simpleRm.Invoke($jc)
 
@@ -128,7 +128,7 @@ Describe "BodyRestMethod (Class)" {
         $qs = New-Object RestMethodQueryParams @{
             prop1 = "val1"
         }
-        Mock "Invoke-RestMethod" $MockInvokeRestMethod
+        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName BodyRestMethod
         $rm = New-Object BodyRestMethod @($simplePath,$get,$qs,$simpleBody)
         $result = $rm.Invoke($jc)
 
