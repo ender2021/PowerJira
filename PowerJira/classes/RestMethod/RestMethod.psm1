@@ -128,6 +128,8 @@ class RestMethod {
             Method = $this.HttpMethod
             ContentType = $this.ContentType 
             Headers = $this.HeadersToSend($JiraContext) 
+            MaximumRetryCount = $JiraContext.Retries
+            RetryIntervalSec = $JiraContext.RetryDelay
         }
         return Invoke-RestMethod @invokeSplat
     }

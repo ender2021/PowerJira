@@ -16,13 +16,30 @@ function Open-JiraSession {
         [string]
         $HostName,
 
+        # Configure the number of retry attempts for rest calls
+        [Parameter(Position=3)]
+        [int32]
+        $Retries = 1,
+
+        # Configure the delay (in seconds) between retry attempts
+        [Parameter(Position=4)]
+        [int32]
+        $RetryDelay = 1,
+
         # Set this switch to return the context object that is created for the session
         [Parameter()]
         [switch]
         $ReturnContext
     )
     process {
-        $context = New-JiraContext $JiraCredentials.UserName $JiraCredentials.ApiToken $JiraCredentials.HostName
+        $splat = @{
+            UserName = $UserName
+            Password = $Password
+            HostName = $HostName
+            Retries = $Retries
+            RetryDelay = $RetryDelay
+        }
+        $context = New-JiraContext @splat
         $Global:PowerJira.OpenSession($context)
         if ($ReturnContext) { $context }
     }

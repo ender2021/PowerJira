@@ -13,6 +13,14 @@ class JiraContext {
     [string]
     $HostName
 
+    [ValidateRange("Positive")]
+    [int32]
+    $Retries
+    
+    [ValidateRange("Positive")]
+    [int32]
+    $RetryDelay
+
     ################
     # CONSTRUCTORS #
     ################
@@ -21,6 +29,32 @@ class JiraContext {
         [string]$UserName,
         [string]$ApiKey,
         [string]$HostName
+    ){
+        $this.Init($UserName,$ApiKey,$HostName,1,1)
+    }
+
+    JiraContext(
+        [string]$UserName,
+        [string]$ApiKey,
+        [string]$HostName,
+        [int32]$Retries,
+        [int32]$RetryDelay
+    ){
+        $this.Init($UserName,$ApiKey,$HostName,$Retries,$RetryDelay)
+    }
+
+    ##################
+    # HIDDEN METHODS #
+    ##################
+
+    hidden
+    [void]
+    Init(
+        [string]$UserName,
+        [string]$ApiKey,
+        [string]$HostName,
+        [int32]$Retries,
+        [int32]$RetryDelay
     ){
         # create the unencoded string
         $credentialsText = "$UserName`:$ApiKey"
@@ -35,11 +69,9 @@ class JiraContext {
         # set the object properties
         $this.AuthHeader = @{Authorization="Basic $encodedCredentials"}
         $this.HostName = $formattedHost
+        $this.Retries = $Retries
+        $this.RetryDelay = $RetryDelay
     }
-
-    ##################
-    # HIDDEN METHODS #
-    ##################
 
     ##################
     # PUBLIC METHODS #

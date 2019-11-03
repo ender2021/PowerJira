@@ -83,7 +83,9 @@ Describe "FormRestMethod (Class)" {
     }
     Context "Invoke Method (no query)" {
         $uri = "https://my-uri.com"
-        $jc = New-Object JiraContext @("1","2",$uri)
+        $retries = 3
+        $delay = 5
+        $jc = New-Object JiraContext @("1","2",$uri,$retries,$delay)
         Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName FormRestMethod
         $rm = New-Object FormRestMethod @($simplePath,$get,$formHash)
         $result = $rm.Invoke($jc)
@@ -100,6 +102,12 @@ Describe "FormRestMethod (Class)" {
         }
         It "passes Form to Invoke-RestMethod correctly" {
             [HashtableUtility]::Compare($result.Form,$formHash) | Should -BeNullOrEmpty
+        }
+        It "passes MaximumRetryCount to Invoke-RestMethod correctly" {
+            $result.MaximumRetryCount | Should -Be $retries
+        }
+        It "passes RetryIntervalSec to Invoke-RestMethod correctly" {
+            $result.RetryIntervalSec | Should -Be $delay
         }
     }
     Context "Invoke Method (with query)" {

@@ -61,6 +61,8 @@ class BodyRestMethod : RestMethod {
             Method = $this.HttpMethod
             ContentType = $this.ContentType 
             Headers = $this.HeadersToSend($JiraContext) 
+            MaximumRetryCount = $JiraContext.Retries
+            RetryIntervalSec = $JiraContext.RetryDelay
             Body = $this.Body.ToString()
         }
         return Invoke-RestMethod @invokeSplat

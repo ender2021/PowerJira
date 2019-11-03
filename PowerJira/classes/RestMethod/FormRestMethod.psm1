@@ -65,6 +65,8 @@ class FormRestMethod : RestMethod {
             Uri = $this.Uri($JiraContext)
             Method = $this.HttpMethod
             Headers = $this.HeadersToSend($JiraContext) 
+            MaximumRetryCount = $JiraContext.Retries
+            RetryIntervalSec = $JiraContext.RetryDelay
             Form = $this.Form
         }
         return Invoke-RestMethod @invokeSplat

@@ -123,7 +123,9 @@ Describe "RestMethod (Class)" {
     }
     Context "Invoke Method (no query)" {
         $uri = "https://my-uri.com"
-        $jc = New-Object JiraContext @("1","2",$uri)
+        $retries = 3
+        $delay = 5
+        $jc = New-Object JiraContext @("1","2",$uri,$retries,$delay)
         Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName RestMethod
         $rm = New-Object RestMethod @($simplePath,$get)
         $result = $rm.Invoke($jc)
@@ -139,6 +141,12 @@ Describe "RestMethod (Class)" {
         }
         It "passes Headers to Invoke-RestMethod correctly" {
             [HashtableUtility]::Compare($result.Headers,$jc.AuthHeader) | Should -BeNullOrEmpty
+        }
+        It "passes MaximumRetryCount to Invoke-RestMethod correctly" {
+            $result.MaximumRetryCount | Should -Be $retries
+        }
+        It "passes RetryIntervalSec to Invoke-RestMethod correctly" {
+            $result.RetryIntervalSec | Should -Be $delay
         }
     }
     Context "Invoke Method (with query)" {

@@ -65,6 +65,8 @@ class FileRestMethod : RestMethod {
             Uri = $this.Uri($JiraContext)
             Method = $this.HttpMethod
             Headers = $this.HeadersToSend($JiraContext) 
+            MaximumRetryCount = $JiraContext.Retries
+            RetryIntervalSec = $JiraContext.RetryDelay
             InFile = $this.FilePath
         }
         return Invoke-RestMethod @invokeSplat
