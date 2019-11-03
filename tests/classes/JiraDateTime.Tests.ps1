@@ -2,10 +2,10 @@ using module ..\..\PowerJira\classes\JiraDateTime.psm1
 
 Describe "JiraDateTime (Class)" {
     Context "Constructors" {
-        $expected = Get-Date "1985-07-20 2:00:00"
+        $expected = [datetime]"1985-07-20 2:00:00"
 
         It "blank constructor sets DateTime property using Get-Date" {
-            Mock Get-Date { return $expected }
+            Mock Get-Date { return [datetime]"1985-07-20 2:00:00" } -ModuleName JiraDateTime
             $jdt = New-Object JiraDateTime
             $jdt.DateTime | Should -Be $expected
         }
