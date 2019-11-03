@@ -84,7 +84,7 @@ Describe "FormRestMethod (Class)" {
     Context "Invoke Method (no query)" {
         $uri = "https://my-uri.com"
         $jc = New-Object JiraContext @("1","2",$uri)
-        Mock "Invoke-RestMethod" $MockInvokeRestMethod
+        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName FormRestMethod
         $rm = New-Object FormRestMethod @($simplePath,$get,$formHash)
         $result = $rm.Invoke($jc)
 
@@ -108,7 +108,7 @@ Describe "FormRestMethod (Class)" {
         $qs = New-Object RestMethodQueryParams @{
             prop1 = "val1"
         }
-        Mock "Invoke-RestMethod" $MockInvokeRestMethod
+        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName FormRestMethod
         $rm = New-Object FormRestMethod @($simplePath,$get,$qs,$formHash)
         $result = $rm.Invoke($jc)
 

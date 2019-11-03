@@ -62,7 +62,7 @@ Describe "FileRestMethod (Class)" {
         It "qs query constructor initializes Headers with the X-Atlassian-Token header" {
             $rm = New-Object FileRestMethod $($simplePath,$get,$qs,$filePath)            
 
-            [HashtableUtility]::Compare(rm.Headers,$xAtlasToken) | Should -BeNullOrEmpty
+            [HashtableUtility]::Compare($rm.Headers,$xAtlasToken) | Should -BeNullOrEmpty
         }
         It "qs query constructor initializes ContentType" {
             $rm = New-Object FileRestMethod $($simplePath,$get,$qs,$filePath)
@@ -84,7 +84,7 @@ Describe "FileRestMethod (Class)" {
     Context "Invoke Method (no query)" {
         $uri = "https://my-uri.com"
         $jc = New-Object JiraContext @("1","2",$uri)
-        Mock "Invoke-RestMethod" $MockInvokeRestMethod
+        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName FileRestMethod
         $rm = New-Object FileRestMethod @($simplePath,$get,$filePath)
         $result = $rm.Invoke($jc)
 
@@ -108,7 +108,7 @@ Describe "FileRestMethod (Class)" {
         $qs = New-Object RestMethodQueryParams @{
             prop1 = "val1"
         }
-        Mock "Invoke-RestMethod" $MockInvokeRestMethod
+        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName FileRestMethod
         $rm = New-Object FileRestMethod @($simplePath,$get,$qs,$filePath)
         $result = $rm.Invoke($jc)
 
