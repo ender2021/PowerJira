@@ -1,9 +1,9 @@
+using module ..\..\..\PowerJira\classes\HashtableUtility.psm1
 using module ..\..\..\PowerJira\classes\JiraContext.psm1
 using module ..\..\..\PowerJira\classes\PowerJiraGlobal.psm1
 using module ..\..\..\PowerJira\classes\RestMethod\FileRestMethod.psm1
 using module ..\..\..\PowerJira\classes\RestMethod\RestMethodQueryParams.psm1
 
-. $PSScriptRoot\..\..\..\PowerJira\private\Compare-Hashtable.ps1
 . $PSScriptRoot\..\..\mocks\Mock-InvokeRestMethod.ps1
 
 Describe "FileRestMethod (Class)" {
@@ -26,7 +26,7 @@ Describe "FileRestMethod (Class)" {
         It "no query constructor initializes Headers with the X-Atlassian-Token header" {
             $rm = New-Object FileRestMethod $($simplePath,$get,$filePath)
             
-            Compare-Hashtable $rm.Headers $xAtlasToken | Should -BeNullOrEmpty
+            [HashtableUtility]::Compare($rm.Headers,$xAtlasToken) | Should -BeNullOrEmpty
         }
         It "no query constructor initializes ContentType" {
             $rm = New-Object FileRestMethod $($simplePath,$get,$filePath)
@@ -62,7 +62,7 @@ Describe "FileRestMethod (Class)" {
         It "qs query constructor initializes Headers with the X-Atlassian-Token header" {
             $rm = New-Object FileRestMethod $($simplePath,$get,$qs,$filePath)            
 
-            Compare-Hashtable $rm.Headers $xAtlasToken | Should -BeNullOrEmpty
+            [HashtableUtility]::Compare(rm.Headers,$xAtlasToken) | Should -BeNullOrEmpty
         }
         It "qs query constructor initializes ContentType" {
             $rm = New-Object FileRestMethod $($simplePath,$get,$qs,$filePath)
@@ -96,7 +96,7 @@ Describe "FileRestMethod (Class)" {
         }
         It "passes Headers to Invoke-RestMethod correctly" {
             $expectedHeaders = $jc.AuthHeader + $xAtlasToken
-            Compare-Hashtable $result.Headers $expectedHeaders | Should -BeNullOrEmpty
+            [HashtableUtility]::Compare($result.Headers,$expectedHeaders) | Should -BeNullOrEmpty
         }
         It "passes InFile to Invoke-RestMethod correctly" {
             $result.InFile | Should -Be $filePath

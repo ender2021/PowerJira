@@ -1,6 +1,6 @@
+using module ..\..\..\PowerJira\classes\HashtableUtility.psm1
 using module ..\..\..\PowerJira\classes\RestMethod\RestMethodJsonBody.psm1
 
-. $PSScriptRoot\..\..\..\PowerJira\private\Compare-Hashtable.ps1
 
 Describe "RestMethodJsonBody (Class)" {
     $bodyHash1 = @{
@@ -21,7 +21,7 @@ Describe "RestMethodJsonBody (Class)" {
         It "hash constructor sets Values property correctly" {
             $rmjb = New-Object RestMethodJsonBody $bodyHash2
 
-            Compare-Hashtable $rmjb.Values $bodyHash2 | Should -BeNullOrEmpty
+            [HashtableUtility]::Compare($rmjb.Values,$bodyHash2) | Should -BeNullOrEmpty
         }
     }
     Context "ToString method" {

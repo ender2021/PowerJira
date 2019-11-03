@@ -1,9 +1,9 @@
+using module ..\..\..\PowerJira\classes\HashtableUtility.psm1
 using module ..\..\..\PowerJira\classes\JiraContext.psm1
 using module ..\..\..\PowerJira\classes\PowerJiraGlobal.psm1
 using module ..\..\..\PowerJira\classes\RestMethod\FormRestMethod.psm1
 using module ..\..\..\PowerJira\classes\RestMethod\RestMethodQueryParams.psm1
 
-. $PSScriptRoot\..\..\..\PowerJira\private\Compare-Hashtable.ps1
 . $PSScriptRoot\..\..\mocks\Mock-InvokeRestMethod.ps1
 
 Describe "FormRestMethod (Class)" {
@@ -21,12 +21,12 @@ Describe "FormRestMethod (Class)" {
 
             $rm.FunctionPath | Should -Be $simplePath
             $rm.HttpMethod | Should -Be $get
-            Compare-Hashtable $rm.Form $formHash | Should -BeNullOrEmpty
+            [HashtableUtility]::Compare($rm.Form,$formHash) | Should -BeNullOrEmpty
         }
         It "no query constructor initializes Headers with the X-Atlassian-Token header" {
             $rm = New-Object FormRestMethod $($simplePath,$get,$formHash)
             
-            Compare-Hashtable $rm.Headers $xAtlasToken | Should -BeNullOrEmpty
+            [HashtableUtility]::Compare($rm.Headers,$xAtlasToken) | Should -BeNullOrEmpty
         }
         It "no query constructor initializes ContentType" {
             $rm = New-Object FormRestMethod $($simplePath,$get,$formHash)
@@ -56,13 +56,13 @@ Describe "FormRestMethod (Class)" {
 
             $rm.FunctionPath | Should -Be $simplePath
             $rm.HttpMethod | Should -Be $get
-            Compare-Hashtable $rm.Form $formHash | Should -BeNullOrEmpty
+            [HashtableUtility]::Compare($rm.Form,$formHash) | Should -BeNullOrEmpty
             $rm.Query | Should -Be $qs
         }
         It "qs query constructor initializes Headers with the X-Atlassian-Token header" {
             $rm = New-Object FormRestMethod $($simplePath,$get,$qs,$formHash)            
 
-            Compare-Hashtable $rm.Headers $xAtlasToken | Should -BeNullOrEmpty
+            [HashtableUtility]::Compare($rm.Headers,$xAtlasToken) | Should -BeNullOrEmpty
         }
         It "qs query constructor initializes ContentType" {
             $rm = New-Object FormRestMethod $($simplePath,$get,$qs,$formHash)
@@ -96,10 +96,10 @@ Describe "FormRestMethod (Class)" {
         }
         It "passes Headers to Invoke-RestMethod correctly" {
             $expectedHeaders = $jc.AuthHeader + $xAtlasToken
-            Compare-Hashtable $result.Headers $expectedHeaders | Should -BeNullOrEmpty
+            [HashtableUtility]::Compare($result.Headers,$expectedHeaders) | Should -BeNullOrEmpty
         }
         It "passes Form to Invoke-RestMethod correctly" {
-            Compare-Hashtable $result.Form $formHash | Should -BeNullOrEmpty
+            [HashtableUtility]::Compare($result.Form,$formHash) | Should -BeNullOrEmpty
         }
     }
     Context "Invoke Method (with query)" {

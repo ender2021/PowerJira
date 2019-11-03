@@ -1,9 +1,9 @@
+using module ..\..\..\PowerJira\classes\HashtableUtility.psm1
 using module ..\..\..\PowerJira\classes\JiraContext.psm1
 using module ..\..\..\PowerJira\classes\PowerJiraGlobal.psm1
 using module ..\..\..\PowerJira\classes\RestMethod\RestMethod.psm1
 using module ..\..\..\PowerJira\classes\RestMethod\RestMethodQueryParams.psm1
 
-. $PSScriptRoot\..\..\..\PowerJira\private\Compare-Hashtable.ps1
 . $PSScriptRoot\..\..\mocks\Mock-InvokeRestMethod.ps1
 
 Describe "RestMethod (Class)" {
@@ -118,7 +118,7 @@ Describe "RestMethod (Class)" {
             $rm.Headers += $newHeader
             $compiledHeaders = $newHeader + $jc.AuthHeader
 
-            Compare-Hashtable $compiledHeaders $rm.HeadersToSend($jc) | Should -BeNullOrEmpty
+            [HashtableUtility]::Compare($compiledHeaders,$rm.HeadersToSend($jc)) | Should -BeNullOrEmpty
         }
     }
     Context "Invoke Method (no query)" {
@@ -138,7 +138,7 @@ Describe "RestMethod (Class)" {
             $result.ContentType | Should -Be $defaultContentType
         }
         It "passes Headers to Invoke-RestMethod correctly" {
-            Compare-Hashtable $result.Headers $jc.AuthHeader | Should -BeNullOrEmpty
+            [HashtableUtility]::Compare($result.Headers,$jc.AuthHeader) | Should -BeNullOrEmpty
         }
     }
     Context "Invoke Method (with query)" {
