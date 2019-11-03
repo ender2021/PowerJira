@@ -1,3 +1,4 @@
+using module ..\HashtableUtility.psm1
 using module .\RestMethodBody.psm1
 
 class RestMethodJsonBody : RestMethodBody {
@@ -37,7 +38,7 @@ class RestMethodJsonBody : RestMethodBody {
 
     [string]
     ToString(){
-        return ConvertTo-Json $this.Values -Compress -Depth (Find-HashtableDepth $this.Values)
+        return ConvertTo-Json $this.Values -Compress -Depth ([HashtableUtility]::FindDepth($this.Values))
     }
 
     [void]
