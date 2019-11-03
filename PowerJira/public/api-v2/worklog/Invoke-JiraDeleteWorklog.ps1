@@ -35,16 +35,16 @@ function Invoke-JiraDeleteWorklog {
         [switch]
         $DisableNotifications,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=6)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/worklog/$WorklogId"
         $verb = "DELETE"
 
-        $query = @{
+        $query = New-Object RestMethodQueryParams @{
             adjustEstimate = $AdjustMethod
             notifyUsers = $true
         }
@@ -52,6 +52,7 @@ function Invoke-JiraDeleteWorklog {
         if($PSBoundParameters.ContainsKey("IncreaseBy")){$query.Add("increaseBy",$IncreaseBy)}
         if($PSBoundParameters.ContainsKey("DisableNotifications")){$query.notifyUsers = $false}
         
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

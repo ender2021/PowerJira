@@ -13,7 +13,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #(Invoke-JiraGetAllScreens).values[0]
 
 #ADD FIELD TO DEFAULT SCREEN
-#Invoke-JiraAddDefaultScreenField customfield_10003
+#Invoke-JiraAddDefaultScreenField customfield_10004
 
 #GET AVAILABLE SCREEN FIELDS
 #Invoke-JiraGetAvailableScreenFields 2
@@ -22,19 +22,19 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetAllScreenTabs 2
 
 #CREATE SCREEN TAB
-#Invoke-JiraCreateScreenTab 1 "tabName"
+#Invoke-JiraCreateScreenTab 1 "tabName2"
 
 #UPDATE SCREEN TAB
-#Invoke-JiraUpdateScreenTab 1 10106 "newTabName"
+#Invoke-JiraUpdateScreenTab 1 10110 "newTabName2"
 
 #DELETE SCREEN TAB
-#Invoke-JiraDeleteScreenTab 1 10106
+#Invoke-JiraDeleteScreenTab 1 10110
 
 #GET ALL SCREEN TAB FIELDS
 #Invoke-JiraGetAllScreenTabFields 1 10000
 
 #ADD SCREEN TAB FIELD
-#Invoke-JiraAddScreenTabField 2 10001 versions
+#Invoke-JiraAddScreenTabField 2 10001 duedate
 
 #REMOVE SCREEN TAB FIELD
 #Invoke-JiraRemoveScreenTabField 2 10001 versions
@@ -43,7 +43,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraReorderScreenTab 1 10107 1
 
 #REORDER SCREEN TAB FIELD
-#Invoke-JiraReorderScreenTabField 2 10001 versions Last
+#Invoke-JiraReorderScreenTabField 2 10001 duedate Last
 
 #end tests
 

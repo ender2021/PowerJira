@@ -29,27 +29,26 @@ function Invoke-JiraGetBulkPermissions {
         [int64[]]
         $IssueIds,
 
-        # The JiraConnection object to use for the request
-        [Parameter(ParameterSetName="Global",Position=1)]
-        [Parameter(ParameterSetName="Project",Position=3)]
-        [Parameter(ParameterSetName="Global,Project",Position=4)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/permissions/check"
         $verb = "POST"
 
-        $body = @{}
+        $body = New-Object RestMethodJsonBody
         if($PSBoundParameters.ContainsKey("GlobalPermissions")){$body.Add("globalPermissions",$GlobalPermissions)}
         if(($PSCmdlet.ParameterSetName -eq "Project") -or ($PSCmdlet.PagingParameters -eq "Global,Project")) {
             $body.Add("projectPermissions", @(@{
                 permissions = $ProjectPermissions
             }))
-            if($PSBoundParameters.ContainsKey("ProjectIds")){$body.projectPermissions[0].Add("projects",$ProjectIds)}
-            if($PSBoundParameters.ContainsKey("IssueIds")){$body.projectPermissions[0].Add("issues",$IssueIds)}
+            if($PSBoundParameters.ContainsKey("ProjectIds")){$body.Values.projectPermissions[0].Add("projects",$ProjectIds)}
+            if($PSBoundParameters.ContainsKey("IssueIds")){$body.Values.projectPermissions[0].Add("issues",$IssueIds)}
         }
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }

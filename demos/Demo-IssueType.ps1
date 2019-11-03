@@ -20,14 +20,14 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraAddIssueTypeAvatar 10000 $item
 
 #UPDATE ISSUE TYPE
-#Invoke-JiraUpdateIssueType 10000 -AvatarId 10512
+#Invoke-JiraUpdateIssueType 10000 -AvatarId 10520
 
 #CREATE ISSUE TYPE
 #Invoke-JiraCreateIssueType "REST Method" "Issues representing REST methods"
 #Invoke-JiraCreateIssueType "REST Method Sub-task" "Sub-task of issues representing REST methods" -Subtask
 
 #DELETE ISSUE TYPE
-#Invoke-JiraDeleteIssueType 10006
+#Invoke-JiraDeleteIssueType 10009
 
 #SET ISSUE TYPE PROPERTY
 #Invoke-JiraSetIssueTypeProperty 10005 "propKey" @{name="neato";description="Super cool!"}

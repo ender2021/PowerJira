@@ -31,24 +31,25 @@ function Invoke-JiraUpdatePermissionScheme {
         [string[]]
         $Expand,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=5)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/permissionscheme/$SchemeId"
         $verb = "PUT"
 
-        $query=@{}
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $body = @{
+        $body = New-Object RestMethodJsonBody @{
             name = $Name
         }
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("Permissions")){$body.Add("permissions",$Permissions)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
+        $method.Invoke($JiraContext)
     }
 }

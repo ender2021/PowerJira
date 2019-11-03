@@ -17,7 +17,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #$results.users.header
 
 #CREATE GROUP
-#Invoke-JiraCreateGroup "perm-test-group"
+#Invoke-JiraCreateGroup "perm-test-group-1"
 
 #DELETE GROUP
 # $groupname = "group-to-be-deleted"
@@ -26,13 +26,13 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 # Invoke-JiraDeleteGroup $groupname
 
 #ADD USER TO GROUP
-#Invoke-JiraAddUserToGroup "perm-test-group" (Invoke-JiraGetCurrentUser).accountId
+#Invoke-JiraAddUserToGroup "perm-test-group-1" (Invoke-JiraGetCurrentUser).accountId
 
 #GET GROUP USERS
-#Invoke-JiraGetGroupUsers "perm-test-group" 0 10
+#Invoke-JiraGetGroupUsers "perm-test-group-1" 0 10
 
 #REMOVE USER FROM GROUP
-#Invoke-JiraRemoveUserFromGroup "perm-test-group" (Invoke-JiraGetCurrentUser).accountId
+#Invoke-JiraRemoveUserFromGroup "perm-test-group-1" (Invoke-JiraGetCurrentUser).accountId
 
 #end tests
 

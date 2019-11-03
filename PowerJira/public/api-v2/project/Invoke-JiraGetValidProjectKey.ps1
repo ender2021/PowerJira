@@ -7,19 +7,20 @@ function Invoke-JiraGetValidProjectKey {
         [string]
         $Key,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/projectvalidate/validProjectKey"
         $verb = "GET"
 
-        $query=@{
+        $query = New-Object RestMethodQueryParams @{
             key = $Key
         }
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

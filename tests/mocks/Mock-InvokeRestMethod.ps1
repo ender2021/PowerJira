@@ -6,5 +6,8 @@ $MockInvokeRestMethod = {
         Headers = $Headers
         Body = $Body
         Form = $Form
+        InFile = $InFile
+        MaximumRetryCount = $MaximumRetryCount
+        RetryIntervalSec = $RetryIntervalSec
     }
 }

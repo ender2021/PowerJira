@@ -18,20 +18,21 @@ function Invoke-JiraUpdateProjectRoleFull {
         [string]
         $Description,
         
-        # The JiraConnection object to use for the request
-        [Parameter(Position=3)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/role/$ProjectRoleId"
         $verb = "PUT"
 
-        $body=@{
+        $body = New-Object RestMethodJsonBody @{
             name = $Name
             description = $Description
         }
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }

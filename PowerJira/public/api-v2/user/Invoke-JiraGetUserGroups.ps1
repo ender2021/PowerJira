@@ -7,17 +7,18 @@ function Invoke-JiraGetUserGroups {
         [string]
         $AccountId,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/user/groups"
         $verb = "GET"
 
-        $query=@{accountId=$AccountId}
+        $query = New-Object RestMethodQueryParams @{accountId=$AccountId}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

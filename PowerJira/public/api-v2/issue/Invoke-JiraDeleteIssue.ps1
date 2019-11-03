@@ -17,10 +17,10 @@ function Invoke-JiraDeleteIssue {
         [switch]
         $DeleteSubtasks,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $results = @()
@@ -30,11 +30,12 @@ function Invoke-JiraDeleteIssue {
         $functionPath = "/rest/api/2/issue/$issueToken"
         $verb = "DELETE"
 
-        $query=@{
+        $query= New-Object RestMethodQueryParams @{
             deleteSubtasks = $DeleteSubtasks
         }
 
-        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $results += $method.Invoke($JiraContext)
     }
     end {
         #$results

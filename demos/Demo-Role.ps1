@@ -13,20 +13,20 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetAllProjectRoles | Format-List
 
 #CREATE PROJECT ROLE
-#Invoke-JiraCreateProjectRole "new-test-role-delete-swap"
+#Invoke-JiraCreateProjectRole "new-test-role-delete-swap-2"
 #Invoke-JiraCreateProjectRole "new-test-role-2" "This one has a description!"
 
 #UPDATE PROJECT ROLE (PARTIAL)
-#Invoke-JiraUpdateProjectRolePartial 10101 -Description "a new description"
+#Invoke-JiraUpdateProjectRolePartial 10103 -Description "a new description"
 
 #UPDATE PROJECT ROLE (FULL)
-#Invoke-JiraUpdateProjectRoleFull 10101 "new-test-role-2" "This one has a description!"
+#Invoke-JiraUpdateProjectRoleFull 10103 "new-test-role-42" "This one has a description!"
 
 #GET PROJECT ROLE
-#Invoke-JiraGetProjectRole 10102
+#Invoke-JiraGetProjectRole 10103
 
 #DELETE PROJECT ROLE
-#Invoke-JiraDeleteProjectRole 10100 10102
+#Invoke-JiraDeleteProjectRole 10103
 
 #GET PROJECT ROLE DEFAULT ACTORS
 #Invoke-JiraGetProjectRoleDefaultActors 10002

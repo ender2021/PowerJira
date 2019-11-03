@@ -13,7 +13,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraGetAllStatuses
 
 #GET STATUS
-#Invoke-JiraGetStatus 10001
+#Invoke-JiraGetStatus 1
 
 #GET ALL STATUS CATEGORIES
 #Invoke-JiraGetAllStatusCategories

@@ -19,10 +19,10 @@ function Invoke-JiraSetCommentProperty {
         [hashtable]
         $Value,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=3)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $results = @()
@@ -31,9 +31,10 @@ function Invoke-JiraSetCommentProperty {
         $functionPath = "/rest/api/2/comment/$CommentId/properties/$Key"
         $verb = "PUT"
 
-        $body=$Value
+        $body = New-Object RestMethodJsonBody $Value
 
-        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $results += $method.Invoke($JiraContext)
     }
     end {
         #$results

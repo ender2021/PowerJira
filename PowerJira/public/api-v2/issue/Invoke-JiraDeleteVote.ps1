@@ -12,10 +12,10 @@ function Invoke-JiraDeleteVote {
         [string]
         $Key,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $results = @()
@@ -25,7 +25,8 @@ function Invoke-JiraDeleteVote {
         $functionPath = "/rest/api/2/issue/$issueToken/votes"
         $verb = "DELETE"
 
-        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $method = New-Object RestMethod @($functionPath,$verb)
+        $results += $method.Invoke($JiraContext)
     }
     end {
         #$results

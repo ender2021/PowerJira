@@ -30,22 +30,23 @@ function Invoke-JiraGetProjectComponentsPaginated {
         [string]
         $OrderBy,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=5)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/component"
         $verb = "GET"
 
-        $query = @{
+        $query = New-Object RestMethodQueryParams @{
             startAt = $StartAt
             maxResults = $MaxResults
         }
         if($PSBoundParameters.ContainsKey("Filter")){$query.Add("query",$Filter)}
         if($PSBoundParameters.ContainsKey("OrderBy")){$query.Add("orderBy",$OrderBy)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

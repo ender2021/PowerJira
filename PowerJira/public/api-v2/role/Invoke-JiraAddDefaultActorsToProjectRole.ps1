@@ -17,19 +17,20 @@ function Invoke-JiraAddDefaultActorsToProjectRole {
         [string[]]
         $Groups,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/role/$RoleId/actors"
         $verb = "POST"
 
-        $body = @{}
+        $body = New-Object RestMethodJsonBody
         if($PSBoundParameters.ContainsKey("Users")){$body.Add("user",$Users)}
         if($PSBoundParameters.ContainsKey("Groups")){$body.Add("group",$Groups)}
 
-        (Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body).actors
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext).actors
     }
 }

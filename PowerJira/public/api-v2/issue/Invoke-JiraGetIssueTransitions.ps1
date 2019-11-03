@@ -25,20 +25,21 @@ function Invoke-JiraGetIssueTransitions {
         [switch]
         $SkipHidden,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=4)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/transitions"
         $verb = "GET"
 
-        $query=@{}
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("ExpandFields")){$query.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("TransitionId")){$query.Add("transitionId",$TransitionId)}
         if($PSBoundParameters.ContainsKey("SkipHidden")){$query.Add("skipRemoteOnlyCondition",$true)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

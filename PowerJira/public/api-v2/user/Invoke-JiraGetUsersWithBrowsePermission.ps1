@@ -30,16 +30,16 @@ function Invoke-JiraGetUsersWithBrowsePermission {
         [int32]
         $MaxResults=50,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=4)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/user/viewissue/search"
         $verb = "GET"
 
-        $query=@{
+        $query = New-Object RestMethodQueryParams @{
             startAt = $StartAt
             maxResults = $MaxResults
             query = $Filter
@@ -47,6 +47,7 @@ function Invoke-JiraGetUsersWithBrowsePermission {
         if($PSBoundParameters.ContainsKey("ProjectKey")){$query.Add("projectKey",$ProjectKey)}
         if($PSBoundParameters.ContainsKey("IssueKey")){$query.Add("issueKey",$IssueKey)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

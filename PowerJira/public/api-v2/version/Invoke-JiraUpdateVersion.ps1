@@ -51,27 +51,28 @@ function Invoke-JiraUpdateVersion {
         [string[]]
         $Expand,
         
-        # The JiraConnection object to use for the request
-        [Parameter(Position=9)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/version/$VersionId"
         $verb = "PUT"
 
-        $body = @{
+        $body = New-Object RestMethodJsonBody @{
             id = $VersionId
         }
         if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("Name")){$body.Add("name",$Name)}
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
-        if($PSBoundParameters.ContainsKey("StartDate")){$body.Add("startDate",(Format-JiraRestDateTime $StartDate))}
-        if($PSBoundParameters.ContainsKey("ReleaseDate")){$body.Add("releaseDate",(Format-JiraRestDateTime $ReleaseDate))}
+        if($PSBoundParameters.ContainsKey("StartDate")){$body.Add("startDate",[JiraDateTime]::ComplexFormat($StartDate))}
+        if($PSBoundParameters.ContainsKey("ReleaseDate")){$body.Add("releaseDate",[JiraDateTime]::ComplexFormat($ReleaseDate))}
         if($PSBoundParameters.ContainsKey("Archived")){$body.Add("archived",$Archived)}
         if($PSBoundParameters.ContainsKey("Released")){$body.Add("released",$Released)}
         if($PSBoundParameters.ContainsKey("UnfixedIssuesVersionId")) {$body.Add("moveUnfixedIssuesTo",$UnfixedIssuesVersionId)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }

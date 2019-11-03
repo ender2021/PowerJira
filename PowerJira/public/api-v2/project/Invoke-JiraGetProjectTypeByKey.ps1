@@ -13,16 +13,17 @@ function Invoke-JiraGetProjectTypeByKey {
         [switch]
         $Accessible,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/project/type/$Key"
         if($PSBoundParameters.ContainsKey("Accessible")){$functionPath += "/accessible"}
         $verb = "GET"
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $method = New-Object RestMethod @($functionPath,$verb)
+        $method.Invoke($JiraContext)
     }
 }

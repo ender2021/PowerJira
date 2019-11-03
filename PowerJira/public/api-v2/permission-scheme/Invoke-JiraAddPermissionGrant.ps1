@@ -20,20 +20,21 @@ function Invoke-JiraAddPermissionGrant {
         [string[]]
         $Expand,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=3)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/permissionscheme/$SchemeId/permission"
         $verb = "POST"
 
-        $query=@{}
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $body = $Permission
+        $body = New-Object RestMethodJsonBody $Permission
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
+        $method.Invoke($JiraContext)
     }
 }

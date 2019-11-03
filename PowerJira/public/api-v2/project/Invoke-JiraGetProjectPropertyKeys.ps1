@@ -7,15 +7,16 @@ function Invoke-JiraGetProjectPropertyKeys {
         [string]
         $ProjectIdOrKey,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/properties"
         $verb = "GET"
 
-        (Invoke-JiraRestMethod $JiraConnection $functionPath $verb).keys
+        $method = New-Object RestMethod @($functionPath,$verb)
+        $method.Invoke($JiraContext).keys
     }
 }

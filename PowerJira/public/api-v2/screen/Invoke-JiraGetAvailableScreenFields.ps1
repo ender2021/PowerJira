@@ -7,15 +7,16 @@ function Invoke-JiraGetAvailableScreenFields {
         [int64]
         $ScreenId,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/screens/$ScreenId/availableFields"
         $verb = "GET"
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $method = New-Object RestMethod @($functionPath,$verb)
+        $method.Invoke($JiraContext)
     }
 }

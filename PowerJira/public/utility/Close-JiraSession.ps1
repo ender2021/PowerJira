@@ -1,5 +1,5 @@
 function Close-JiraSession() {
     process {
-        $Global:PowerJira.Session = $null
+        $Global:PowerJira.CloseSession()
     }
 }

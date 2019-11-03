@@ -52,32 +52,33 @@ function Invoke-JiraFindUsersAndGroups {
         [switch]
         $ExcludeConnectAddons,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/groupuserpicker"
         $verb = "GET"
 
-        $queryKvp = @(
-            Format-QueryKvp "query" $SearchTerm
-        )
+        $query = New-Object RestMethodQueryParams @{
+            query = $SearchTerm
+        }
 
         if($PSBoundParameters.ContainsKey("CustomFieldId")){
-            $queryKvp += Format-QueryKvp "fieldId" $CustomFieldId
-            if($PSBoundParameters.ContainsKey("Projects")){$Projects | ForEach-Object {$queryKvp += Format-QueryKvp "projectId" $_}}
-            if($PSBoundParameters.ContainsKey("IssueTypes")){$IssueTypes | ForEach-Object {$queryKvp += Format-QueryKvp "issueTypeId" $_}}
+            $query.Add("fieldId",$CustomFieldId)
+            if($PSBoundParameters.ContainsKey("Projects")){$Projects | ForEach-Object {$query.Add("projectId",$_)}}
+            if($PSBoundParameters.ContainsKey("IssueTypes")){$IssueTypes | ForEach-Object {$query.Add("issueTypeId",$_)}}
         }
-        if($PSBoundParameters.ContainsKey("MaxResults")){$queryKvp += Format-QueryKvp "maxResults" $MaxResults}
-        if(!$PSBoundParameters.ContainsKey("CaseSensitiveGroups")){$queryKvp += Format-QueryKvp "caseInsensitive" $true}
+        if($PSBoundParameters.ContainsKey("MaxResults")){$query.Add("maxResults",$MaxResults)}
+        if(!$PSBoundParameters.ContainsKey("CaseSensitiveGroups")){$query.Add("caseInsensitive",$true)}
         if($PSBoundParameters.ContainsKey("ShowAvatar")){
-            $queryKvp += Format-QueryKvp "showAvatar" $true
-            $queryKvp += Format-QueryKvp "avatarSize" $AvatarSize
+            $query.Add("showAvatar",$true)
+            $query.Add("avatarSize",$AvatarSize)
         }
-        if($PSBoundParameters.ContainsKey("ExcludeConnectAddons")){$queryKvp += Format-QueryKvp "excludeConnectAddons" $true}
+        if($PSBoundParameters.ContainsKey("ExcludeConnectAddons")){$query.Add("excludeConnectAddons",$true)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -QueryKvp $queryKvp
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

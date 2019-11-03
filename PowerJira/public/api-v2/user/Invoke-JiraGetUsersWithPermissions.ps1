@@ -36,16 +36,16 @@ function Invoke-JiraGetUsersWithPermissions {
         [int32]
         $MaxResults=50,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=5)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/user/permission/search"
         $verb = "GET"
 
-        $query=@{
+        $query = New-Object RestMethodQueryParams @{
             permissions = $Permissions -join ","
             startAt = $StartAt
             maxResults = $MaxResults
@@ -54,6 +54,7 @@ function Invoke-JiraGetUsersWithPermissions {
         if($PSBoundParameters.ContainsKey("IssueKey")){$query.Add("issueKey",$IssueKey)}
         if($PSBoundParameters.ContainsKey("Filter")){$query.Add("query",$Filter)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

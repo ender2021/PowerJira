@@ -1,4 +1,4 @@
-function New-JiraConnection {
+function New-JiraContext {
     [CmdletBinding(DefaultParameterSetName="PlainText")]
     param (
         # The Jira username of the user performing actions
@@ -26,22 +26,9 @@ function New-JiraConnection {
         [int32]
         $RetryDelay = 1
     )
-    # create the unencoded string
-    $credentialsText = "$UserName`:$Password"
-
-    # encode the string in base64
-    $credentialsBytes = [System.Text.Encoding]::UTF8.GetBytes($credentialsText)
-    $encodedCredentials = [Convert]::ToBase64String($credentialsBytes)
-
-    # format the host name
-    $formattedHost = (&{If($HostName.EndsWith("/")) {$HostName.Substring(0,$HostName.Length-1)} else {$HostName}})
-
-    @{
-        AuthHeader = @{Authorization="Basic $encodedCredentials"}
-        HostName = $formattedHost
-        Retry = @{
-            Max = $Retries
-            Delay = $RetryDelay
-        }
-    }    
+    begin {}
+    process {
+        return New-Object JiraContext @($UserName,$Password,$HostName,$Retries,$RetryDelay)
+    }
+    end {}
 }

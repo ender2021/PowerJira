@@ -27,10 +27,10 @@ function Invoke-JiraAddProjectAvatar {
         [int32]
         $CropLength,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=5)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/avatar2"
@@ -49,14 +49,16 @@ function Invoke-JiraAddProjectAvatar {
             "Content-Type" = "image/$ImageType"
         }
 
-        $query = @{
+        $query = New-Object RestMethodQueryParams @{
             x = $CropX
             y = $CropY
         }
         if($PSBoundParameters.ContainsKey("CropLength")){$query.Add("size",$CropLength)}
 
-        $file = $Avatar
+        $file = $Avatar.VersionInfo.FileName
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Headers $headers -Query $query -File $file
+        $method = New-Object FileRestMethod @($functionPath,$verb,$query,$file)
+        $method.Headers += $headers
+        $method.Invoke($JiraContext)
     }
 }

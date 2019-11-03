@@ -25,22 +25,23 @@ function Invoke-JiraCreateWorkflowScheme {
         [hashtable[]]
         $IssueTypeMappings,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=4)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/workflowscheme"
         $verb = "POST"
 
-        $body=@{
+        $body = New-Object RestMethodJsonBody @{
             name = $Name
         }
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("DefaultWorkflow")){$body.Add("defaultWorkflow",$DefaultWorkflow)}
         if($PSBoundParameters.ContainsKey("IssueTypeMappings")){$body.Add("issueTypeMappings",($IssueTypeMappings | ForEach-Object {$h=@{}} {$type=$_.type;$h.Add("$type",$_.workflow)} {$h}))}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }

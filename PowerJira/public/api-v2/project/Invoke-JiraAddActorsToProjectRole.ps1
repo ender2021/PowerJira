@@ -24,22 +24,20 @@ function Invoke-JiraAddActorsToProjectRole {
         [string[]]
         $Groups,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [Parameter(ParameterSetName="Users",Position=3)]
-        [Parameter(ParameterSetName="Groups",Position=3)]
-        [Parameter(ParameterSetName="Users,Groups",Position=4)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/role/$RoleId"
         $verb = "POST"
 
-        $body = @{}
+        $body = New-Object RestMethodJsonBody
         if($PSBoundParameters.ContainsKey("Users")){$body.Add("user",$Users)}
         if($PSBoundParameters.ContainsKey("Groups")){$body.Add("group",$Groups)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }

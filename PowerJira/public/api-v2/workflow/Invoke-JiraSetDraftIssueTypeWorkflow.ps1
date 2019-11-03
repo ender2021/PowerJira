@@ -17,20 +17,21 @@ function Invoke-JiraSetDraftIssueTypeWorkflow {
         [string]
         $WorkflowName,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=3)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/workflowscheme/$SchemeId/draft/issuetype/$IssueTypeId"
         $verb = "PUT"
 
-        $body = @{
+        $body = New-Object RestMethodJsonBody @{
             issueType = $IssueTypeId
             workflow = $WorkflowName
         }
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }

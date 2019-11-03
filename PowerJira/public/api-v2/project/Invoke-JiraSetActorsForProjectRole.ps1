@@ -24,24 +24,22 @@ function Invoke-JiraSetActorsForProjectRole {
         [string[]]
         $Groups,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [Parameter(ParameterSetName="Users",Position=3)]
-        [Parameter(ParameterSetName="Groups",Position=3)]
-        [Parameter(ParameterSetName="Users,Groups",Position=4)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/project/$ProjectIdOrKey/role/$RoleId"
         $verb = "PUT"
 
-        $body = @{
+        $body = New-Object RestMethodJsonBody @{
             categorisedActors = @{}
         }
-        if($PSBoundParameters.ContainsKey("Users")){$body.categorisedActors.Add("atlassian-user-role-actor",$Users)}
-        if($PSBoundParameters.ContainsKey("Groups")){$body.categorisedActors.Add("atlassian-group-role-actor",$Groups)}
+        if($PSBoundParameters.ContainsKey("Users")){$body.Values.categorisedActors.Add("atlassian-user-role-actor",$Users)}
+        if($PSBoundParameters.ContainsKey("Groups")){$body.Values.categorisedActors.Add("atlassian-group-role-actor",$Groups)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }

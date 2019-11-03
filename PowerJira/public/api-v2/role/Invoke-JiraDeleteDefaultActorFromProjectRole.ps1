@@ -17,19 +17,20 @@ function Invoke-JiraDeleteDefaultActorFromProjectRole {
         [string]
         $Group,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/role/$RoleId/actors"
         $verb = "DELETE"
 
-        $query = @{}
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("User")){$query.Add("user",$User)}
         if($PSBoundParameters.ContainsKey("Group")){$query.Add("group",$Group)}
 
-        (Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query).actors
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext).actors
     }
 }

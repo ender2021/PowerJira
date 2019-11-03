@@ -7,19 +7,20 @@ function Invoke-JiraGetUserPropertyKeys {
         [string]
         $User,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/user/properties"
         $verb = "GET"
 
-        $query=@{
+        $query = New-Object RestMethodQueryParams @{
             accountId = $User
         }
 
-        (Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query).keys
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext).keys
     }
 }

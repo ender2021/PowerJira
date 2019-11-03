@@ -7,10 +7,10 @@ function Invoke-JiraGetAttachmentMetadata {
         [int64]
         $Id,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $results = @()
@@ -19,7 +19,8 @@ function Invoke-JiraGetAttachmentMetadata {
         $functionPath = "/rest/api/2/attachment/$Id"
         $verb = "GET"
 
-        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $method = New-Object RestMethod @($functionPath,$verb)
+        $results += $method.Invoke($JiraContext)
     }
     end {
         $results

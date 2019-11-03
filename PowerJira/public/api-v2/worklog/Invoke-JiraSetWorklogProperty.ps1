@@ -23,17 +23,18 @@ function Invoke-JiraSetWorklogProperty {
         [hashtable]
         $Value,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=4)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/worklog/$WorklogId/properties/$PropertyKey"
         $verb = "PUT"
 
-        $body=$Value
+        $body = New-Object RestMethodJsonBody $Value
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }

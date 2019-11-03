@@ -2,15 +2,16 @@
 function Invoke-JiraGetAllPermissions {
     [CmdletBinding()]
     param (
-        # The JiraConnection object to use for the request
+        # The JiraContext object to use for the request
         [Parameter()]
-        [hashtable]
-        $JiraConnection
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/permissions"
         $verb = "GET"
 
-        (Invoke-JiraRestMethod $JiraConnection $functionPath $verb).permissions
+        $method = New-Object RestMethod @($functionPath,$verb)
+        $method.Invoke($JiraContext).permissions
     }
 }

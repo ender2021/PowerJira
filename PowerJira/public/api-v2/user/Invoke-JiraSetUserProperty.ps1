@@ -17,19 +17,22 @@ function Invoke-JiraSetUserProperty {
         [hashtable]
         $PropertyValue,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=3)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/user/properties/$PropertyKey"
         $verb = "PUT"
 
-        $query=@{
+        $query = New-Object RestMethodQueryParams @{
             accountId = $User
         }
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $PropertyValue
+        $body = New-Object RestMethodJsonBody $PropertyValue
+
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
+        $method.Invoke($JiraContext)
     }
 }

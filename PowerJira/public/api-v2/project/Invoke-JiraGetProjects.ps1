@@ -52,16 +52,16 @@ function Invoke-JiraGetProjects {
         [string[]]
         $Expand,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=8)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/project/search"
         $verb = "GET"
 
-        $query=@{
+        $query = New-Object RestMethodQueryParams @{
             startAt = $StartAt
             maxResults = $MaxResults
             orderBy = $OrderBy
@@ -72,6 +72,7 @@ function Invoke-JiraGetProjects {
         if($PSBoundParameters.ContainsKey("Filter")){$query.Add("query",$Filter)}
         if($PSBoundParameters.ContainsKey("CategoryId")){$query.Add("categoryId",$CategoryId)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

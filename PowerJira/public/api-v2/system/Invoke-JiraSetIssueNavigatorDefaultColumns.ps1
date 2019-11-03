@@ -8,19 +8,20 @@ function Invoke-JiraSetIssueNavigatorDefaultColumns {
         [string[]]
         $Columns,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/settings/columns"
         $verb = "PUT"
 
-        $body = @{
+        $body = New-Object RestMethodJsonBody @{
             columns = $Columns
         }
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }

@@ -13,20 +13,21 @@ function Invoke-JiraGetAllLabels {
         [int32]
         $MaxResults=1000,
         
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/label"
         $verb = "GET"
 
-        $query = @{
+        $query = New-Object RestMethodQueryParams @{
             startAt = $StartAt
             maxResults = $MaxResults
         }
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

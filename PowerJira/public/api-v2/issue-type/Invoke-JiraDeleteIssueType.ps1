@@ -12,18 +12,19 @@ function Invoke-JiraDeleteIssueType {
         [string]
         $ReplacementId,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/issuetype/$IssueTypeId"
         $verb = "DELETE"
 
-        $query = @{}
-        if($PSBoundParameters.ContainsKey("ReplacementId")){$body.Add("alternativeIssueTypeId",$ReplacementId)}
+        $query = New-Object RestMethodQueryParams
+        if($PSBoundParameters.ContainsKey("ReplacementId")){$query.Add("alternativeIssueTypeId",$ReplacementId)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method.Invoke($JiraContext)
     }
 }

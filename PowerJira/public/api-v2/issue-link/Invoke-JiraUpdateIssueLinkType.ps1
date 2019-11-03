@@ -22,20 +22,21 @@ function Invoke-JiraUpdateIssueLinkType {
         [string]
         $Outward,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=4)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/issueLinkType/$LinkTypeId"
         $verb = "PUT"
 
-        $body=@{}
+        $body = New-Object RestMethodJsonBody
         if($PSBoundParameters.ContainsKey("Name")){$body.Add("name",$Name)}
         if($PSBoundParameters.ContainsKey("Inward")){$body.Add("inward",$Inward)}
         if($PSBoundParameters.ContainsKey("Outward")){$body.Add("outward",$Outward)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }

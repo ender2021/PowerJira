@@ -5,7 +5,7 @@ Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira\PowerJira.
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \credentials\Credentials.psm1) -Force
 
 #open a new Jira session
-Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
+$context = Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
 
 #do tests here
 
@@ -79,10 +79,10 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 
 #UPDATE WORKFLOW SCHEME
 #$mappings = @((New-JiraIssueTypeWorkflowMapping 10000 "jira"), (New-JiraIssueTypeWorkflowMapping 10002 "classic default workflow"))
-#Invoke-JiraUpdateWorkflowScheme 10106 -Description "This workflow was updated" -DefaultWorkflow "jira" -IssueTypeMappings $mappings
+#Invoke-JiraUpdateWorkflowScheme 10108 -Description "This workflow was updated" -DefaultWorkflow "jira" -IssueTypeMappings $mappings
 
 #DELETE WORKFLOW SCHEME
-#Invoke-JiraDeleteWorkflowScheme 10106
+#Invoke-JiraDeleteWorkflowScheme 10108
 
 #CREATE DRAFT WORKFLOW SCHEME
 #Invoke-JiraCreateDraftWorkflowScheme 10105
@@ -93,11 +93,11 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #DELETE DRAFT WORKFLOW SCHEME
 #Invoke-JiraDeleteDraftWorkflowScheme 10105
 
-#UPDATE SCHEME DEFAULT WORKFLOW
-#Invoke-JiraUpdateSchemeDefaultWorkflow 10104 "classic default workflow"
+#UPDATE DEFAULT WORKFLOW
+#Invoke-JiraUpdateDefaultWorkflow 10104 "classic default workflow"
 
 #RESET SCHEME DEFAULT WORKFLOW
-#Invoke-JiraResetSchemeDefaultWorkflow 10104
+#Invoke-JiraResetDefaultWorkflow 10104
 
 #UPDATE DRAFT SCHEME DEFAULT WORKFLOW
 #Invoke-JiraUpdateDraftDefaultWorkflow 10105 "classic default workflow"

@@ -40,10 +40,10 @@ function Invoke-JiraAddComment {
         [hashtable[]]
         $Properties,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=6)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $results = @()
@@ -53,17 +53,18 @@ function Invoke-JiraAddComment {
         $functionPath = "/rest/api/2/issue/$issueToken/comment"
         $verb = "POST"
 
-        $query = @{}
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $body=@{
+        $body = New-Object RestMethodJsonBody @{
             body = $CommentBody
             jsdPublic = !$JsdHide
         }
         if($PSBoundParameters.ContainsKey("Visibility")){$body.Add("visibility",$Visibility)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
 
-        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
+        $results += $method.Invoke($JiraContext)
     }
     end {
         $results

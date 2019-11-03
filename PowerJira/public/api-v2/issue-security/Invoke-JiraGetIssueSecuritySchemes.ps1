@@ -2,15 +2,16 @@
 function Invoke-JiraGetIssueSecuritySchemes {
     [CmdletBinding()]
     param (
-        # The JiraConnection object to use for the request
-        [Parameter(Position=0)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/issuesecurityschemes"
         $verb = "GET"
 
-        (Invoke-JiraRestMethod $JiraConnection $functionPath $verb).issueSecuritySchemes
+        $method = New-Object RestMethod @($functionPath,$verb)
+        $method.Invoke($JiraContext).issueSecuritySchemes
     }
 }

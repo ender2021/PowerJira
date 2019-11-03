@@ -20,10 +20,10 @@ function Invoke-JiraGetIssue {
         [string[]]
         $Expand,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $results = @()
@@ -33,10 +33,11 @@ function Invoke-JiraGetIssue {
         $functionPath = "/rest/api/2/issue/$issueToken"
         $verb = "GET"
      
-        $query = @{}
+        $query = New-Object RestMethodQueryParams
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
         
-        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $results += $method.Invoke($JiraContext)
     }
     end {
         $results

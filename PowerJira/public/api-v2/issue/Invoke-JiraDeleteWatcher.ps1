@@ -17,10 +17,10 @@ function Invoke-JiraDeleteWatcher {
         [string]
         $AccountId,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=2)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $results = @()
@@ -30,11 +30,12 @@ function Invoke-JiraDeleteWatcher {
         $functionPath = "/rest/api/2/issue/$issueToken/watchers"
         $verb = "DELETE"
 
-        $query=@{
+        $query = New-Object RestMethodQueryParams @{
             accountId = $AccountId
         }
 
-        $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $query
+        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $results += $method.Invoke($JiraContext)
     }
     end {
         #$results

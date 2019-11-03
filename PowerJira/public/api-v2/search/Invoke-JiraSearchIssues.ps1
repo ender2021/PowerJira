@@ -53,31 +53,33 @@ function Invoke-JiraSearchIssues {
         [switch]
         $GET,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=9)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/search"
-        $verb = "POST"
+        $verb = IIF $GET "GET" "POST"
 
-        $body = @{
+        $body = New-Object RestMethodJsonBody @{
             jql = $JQL
             startAt = $StartAt
             maxResults = $MaxResults
-            fields = $Fields -join ","
+            fields = $Fields
             validateQuery = $QueryValidation
         }
         if($PSBoundParameters.ContainsKey("Expand")){$body.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
         if($PSBoundParameters.ContainsKey("FieldsByKeys")){$body.Add("fieldsByKeys",$true)}
 
-        if ($PSBoundParameters.ContainsKey("GET")) {
-            $verb = "GET"
-            Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Query $body
+        if ($GET) {
+            $query = New-Object RestMethodQueryParams $body.Values
+            $method = New-Object RestMethod @($functionPath,$verb,$query)
         } else {
-            Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+            $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
         }
+
+        $method.Invoke($JiraContext)
     }
 }

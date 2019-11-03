@@ -5,30 +5,30 @@ Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira\PowerJira.
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \credentials\Credentials.psm1) -Force
 
 #open a new Jira session
-Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
+$context = Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
 
 #do tests here
 
 #CREATE VERSION
-#Invoke-JiraCreateVersion 10000 -Name "Blargh Version 8" -StartDate (Get-Date "2019-05-18")
+#Invoke-JiraCreateVersion 10000 -Name "Blargh Version 10" -StartDate (Get-Date "2019-05-18")
 
 #UPDATE VERSION
-#Invoke-JiraUpdateVersion -VersionId 10485 -Archived $false
+#Invoke-JiraUpdateVersion -VersionId 10000 -Archived $false
 
 #GET VERSION
-#Invoke-JiraGetVersion 10000
+#Invoke-JiraGetVersion 10005
 
 #DELETE VERSION
-#Invoke-JiraDeleteVersion -VersionId 10485
+#Invoke-JiraDeleteVersion -VersionId 10003
 
 #MOVE VERSION
-#Invoke-JiraMoveVersion -VersionId 10484 -Position "First"
+#Invoke-JiraMoveVersion -VersionId 10004 -Position "First"
 
 #MERGE VERSION
-#Invoke-JiraMergeVersion -SourceVersionId 10480 -TargetVersionId 10482
+#Invoke-JiraMergeVersion -SourceVersionId 10004 -TargetVersionId 10005
 
 #GET VERSION RELATED ISSUE COUNTS
-#Invoke-JiraGetVersionRelatedIssueCounts -VersionId 10482
+#Invoke-JiraGetVersionRelatedIssueCounts -VersionId 10005
 
 #GET VERSION UNRESOLVLED ISSUE COUNTS
 #Invoke-JiraGetVersionUnresolvedIssueCount 10000

@@ -35,22 +35,23 @@ function Invoke-JiraUpdateWorkflowScheme {
         [switch]
         $UpdateDraft,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=5)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/workflowscheme/$SchemeId"
         $verb = "PUT"
 
-        $body=@{}
+        $body = New-Object RestMethodJsonBody
         if($PSBoundParameters.ContainsKey("Name")){$body.Add("name",$Name)}
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("DefaultWorkflow")){$body.Add("defaultWorkflow",$DefaultWorkflow)}
         if($PSBoundParameters.ContainsKey("IssueTypeMappings")){$body.Add("issueTypeMappings",($IssueTypeMappings | ForEach-Object {$h=@{}} {$type=$_.type;$h.Add("$type",$_.workflow)} {$h}))}
-        if($PSBoundParameters.ContainsKey("UpdateDraft")){$query.Add("updateDraftIfNeeded",$true)}
+        if($PSBoundParameters.ContainsKey("UpdateDraft")){$body.Add("updateDraftIfNeeded",$true)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }

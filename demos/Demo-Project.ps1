@@ -5,7 +5,7 @@ Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira\PowerJira.
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \credentials\Credentials.psm1) -Force
 
 #open a new Jira session
-Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
+$context = Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.ApiToken -HostName $JiraCredentials.HostName
 
 #do tests here
 
@@ -102,7 +102,7 @@ Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraCredentials.
 #Invoke-JiraSetProjectAvatar JPT 10425
 
 #DELETE PROJECT AVATAR
-#Invoke-JiraDeleteProjectAvatar JPT 10513
+#Invoke-JiraDeleteProjectAvatar JPT 10519
 
 #CREATE PROJECT
 #Invoke-JiraCreateProject "RCP" "REST-Created Project" "software" "com.pyxis.greenhopper.jira:gh-simplified-basic" (Invoke-JiraGetCurrentUser).accountId

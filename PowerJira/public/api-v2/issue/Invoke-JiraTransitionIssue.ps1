@@ -37,16 +37,16 @@ function Invoke-JiraTransitionIssue {
         [hashtable]
         $Properties,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=7)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/transitions"
         $verb = "POST"
 
-        $body=@{
+        $body = New-Object RestMethodJsonBody @{
             transition=@{id="$TransitionId"}
         }
         if($PSBoundParameters.ContainsKey("DisableNotifications")){$body.Add("notifyUsers",$false)}
@@ -55,6 +55,7 @@ function Invoke-JiraTransitionIssue {
         if($PSBoundParameters.ContainsKey("HistoryMetadata")){$body.Add("historyMetadata",$HistoryMetadata)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb -Body $body
+        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method.Invoke($JiraContext)
     }
 }

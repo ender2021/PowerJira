@@ -12,10 +12,10 @@ function Invoke-JiraGetIssueEditMetadata {
         [string]
         $Key,
         
-        # The JiraConnection object to use for the request
-        [Parameter(Position=1)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $results = @()
@@ -25,7 +25,8 @@ function Invoke-JiraGetIssueEditMetadata {
         $functionPath = "/rest/api/2/issue/$issueToken/editmeta"
         $verb = "GET"
         
-        $obj = Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $method = New-Object RestMethod @($functionPath,$verb)
+        $obj = $method.Invoke($JiraContext)
         if($PSBoundParameters.ContainsKey("Id")){$obj | Add-Member "Id" $Id}
         if($PSBoundParameters.ContainsKey("Key")){$obj | Add-Member "Key" $Key}
         $results += $obj

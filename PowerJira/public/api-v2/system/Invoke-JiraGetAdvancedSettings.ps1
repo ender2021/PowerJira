@@ -2,15 +2,16 @@
 function Invoke-JiraGetAdvancedSettings {
     [CmdletBinding()]
     param (
-        # The JiraConnection object to use for the request
-        [Parameter(Position=0)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/application-properties/advanced-settings"
         $verb = "GET"
 
-        Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+        $method = New-Object RestMethod @($functionPath,$verb)
+        $method.Invoke($JiraContext)
     }
 }

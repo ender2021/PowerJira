@@ -13,10 +13,10 @@ function Invoke-JiraDeleteCommentProperty {
         [string[]]
         $Keys,
 
-        # The JiraConnection object to use for the request
-        [Parameter(Position=3)]
-        [hashtable]
-        $JiraConnection
+        # The JiraContext object to use for the request
+        [Parameter()]
+        [JiraContext]
+        $JiraContext
     )
     begin {
         $results = @()
@@ -27,7 +27,8 @@ function Invoke-JiraDeleteCommentProperty {
                 $functionPath = "/rest/api/2/comment/$Id/properties/$_"
                 $verb = "DELETE"
 
-                $results += Invoke-JiraRestMethod $JiraConnection $functionPath $verb
+                $method = New-Object RestMethod @($functionPath,$verb)
+                $results += $method.Invoke($JiraContext)
             }
         }
     }
