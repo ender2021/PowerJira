@@ -34,6 +34,6 @@ function Invoke-JiraDeleteAvatar {
         $results += $method.Invoke($JiraContext)
     }
     end {
-        #$results
+        $results
     }
 }
