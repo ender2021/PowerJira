@@ -27,4 +27,26 @@ Describe "Invoke-JiraGetAvatars (Function)" {
             $result.ArgumentList[1] | Should -Be $expected
         }
     }
+    Context "Pipeline" {
+        $Type = "issuetype"
+        $Id = 1
+        $ids = @(1,2,3)
+
+        It "pipes input correctly with one value" {
+            $expected = "/rest/api/2/universal_avatar/type/$Type/owner/$Id"
+
+            $result = $Id | Invoke-JiraGetAvatars -Type $Type
+            $result.ArgumentList[0] | Should -Be $expected
+        }
+        It "pipes input correctly with multiple values" {
+            $expected = @(
+                "/rest/api/2/universal_avatar/type/$Type/owner/" + [string]$ids[0]
+                "/rest/api/2/universal_avatar/type/$Type/owner/" + [string]$ids[1]
+                "/rest/api/2/universal_avatar/type/$Type/owner/" + [string]$ids[2]
+            )
+
+            $results = $ids | Invoke-JiraGetAvatars -Type $Type
+            $results | ForEach-Object { $_.ArgumentList[0] } | Should -Be $expected
+        }
+    }
 }
