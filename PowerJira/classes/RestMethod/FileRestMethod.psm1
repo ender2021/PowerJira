@@ -69,6 +69,6 @@ class FileRestMethod : RestMethod {
             RetryIntervalSec = $JiraContext.RetryDelay
             InFile = $this.FilePath
         }
-        return Invoke-RestMethod @invokeSplat
+        return [RestMethod]::RootInvoke($invokeSplat)
     }
 }

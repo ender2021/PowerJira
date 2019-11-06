@@ -65,6 +65,6 @@ class BodyRestMethod : RestMethod {
             RetryIntervalSec = $JiraContext.RetryDelay
             Body = $this.Body.ToString()
         }
-        return Invoke-RestMethod @invokeSplat
+        return [RestMethod]::RootInvoke($invokeSplat)
     }
 }

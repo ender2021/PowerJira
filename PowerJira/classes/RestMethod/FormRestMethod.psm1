@@ -69,6 +69,6 @@ class FormRestMethod : RestMethod {
             RetryIntervalSec = $JiraContext.RetryDelay
             Form = $this.Form
         }
-        return Invoke-RestMethod @invokeSplat
+        return [RestMethod]::RootInvoke($invokeSplat)
     }
 }

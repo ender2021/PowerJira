@@ -86,7 +86,7 @@ Describe "FormRestMethod (Class)" {
         $retries = 3
         $delay = 5
         $jc = New-Object JiraContext @("1","2",$uri,$retries,$delay)
-        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName FormRestMethod
+        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName RestMethod
         $rm = New-Object FormRestMethod @($simplePath,$get,$formHash)
         $result = $rm.Invoke($jc)
 
@@ -116,7 +116,7 @@ Describe "FormRestMethod (Class)" {
         $qs = New-Object RestMethodQueryParams @{
             prop1 = "val1"
         }
-        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName FormRestMethod
+        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName RestMethod
         $rm = New-Object FormRestMethod @($simplePath,$get,$qs,$formHash)
         $result = $rm.Invoke($jc)
 

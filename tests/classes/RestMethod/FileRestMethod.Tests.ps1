@@ -86,7 +86,7 @@ Describe "FileRestMethod (Class)" {
         $retries = 3
         $delay = 5
         $jc = New-Object JiraContext @("1","2",$uri,$retries,$delay)
-        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName FileRestMethod
+        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName RestMethod
         $rm = New-Object FileRestMethod @($simplePath,$get,$filePath)
         $result = $rm.Invoke($jc)
 
@@ -116,7 +116,7 @@ Describe "FileRestMethod (Class)" {
         $qs = New-Object RestMethodQueryParams @{
             prop1 = "val1"
         }
-        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName FileRestMethod
+        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName RestMethod
         $rm = New-Object FileRestMethod @($simplePath,$get,$qs,$filePath)
         $result = $rm.Invoke($jc)
 

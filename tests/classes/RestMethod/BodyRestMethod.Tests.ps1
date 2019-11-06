@@ -99,7 +99,7 @@ Describe "BodyRestMethod (Class)" {
         $retries = 3
         $delay = 5
         $jc = New-Object JiraContext @("1","2",$uri,$retries,$delay)
-        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName BodyRestMethod
+        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName RestMethod
         $simpleRm = New-Object BodyRestMethod @($simplePath,$get,$simpleBody)
         $result = $simpleRm.Invoke($jc)
 
@@ -136,7 +136,7 @@ Describe "BodyRestMethod (Class)" {
         $qs = New-Object RestMethodQueryParams @{
             prop1 = "val1"
         }
-        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName BodyRestMethod
+        Mock "Invoke-RestMethod" $MockInvokeRestMethod -ModuleName RestMethod
         $rm = New-Object BodyRestMethod @($simplePath,$get,$qs,$simpleBody)
         $result = $rm.Invoke($jc)
 

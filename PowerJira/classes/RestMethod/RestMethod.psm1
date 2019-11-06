@@ -87,6 +87,34 @@ class RestMethod {
         }
     }
 
+    hidden
+    static
+    [object]
+    RootInvoke(
+        [hashtable]$splat
+    ){
+        $failCount = 0
+        $callSuccess = $false
+        $result = $null
+        $maxRetries = $splat.MaximumRetryCount
+        $retryDelay = $splat.RetryIntervalSec
+        do {
+            try {
+                $result = Invoke-RestMethod @splat -ErrorAction "Stop"
+                $callSuccess = $true
+            } catch [System.Net.Http.HttpRequestException] {
+                $failCount++
+                if ($failCount -le $maxRetries) {
+                    Write-Verbose "Error while invoking REST method; sleeping for $retryDelay seconds before re-attempting"
+                    Start-Sleep -Seconds $retryDelay
+                } else {
+                    throw $_
+                }
+            }
+        } while (!$callSuccess)
+        return $result
+    }
+
     ##################
     # PUBLIC METHODS #
     ##################
@@ -131,6 +159,6 @@ class RestMethod {
             MaximumRetryCount = $JiraContext.Retries
             RetryIntervalSec = $JiraContext.RetryDelay
         }
-        return Invoke-RestMethod @invokeSplat
+        return [RestMethod]::RootInvoke($invokeSplat)
     }
 }
