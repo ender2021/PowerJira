@@ -163,4 +163,40 @@ Describe "RestMethod (Class)" {
             $result.Uri | Should -Be "$uri/$simplePath`?prop1=val1"
         }
     }
+    Context "Invoke-RestMethod error handling" {
+        $uri = "https://my-uri.com"
+        $retries = 3
+        $delay = 1
+        $jc = New-Object JiraContext @("1","2",$uri, $retries, $delay)
+        Mock "Start-Sleep" {} -ModuleName RestMethod
+
+        It "retries the correct number of times when an exception is thrown" {
+            Mock "Invoke-RestMethod" { throw [System.Net.Http.HttpRequestException]::new() } -ModuleName RestMethod
+            $rm = New-Object RestMethod @($simplePath,$get)
+            { $rm.Invoke($jc) } | Should -Throw
+            { Assert-MockCalled "Invoke-RestMethod" -Times ($retries + 1) -Exactly -ModuleName RestMethod -Scope "It" } | Should -Not -Throw
+        }
+        It "sleeps each time an exception is thrown" {
+            Mock "Invoke-RestMethod" { throw [System.Net.Http.HttpRequestException]::new() } -ModuleName RestMethod
+            $rm = New-Object RestMethod @($simplePath,$get)
+            { $rm.Invoke($jc) } | Should -Throw
+            { Assert-MockCalled "Start-Sleep" -Times ($retries) -Exactly -ModuleName RestMethod -Scope "It" } | Should -Not -Throw
+        }
+        It "sleeps for the correct duration" {
+            Mock "Invoke-RestMethod" { throw [System.Net.Http.HttpRequestException]::new() } -ModuleName RestMethod
+            $rm = New-Object RestMethod @($simplePath,$get)
+            { $rm.Invoke($jc) } | Should -Throw
+            { Assert-MockCalled "Start-Sleep" -ParameterFilter {$Seconds -and $Seconds -eq $delay} -ModuleName RestMethod -Scope "It" } | Should -Not -Throw
+        }
+        It "succeeds after an intial error" {
+            $oneError = {
+                Mock "Invoke-RestMethod" {return @{}} -ModuleName RestMethod
+                throw [System.Net.Http.HttpRequestException]::new()
+            }
+            Mock "Invoke-RestMethod" $oneError -ModuleName RestMethod
+            $rm = New-Object RestMethod @($simplePath,$get)
+            { $rm.Invoke($jc) } | Should -Not -Throw
+            { Assert-MockCalled "Invoke-RestMethod" -Times 2 -Exactly -ModuleName RestMethod -Scope "It" } | Should -Not -Throw
+        }
+    }
 }
