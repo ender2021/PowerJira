@@ -1,7 +1,7 @@
 version: 1.0.{build}
 environment:
   NugetApiKey:
-    secure: r7cE4GhlpOQ85VBbSU2eSeRjYGfPFDZrq5YFOaE8erDtktb8lb17m2yj7IOgH7zJ
+    secure: JgK2cd5E+VAhFpQTTB8zT8H5hlC8jGSBk3F4Bn7jn4f6qVA5aH0yuMNbUppvJTt8
 build: off
 test_script:
 - pwsh: . .\build.ps1
