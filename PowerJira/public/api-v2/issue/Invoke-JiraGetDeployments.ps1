@@ -13,7 +13,9 @@ function Invoke-JiraGetDeployments {
         $functionPath = "/jsw/graphql"
         $verb = "POST"
 
-        $query = New-Object RestMethodQueryParams
+        $query = New-Object RestMethodQueryParams @{
+            operation = "DevDetailsDialog"
+        }
 
         $gqlQuery = @'
 query DevDetailsDialog ($issueId: ID!) {
