@@ -10,7 +10,7 @@ function Invoke-JiraGetDeployments {
         $results = @()
     }
     process {
-        $functionPath = "/jsw/graphql?operation=DevDetailsDialog"
+        $functionPath = "/jsw/graphql"
         $verb = "POST"
 
         $query = New-Object RestMethodQueryParams
