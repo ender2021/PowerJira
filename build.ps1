@@ -46,10 +46,11 @@ function Resolve-Module
 }
 
 # Grab nuget bits, install modules, set build variables, start build.
-$VerbosePreference = "Continue"
 Get-PackageProvider -Name NuGet -ForceBootstrap | Out-Null
 
 Resolve-Module Psake, PSDeploy, Pester, BuildHelpers
+
+"It gets to here before dying"
 
 Set-BuildEnvironment
 
