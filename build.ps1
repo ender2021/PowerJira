@@ -39,15 +39,7 @@ function Resolve-Module
             {
                 Write-Verbose -Message "$($ModuleName) Missing, installing Module"
                 Install-Module -Name $ModuleName -Force
-                "$ModuleName Installed"
-                try {
-                    Import-Module -Name $ModuleName -Force -RequiredVersion $Version -Verbose
-                }
-                catch {
-                    "Error"
-                    $_.Exception
-                    exit 1
-                }
+                Import-Module -Name $ModuleName -Force
             }
         }
     }
@@ -57,8 +49,6 @@ function Resolve-Module
 Get-PackageProvider -Name NuGet -ForceBootstrap | Out-Null
 
 Resolve-Module Psake, PSDeploy, Pester, BuildHelpers
-
-"It gets to here before dying"
 
 Set-BuildEnvironment
 
