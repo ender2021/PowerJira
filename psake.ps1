@@ -29,6 +29,8 @@ Task Init {
     Get-Item ENV:BH*
     "`n"
 
+    Update-Module PowerShellGet -RequiredVersion "2.2.4.1"
+
     $mod = Get-Module PowerShellGet
     "PowerShellGet Version: " + $mod.Version
     "`n"
