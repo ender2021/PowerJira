@@ -64,8 +64,7 @@ Task Build -Depends Test {
     $lines
     
     # Load the module, read the exported functions, update the psd1 FunctionsToExport
-    # commenting out the line below to see if it will fix the PowershellGallery publishing issue
-    #Set-ModuleFunctions
+    Set-ModuleFunctions
 
     # Bump the module version
     Update-Metadata -Path $env:BHPSModuleManifest
@@ -74,10 +73,37 @@ Task Build -Depends Test {
 Task Deploy -Depends Build {
     $lines
 
-    $Params = @{
-        Path = $ProjectRoot
-        Force = $true
-        Recurse = $false # We keep psdeploy artifacts, avoid deploying those : )
+    # Publish to gallery with a few restrictions
+    if(
+        $env:BHPSModulePath -and
+        $env:BHBuildSystem -ne 'Unknown' -and
+        $env:BHBranchName -eq "master" -and
+        $env:BHCommitMessage -match '!deploy'
+    )
+    {
+        $target = "PowerJira"
+
+        # Validate that $target has been setup as a valid PowerShell repository
+        $validRepo = Get-PSRepository -Name $target -Verbose:$false -ErrorAction SilentlyContinue
+        if (-not $validRepo) {
+            throw "[$target] has not been setup as a valid PowerShell repository."
+        }
+
+        $params = @{
+            Path       = $ProjectRoot
+            Repository = $target
+            Verbose    = $VerbosePreference
+            ApiKey     = $ENV:NugetApiKey
+        }
+
+        Publish-Module @params -SkipAutomaticTags
     }
-    Invoke-PSDeploy @Verbose @Params
+    else
+    {
+        "Skipping deployment: To deploy, ensure that...`n" +
+        "`t* You are in a known build system (Current: $ENV:BHBuildSystem)`n" +
+        "`t* You are committing to the master branch (Current: $ENV:BHBranchName) `n" +
+        "`t* Your commit message includes !deploy (Current: $ENV:BHCommitMessage)" |
+            Write-Host
+    }
 }
