@@ -94,7 +94,7 @@ Task Deploy -Depends Build {
         $params = @{
             Path       = $path
             Repository = $target
-            Verbose    = $VerbosePreference
+            Verbose    = $true
             NuGetApiKey     = $ENV:NugetApiKey
         }
 
