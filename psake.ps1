@@ -81,7 +81,7 @@ Task Deploy -Depends Build {
         $env:BHCommitMessage -match '!deploy'
     )
     {
-        $target = "PowerJira"
+        $target = "PSGallery"
 
         # Validate that $target has been setup as a valid PowerShell repository
         $validRepo = Get-PSRepository -Name $target -Verbose:$false -ErrorAction SilentlyContinue
