@@ -28,6 +28,10 @@ Task Init {
     "Build System Details:"
     Get-Item ENV:BH*
     "`n"
+
+    $mod = Get-Module PowerShellGet
+    "PowerShellGet Version: " + $mod.Version
+    "`n"
 }
 
 Task Test -Depends Init  {
