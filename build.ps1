@@ -45,7 +45,7 @@ function Resolve-Module
                 }
                 catch {
                     "Error"
-                    $_
+                    $_.Exception
                     exit 1
                 }
             }
