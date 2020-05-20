@@ -46,9 +46,7 @@ function Resolve-Module
                 catch {
                     "Error"
                     $_
-                }
-                finally {
-                    exit
+                    exit 1
                 }
             }
         }
