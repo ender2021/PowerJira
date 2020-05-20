@@ -82,6 +82,8 @@ Task Deploy -Depends Build {
     )
     {
         $target = "PSGallery"
+        $moduleName = $ProjectRoot.Substring($ProjectRoot.LastIndexOf("\") + 1)
+        $path = "$ProjectRoot\$moduleName"
 
         # Validate that $target has been setup as a valid PowerShell repository
         $validRepo = Get-PSRepository -Name $target -Verbose:$false -ErrorAction SilentlyContinue
@@ -90,7 +92,7 @@ Task Deploy -Depends Build {
         }
 
         $params = @{
-            Path       = $ProjectRoot
+            Path       = $path
             Repository = $target
             Verbose    = $VerbosePreference
             NuGetApiKey     = $ENV:NugetApiKey
