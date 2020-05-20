@@ -93,7 +93,7 @@ Task Deploy -Depends Build {
             Path       = $ProjectRoot
             Repository = $target
             Verbose    = $VerbosePreference
-            ApiKey     = $ENV:NugetApiKey
+            NuGetApiKey     = $ENV:NugetApiKey
         }
 
         Publish-Module @params -SkipAutomaticTags
