@@ -64,7 +64,8 @@ Task Build -Depends Test {
     $lines
     
     # Load the module, read the exported functions, update the psd1 FunctionsToExport
-    Set-ModuleFunctions
+    # commenting out the line below to see if it will fix the PowershellGallery publishing issue
+    #Set-ModuleFunctions
 
     # Bump the module version
     Update-Metadata -Path $env:BHPSModuleManifest
