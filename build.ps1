@@ -40,7 +40,7 @@ function Resolve-Module
                 Write-Verbose -Message "$($ModuleName) Missing, installing Module"
                 Install-Module -Name $ModuleName -Force
                 "$ModuleName Installed"
-                Import-Module -Name $ModuleName -Force -RequiredVersion $Version
+                Import-Module -Name $ModuleName -Force -RequiredVersion $Version -Verbose
             }
         }
     }
