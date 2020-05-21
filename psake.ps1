@@ -77,11 +77,6 @@ Task Build -Depends Test {
 Task Deploy -Depends Build {
     $lines
 
-    "bad form, but i'm at my wits end"
-    "`n"
-    $ENV:NugetApiKey
-    "`n"
-
     $Params = @{
         Path = "$ProjectRoot"
         Force = $true

@@ -5,6 +5,8 @@ environment:
   NugetApiKey:
     secure: NbVZnzTiU185w6s4ytTvtKzBY9ivT/usfJ/wBPUyKGvY9lpiH0P4600x8WeAFqAi
 
+
+
 # Allow WMF5 (i.e. PowerShellGallery functionality)
 image: Visual Studio 2019
 
