@@ -3,7 +3,7 @@
 #Publish to PowerShell Gallery with this key
 environment:
   NuGetApiKey:
-    secure: JgK2cd5E+VAhFpQTTB8zT8H5hlC8jGSBk3F4Bn7jn4f6qVA5aH0yuMNbUppvJTt8
+    secure: C+iBHB7k0z+8xn2368MzqR3x8J9YQClyVoKe/oTCJCsVHzvisaNIMaUDEqMpYAtX
 
 # Allow WMF5 (i.e. PowerShellGallery functionality)
 image: Visual Studio 2019
