@@ -71,7 +71,7 @@ Task Build -Depends Test {
     Set-ModuleFunctions
 
     # Bump the module version
-    Update-Metadata -Path $env:BHPSModuleManifest
+    #Update-Metadata -Path $env:BHPSModuleManifest
 }
 
 Task Deploy -Depends Build {
