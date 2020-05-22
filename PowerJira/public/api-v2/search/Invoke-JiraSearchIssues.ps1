@@ -55,14 +55,14 @@ function Invoke-JiraSearchIssues {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/search"
         $verb = IIF $GET "GET" "POST"
 
-        $body = New-Object RestMethodJsonBody @{
+        $body = New-PACRestMethodJsonBody @{
             jql = $JQL
             startAt = $StartAt
             maxResults = $MaxResults
@@ -74,10 +74,10 @@ function Invoke-JiraSearchIssues {
         if($PSBoundParameters.ContainsKey("FieldsByKeys")){$body.Add("fieldsByKeys",$true)}
 
         if ($GET) {
-            $query = New-Object RestMethodQueryParams $body.Values
-            $method = New-Object RestMethod @($functionPath,$verb,$query)
+            $query = New-PACRestMethodQueryParams $body.Values
+            $method = New-PACRestMethod $functionPath $verb $query
         } else {
-            $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+            $method = New-PACRestMethod $functionPath $verb $null $body
         }
 
         $method.Invoke($JiraContext)

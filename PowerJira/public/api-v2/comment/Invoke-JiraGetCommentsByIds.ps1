@@ -19,7 +19,7 @@ function Invoke-JiraGetCommentsByIds {
         
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -32,14 +32,14 @@ function Invoke-JiraGetCommentsByIds {
         $functionPath = "/rest/api/2/comment/list"
         $verb = "POST"
 
-        $query = New-Object RestMethodQueryParams
+        $query = New-PACRestMethodQueryParams
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $body = New-Object RestMethodJsonBody @{
+        $body = New-PACRestMethodJsonBody @{
             ids = $idList
         }
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
+        $method = New-PACRestMethod $functionPath $verb $query $body
         $method.Invoke($JiraContext).values
     }
 }

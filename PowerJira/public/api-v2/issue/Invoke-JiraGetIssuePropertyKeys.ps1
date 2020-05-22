@@ -14,7 +14,7 @@ function Invoke-JiraGetIssuePropertyKeys {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -31,7 +31,7 @@ function Invoke-JiraGetIssuePropertyKeys {
         if($PSBoundParameters.ContainsKey("Id")){$obj | Add-Member "IssueId" $Id}
         if($PSBoundParameters.ContainsKey("Key")){$obj | Add-Member "IssueKey" $Key}
 
-        $method = New-Object RestMethod @($functionPath,$verb)
+        $method = New-PACRestMethod $functionPath $verb
         $obj.keys += $method.Invoke($JiraContext).keys | ForEach-Object {$_.key}
         $results += $obj
     }

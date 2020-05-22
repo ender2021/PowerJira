@@ -15,19 +15,19 @@ function Invoke-JiraCreateProjectRole {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/role"
         $verb = "POST"
 
-        $body = New-Object RestMethodJsonBody @{
+        $body = New-PACRestMethodJsonBody @{
             name = $Name.Trim()
         }
         if($PSBoundParameters.ContainsKey("description")){$body.Add("description",$Description)}
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method = New-PACRestMethod $functionPath $verb $null $body
         $method.Invoke($JiraContext)
     }
 }

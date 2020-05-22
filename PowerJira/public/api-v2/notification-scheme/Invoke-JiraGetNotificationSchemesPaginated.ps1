@@ -23,20 +23,20 @@ function Invoke-JiraGetNotificationSchemesPaginated {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/notificationscheme"
         $verb = "GET"
 
-        $query = New-Object RestMethodQueryParams @{
+        $query = New-PACRestMethodQueryParams @{
             startAt = $StartAt
             maxResults = $MaxResults
         }
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method = New-PACRestMethod $functionPath $verb $query
         $method.Invoke($JiraContext)
     }
 }

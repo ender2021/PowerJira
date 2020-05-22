@@ -35,21 +35,21 @@ function Invoke-JiraUpdateRemoteIssueLink {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/remotelink/$RemoteLinkId"
         $verb = "PUT"
 
-        $body = New-Object RestMethodJsonBody @{
+        $body = New-PACRestMethodJsonBody @{
             object = $RemoteObject
         }
         if($PSBoundParameters.ContainsKey("GlobalId")){$body.Add("globalId",$GlobalId)}
         if($PSBoundParameters.ContainsKey("Relationship")){$body.Add("relationship",$Relationship)}
         if($PSBoundParameters.ContainsKey("Application")){$body.Add("application",$Application)}
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method = New-PACRestMethod $functionPath $verb $null $body
         $method.Invoke($JiraContext)
     }
 }

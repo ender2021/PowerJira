@@ -9,14 +9,14 @@ function Invoke-JiraAddDefaultScreenField {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/screens/addToDefault/$FieldId"
         $verb = "POST"
 
-        $method = New-Object RestMethod @($functionPath,$verb)
+        $method = New-PACRestMethod $functionPath $verb
         $method.Invoke($JiraContext)
     }
 }

@@ -34,7 +34,7 @@ function Invoke-JiraGetIssuePickerSuggestions {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -44,7 +44,7 @@ function Invoke-JiraGetIssuePickerSuggestions {
         $functionPath = "/rest/api/2/issue/picker"
         $verb = "GET"
 
-        $query = New-Object RestMethodQueryParams @{
+        $query = New-PACRestMethodQueryParams @{
             showSubTasks = !$HideSubTasks
             showSubTaskParent = !$HideSubTaskParent
         }
@@ -53,7 +53,7 @@ function Invoke-JiraGetIssuePickerSuggestions {
         if($PSBoundParameters.ContainsKey("ProjectFilter")){$query.Add("currentProjectId",$ProjectFilter)}
         if($PSBoundParameters.ContainsKey("ExcludeIssueKey")){$query.Add("currentIssueKey",$ExcludeIssueKey)}
 
-        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method = New-PACRestMethod $functionPath $verb $query
         $results += $method.Invoke($JiraContext)
     }
     end {

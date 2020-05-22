@@ -10,7 +10,7 @@ function Invoke-JiraGetSystemAvatars {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -20,7 +20,7 @@ function Invoke-JiraGetSystemAvatars {
         $functionPath = "/rest/api/2/avatar/$Type/system"
         $verb = "GET"
 
-        $method = New-Object RestMethod @($functionPath,$verb)
+        $method = New-PACRestMethod $functionPath $verb
         $results += $method.Invoke($JiraContext).system
     }
     end {

@@ -31,14 +31,14 @@ function Invoke-JiraGetBulkPermissions {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/permissions/check"
         $verb = "POST"
 
-        $body = New-Object RestMethodJsonBody
+        $body = New-PACRestMethodJsonBody
         if($PSBoundParameters.ContainsKey("GlobalPermissions")){$body.Add("globalPermissions",$GlobalPermissions)}
         if(($PSCmdlet.ParameterSetName -eq "Project") -or ($PSCmdlet.PagingParameters -eq "Global,Project")) {
             $body.Add("projectPermissions", @(@{
@@ -48,7 +48,7 @@ function Invoke-JiraGetBulkPermissions {
             if($PSBoundParameters.ContainsKey("IssueIds")){$body.Values.projectPermissions[0].Add("issues",$IssueIds)}
         }
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method = New-PACRestMethod $functionPath $verb $null $body
         $method.Invoke($JiraContext)
     }
 }

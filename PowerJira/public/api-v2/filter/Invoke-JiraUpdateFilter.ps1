@@ -42,24 +42,24 @@ function Invoke-JiraUpdateFilter {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/filter/$FilterId"
         $verb = "PUT"
 
-        $query = New-Object RestMethodQueryParams
+        $query = New-PACRestMethodQueryParams
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $body = New-Object RestMethodJsonBody
+        $body = New-PACRestMethodJsonBody
         if($PSBoundParameters.ContainsKey("Name")){$body.Add("name",$Name)}
         if($PSBoundParameters.ContainsKey("Jql")){$body.Add("jql",$Jql)}
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("Favourite")){$body.Add("favourite",$Favourite)}
         if($PSBoundParameters.ContainsKey("SharePermissions")){$body.Add("sharePermissions",$SharePermissions)}
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
+        $method = New-PACRestMethod $functionPath $verb $query $body
         $method.Invoke($JiraContext)
     }
 }

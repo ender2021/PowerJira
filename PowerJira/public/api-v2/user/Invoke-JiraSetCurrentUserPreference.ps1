@@ -22,24 +22,24 @@ function Invoke-JiraSetCurrentUserPreference {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/mypreferences"
         $verb = "PUT"
 
-        $query = New-Object RestMethodQueryParams @{
+        $query = New-PACRestMethodQueryParams @{
             key = $PreferenceKey
         }
 
         $body = if ($PSCmdlet.ParameterSetName -eq "TextValue") {
-            New-Object RestMethodBody $ValueText
+            New-PACRestMethodBody $ValueText
         } else {
-            New-Object RestMethodJsonBody $ValueJson
+            New-PACRestMethodJsonBody $ValueJson
         }
         
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
+        $method = New-PACRestMethod $functionPath $verb $query $body
         $method.Invoke($JiraContext)
     }
 }

@@ -30,7 +30,7 @@ function Invoke-JiraGetIssueChangelogs {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -41,7 +41,7 @@ function Invoke-JiraGetIssueChangelogs {
         $functionPath = "/rest/api/2/issue/$issueToken/changelog"
         $verb = "GET"
 
-        $query=New-Object RestMethodQueryParams @{
+        $query=New-PACRestMethodQueryParams @{
             startAt = $StartAt
             maxResults = $MaxResults
         }
@@ -54,7 +54,7 @@ function Invoke-JiraGetIssueChangelogs {
             $issueMemberValue = $Key
         }
         
-        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method = New-PACRestMethod $functionPath $verb $query
         $obj = $method.Invoke($JiraContext)
         $obj | Add-Member $issueMemberName $issueMemberValue
         $obj.values | ForEach-Object {$_ | Add-Member $issueMemberName $issueMemberValue}

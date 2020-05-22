@@ -14,17 +14,17 @@ function Invoke-JiraDeleteComponent {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/component/$ComponentId"
         $verb = "DELETE"
 
-        $query = New-Object RestMethodQueryParams
+        $query = New-PACRestMethodQueryParams
         if($PSBoundParameters.ContainsKey("MoveIssuesTo")){$query.Add("moveIssuesTo",$MoveIssuesTo)}
 
-        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method = New-PACRestMethod $functionPath $verb $query
         $method.Invoke($JiraContext)
     }
 }

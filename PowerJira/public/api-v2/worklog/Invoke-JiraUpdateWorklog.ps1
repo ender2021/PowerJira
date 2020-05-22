@@ -69,14 +69,14 @@ function Invoke-JiraUpdateWorklog {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/worklog/$WorklogId"
         $verb = "PUT"
 
-        $query = New-Object RestMethodQueryParams @{
+        $query = New-PACRestMethodQueryParams @{
             adjustEstimate = $AdjustMethod
             notifyUsers = $true
         }
@@ -84,7 +84,7 @@ function Invoke-JiraUpdateWorklog {
         if($PSBoundParameters.ContainsKey("DisableNotifications")){$query.notifyUsers = $false}
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $body = New-Object RestMethodJsonBody
+        $body = New-PACRestMethodJsonBody
         if($PSBoundParameters.ContainsKey("Started")){$body.Add("",[JiraDateTime]::ComplexFormat($Started))}
         if($PSBoundParameters.ContainsKey("TimeSpent")){$body.Add("timeSpent",$TimeSpent)}
         if($PSBoundParameters.ContainsKey("TimeSpentSeconds")){$body.Add("timeSpentSeconds",$TimeSpentSeconds)}
@@ -92,7 +92,7 @@ function Invoke-JiraUpdateWorklog {
         if($PSBoundParameters.ContainsKey("Visibility")){$body.Add("visibility",$Visibility)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
         
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
+        $method = New-PACRestMethod $functionPath $verb $query $body
         $method.Invoke($JiraContext)
     }
 }

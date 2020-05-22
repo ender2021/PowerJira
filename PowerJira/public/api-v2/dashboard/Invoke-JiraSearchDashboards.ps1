@@ -50,14 +50,14 @@ function Invoke-JiraSearchDashboards {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/dashboard/search"
         $verb = "GET"
 
-        $query = New-Object RestMethodQueryParams @{
+        $query = New-PACRestMethodQueryParams @{
             startAt = $StartAt
             maxResults = $MaxResults
             orderBy = $OrderBy
@@ -68,7 +68,7 @@ function Invoke-JiraSearchDashboards {
         if($PSBoundParameters.ContainsKey("ProjectId")){$query.Add("projectId",$ProjectId)}
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method = New-PACRestMethod $functionPath $verb $query
         $method.Invoke($JiraContext)
     }
 }

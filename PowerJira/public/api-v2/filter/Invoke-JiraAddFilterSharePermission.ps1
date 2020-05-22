@@ -14,16 +14,16 @@ function Invoke-JiraAddFilterSharePermission {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/filter/$FilterId/permission"
         $verb = "POST"
 
-        $body = New-Object RestMethodJsonBody $SharePermission
+        $body = New-PACRestMethodJsonBody $SharePermission
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method = New-PACRestMethod $functionPath $verb $null $body
         $method.Invoke($JiraContext)
     }
 }

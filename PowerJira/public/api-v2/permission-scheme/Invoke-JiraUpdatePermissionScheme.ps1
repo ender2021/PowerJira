@@ -33,23 +33,23 @@ function Invoke-JiraUpdatePermissionScheme {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/permissionscheme/$SchemeId"
         $verb = "PUT"
 
-        $query = New-Object RestMethodQueryParams
+        $query = New-PACRestMethodQueryParams
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $body = New-Object RestMethodJsonBody @{
+        $body = New-PACRestMethodJsonBody @{
             name = $Name
         }
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
         if($PSBoundParameters.ContainsKey("Permissions")){$body.Add("permissions",$Permissions)}
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
+        $method = New-PACRestMethod $functionPath $verb $query $body
         $method.Invoke($JiraContext)
     }
 }

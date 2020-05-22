@@ -13,7 +13,7 @@ function Invoke-JiraGetDeployments {
         $functionPath = "/jsw/graphql"
         $verb = "POST"
 
-        $query = New-Object RestMethodQueryParams @{
+        $query = New-PACRestMethodQueryParams @{
             operation = "DevDetailsDialog"
         }
 
@@ -42,7 +42,7 @@ query DevDetailsDialog ($issueId: ID!) {
 }
 '@
 
-        $body = New-Object RestMethodJsonBody @{
+        $body = New-PACRestMethodJsonBody @{
             operationName = "DevDetailsDialog"
             query         = $gqlQuery
             variables     = @{
@@ -50,7 +50,7 @@ query DevDetailsDialog ($issueId: ID!) {
             }
         }
 
-        $method = New-Object BodyRestMethod @($functionPath, $verb, $query, $body) 
+        $method = New-PACRestMethod $functionPath $verb $query $body 
         $results += $method.Invoke($JiraContext)
     }
     end {

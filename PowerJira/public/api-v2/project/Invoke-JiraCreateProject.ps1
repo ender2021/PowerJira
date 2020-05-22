@@ -88,14 +88,14 @@ function Invoke-JiraCreateProject {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/project"
         $verb = "POST"
 
-        $body = New-Object RestMethodJsonBody @{
+        $body = New-PACRestMethodJsonBody @{
             key = $Key
             name = $Name
             projectTypeKey = $Type
@@ -111,7 +111,7 @@ function Invoke-JiraCreateProject {
         if($PSBoundParameters.ContainsKey("NotificationScheme")){$body.Add("notificationScheme",$NotificationScheme)}
         if($PSBoundParameters.ContainsKey("CategoryId")){$body.Add("categoryId",$CategoryId)}
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method = New-PACRestMethod $functionPath $verb $null $body
         $method.Invoke($JiraContext)
     }
 }

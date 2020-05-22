@@ -74,14 +74,14 @@ function Invoke-JiraAddWorklog {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/issue/$IssueIdOrKey/worklog"
         $verb = "POST"
 
-        $query = New-Object RestMethodQueryParams @{
+        $query = New-PACRestMethodQueryParams @{
             adjustEstimate = $AdjustMethod
             notifyUsers = $true
         }
@@ -90,7 +90,7 @@ function Invoke-JiraAddWorklog {
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
         if($PSBoundParameters.ContainsKey("ReduceBy")){$query.Add("reduceBy",$ReduceBy)}
 
-        $body = New-Object RestMethodJsonBody @{
+        $body = New-PACRestMethodJsonBody @{
             started = [JiraDateTime]::ComplexFormat($Started)
         }
         if($PSBoundParameters.ContainsKey("TimeSpent")){$body.Add("timeSpent",$TimeSpent)}
@@ -99,7 +99,7 @@ function Invoke-JiraAddWorklog {
         if($PSBoundParameters.ContainsKey("Visibility")){$body.Add("visibility",$Visibility)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
         
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
+        $method = New-PACRestMethod $functionPath $verb $query $body
         $method.Invoke($JiraContext)
     }
 }

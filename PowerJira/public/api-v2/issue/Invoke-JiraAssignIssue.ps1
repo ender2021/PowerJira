@@ -24,7 +24,7 @@ function Invoke-JiraAssignIssue {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -35,12 +35,12 @@ function Invoke-JiraAssignIssue {
         $functionPath = "/rest/api/2/issue/$issueToken/assignee"
         $verb = "PUT"
 
-        $body = New-Object RestMethodJsonBody @{
+        $body = New-PACRestMethodJsonBody @{
             accountId = IIF $PSBoundParameters.ContainsKey("AccountId") $AccountId $null
         }
         if($PSBoundParameters.ContainsKey("ProjectDefault")){$body.Values.accountId = "-1"}
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method = New-PACRestMethod $functionPath $verb $null $body
         $results += $method.Invoke($JiraContext)
     }
     end {

@@ -14,14 +14,14 @@ function Invoke-JiraDeletePermissionSchemeGrant {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/permissionscheme/$SchemeId/permission/$PermissionId"
         $verb = "DELETE"
 
-        $method = New-Object RestMethod @($functionPath,$verb)
+        $method = New-PACRestMethod $functionPath $verb
         $method.Invoke($JiraContext)
     }
 }

@@ -39,7 +39,7 @@ function Invoke-JiraCreateIssue {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -49,10 +49,10 @@ function Invoke-JiraCreateIssue {
         $functionPath = "/rest/api/2/issue"
         $verb = "POST"
 
-        $query = New-Object RestMethodQueryParams
+        $query = New-PACRestMethodQueryParams
         if($PSBoundParameters.ContainsKey("UpdateUserHistory")){$body.Add("updateHistory",$true)}
 
-        $body = New-Object RestMethodJsonBody
+        $body = New-PACRestMethodJsonBody
         if($PSBoundParameters.ContainsKey("DisableNotifications")){$body.Add("notifyUsers",$false)}
         if($PSBoundParameters.ContainsKey("TransitionId")){$body.Add("transition",@{id="$TransitionId"})}
         if($PSBoundParameters.ContainsKey("Fields")){$body.Add("fields",$Fields)}
@@ -60,7 +60,7 @@ function Invoke-JiraCreateIssue {
         if($PSBoundParameters.ContainsKey("HistoryMetadata")){$body.Add("historyMetadata",$HistoryMetadata)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
+        $method = New-PACRestMethod $functionPath $verb $query $body
         $results += $method.Invoke($JiraContext)
     }
     end {

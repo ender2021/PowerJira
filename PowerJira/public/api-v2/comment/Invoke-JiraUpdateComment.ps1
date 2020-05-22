@@ -43,7 +43,7 @@ function Invoke-JiraUpdateComment {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -53,17 +53,17 @@ function Invoke-JiraUpdateComment {
         $functionPath = "/rest/api/2/issue/$IssueKey/comment/$Id"
         $verb = "PUT"
 
-        $query = New-Object RestMethodQueryParams
+        $query = New-PACRestMethodQueryParams
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $b = New-Object RestMethodJsonBody @{
+        $b = New-PACRestMethodJsonBody @{
             body = $Body
             jsdPublic = !$JsdHide
         }
         if($PSBoundParameters.ContainsKey("Visibility")){$b.Add("visibility",$Visibility)}
         if($PSBoundParameters.ContainsKey("Properties")){$b.Add("properties",$Properties)}
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$b)
+        $method = New-PACRestMethod  $functionPath $verb $query $b
         $results += $method.Invoke($JiraContext)
     }
     end {

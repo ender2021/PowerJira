@@ -28,7 +28,7 @@ function Invoke-JiraCreateCustomField {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
@@ -60,14 +60,14 @@ function Invoke-JiraCreateCustomField {
             Default {$null}
         }
 
-        $body = New-Object RestMethodJsonBody @{
+        $body = New-PACRestMethodJsonBody @{
             name = $Name
             type = "com.atlassian.jira.plugin.system.customfieldtypes:$Type"
             searcherKey = "com.atlassian.jira.plugin.system.customfieldtypes:$searcherKey"
         }
         if($PSBoundParameters.ContainsKey("Description")){$body.Add("description",$Description)}
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method = New-PACRestMethod $functionPath $verb $null $body
         $method.Invoke($JiraContext)
     }
 }

@@ -9,7 +9,7 @@ function Invoke-JiraGetCommentPropertyKeys {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -24,7 +24,7 @@ function Invoke-JiraGetCommentPropertyKeys {
             keys = @()
         }
 
-        $method = New-Object RestMethod @($functionPath,$verb)
+        $method = New-PACRestMethod $functionPath $verb
         $obj.keys += $method.Invoke($JiraContext).keys | ForEach-Object {$_.key}
         $results += $obj
 

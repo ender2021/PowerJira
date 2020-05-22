@@ -9,7 +9,7 @@ function Invoke-JiraCreateIssueBulk {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -19,9 +19,9 @@ function Invoke-JiraCreateIssueBulk {
         $functionPath = "/rest/api/2/issue/bulk"
         $verb = "POST"
 
-        $body = New-Object RestMethodJsonBody @{issueUpdates=$Issues}
+        $body = New-PACRestMethodJsonBody @{issueUpdates=$Issues}
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method = New-PACRestMethod $functionPath $verb $null $body
         $results += $method.Invoke($JiraContext)
     }
     end {

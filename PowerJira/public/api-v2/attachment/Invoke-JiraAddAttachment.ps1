@@ -14,7 +14,7 @@ function Invoke-JiraAddAttachment {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -27,7 +27,7 @@ function Invoke-JiraAddAttachment {
         foreach($item in $Attachments) {
             $form = @{file=$item}
 
-            $method = New-Object FormRestMethod @($functionPath,$verb,$form)
+            $method = New-PACRestMethod $functionPath $verb $null $form
             $results += $method.Invoke($JiraContext)
         }
     }

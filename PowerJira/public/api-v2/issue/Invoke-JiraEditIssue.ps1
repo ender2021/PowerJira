@@ -39,7 +39,7 @@ function Invoke-JiraEditIssue {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -50,17 +50,17 @@ function Invoke-JiraEditIssue {
         $functionPath = "/rest/api/2/issue/$issueToken"
         $verb = "PUT"
 
-        $query = New-Object RestMethodQueryParams @{
+        $query = New-PACRestMethodQueryParams @{
             notifyUsers = !$DisableNotifications
         }
 
-        $body = New-Object RestMethodJsonBody
+        $body = New-PACRestMethodJsonBody
         if($PSBoundParameters.ContainsKey("Fields")){$body.Add("fields",$Fields)}
         if($PSBoundParameters.ContainsKey("Update")){$body.Add("update",$Update)}
         if($PSBoundParameters.ContainsKey("HistoryMetadata")){$body.Add("historyMetadata",$HistoryMetadata)}
         if($PSBoundParameters.ContainsKey("Properties")){$body.Add("properties",$Properties)}
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
+        $method = New-PACRestMethod $functionPath $verb $query $body
         $results += $method.Invoke($JiraContext)
     }
     end {

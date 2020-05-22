@@ -20,7 +20,7 @@ function Invoke-JiraDeleteRemoteIssueLink {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
@@ -28,12 +28,12 @@ function Invoke-JiraDeleteRemoteIssueLink {
         if($PSBoundParameters.ContainsKey("RemoteLinkId")){$functionPath += "/$RemoteLinkId"}
         $verb = "DELETE"
         
-        $query = New-Object RestMethodQueryParams
+        $query = New-PACRestMethodQueryParams
         if($PSBoundParameters.ContainsKey("GlobalId")){
             $query.Add("globalId",$GlobalId)
         }
 
-        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method = New-PACRestMethod $functionPath $verb $query
         $method.Invoke($JiraContext)
     }
 }

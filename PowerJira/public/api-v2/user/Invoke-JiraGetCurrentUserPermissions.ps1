@@ -20,14 +20,14 @@ function Invoke-JiraGetCurrentUserPermissions {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/mypermissions"
         $verb = "GET"
 
-        $query = New-Object RestMethodQueryParams @{
+        $query = New-PACRestMethodQueryParams @{
             permissions = $Permissions -join ","
         }
         if($PSBoundParameters.ContainsKey("ProjectIdOrKey")){
@@ -37,7 +37,7 @@ function Invoke-JiraGetCurrentUserPermissions {
             $query.Add((IIf (Test-Id $IssueIdOrKey) "issueId" "issueKey"),$IssueIdOrKey)
         }
 
-        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method = New-PACRestMethod $functionPath $verb $query
         $method.Invoke($JiraContext).permissions
     }
 }

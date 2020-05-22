@@ -4,14 +4,14 @@ function Invoke-JiraGetAllApplicationRoles {
     param (
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/applicationrole"
         $verb = "GET"
 
-        $method = New-Object RestMethod @($functionPath,$verb)
+        $method = New-PACRestMethod $functionPath $verb
         $method.Invoke($JiraContext)
     }
 }

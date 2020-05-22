@@ -69,7 +69,7 @@ function Invoke-JiraSendIssueNotification {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
@@ -109,7 +109,7 @@ function Invoke-JiraSendIssueNotification {
         if($PSBoundParameters.ContainsKey("RestrictGroups")){$RestrictGroups | ForEach-Object {$restrict.groups += @{name=$_}}}
         if($PSBoundParameters.ContainsKey("RestrictPermissions")){$restrict.permissions += $RestrictPermissions}
 
-        $body = New-Object RestMethodJsonBody @{
+        $body = New-PACRestMethodJsonBody @{
             htmlBody = $HtmlBody
             to = $to
         }
@@ -117,7 +117,7 @@ function Invoke-JiraSendIssueNotification {
         if($PSBoundParameters.ContainsKey("Subject")){$body.Add("subject",$Subject)}
         if(($restrict.groups.Count -gt 0) -or ($restrict.permissions.Count -gt 0)) {$body.Add("restrict",$restrict)}
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method = New-PACRestMethod $functionPath $verb $null $body
         $method.Invoke($JiraContext)
     }
 }

@@ -14,19 +14,19 @@ function Invoke-JiraDeleteGroup {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/group"
         $verb = "DELETE"
 
-        $query = New-Object RestMethodQueryParams @{
+        $query = New-PACRestMethodQueryParams @{
             groupname = $Name
         }
         if($PSBoundParameters.ContainsKey("SwapGroup")){$query.Add("swapGroup",$SwapGroup)}
 
-        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method = New-PACRestMethod $functionPath $verb $query
         $method.Invoke($JiraContext)
     }
 }

@@ -29,7 +29,7 @@ function Invoke-JiraAddProjectAvatar {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
@@ -49,7 +49,7 @@ function Invoke-JiraAddProjectAvatar {
             "Content-Type" = "image/$ImageType"
         }
 
-        $query = New-Object RestMethodQueryParams @{
+        $query = New-PACRestMethodQueryParams @{
             x = $CropX
             y = $CropY
         }
@@ -57,7 +57,7 @@ function Invoke-JiraAddProjectAvatar {
 
         $file = $Avatar.VersionInfo.FileName
 
-        $method = New-Object FileRestMethod @($functionPath,$verb,$query,$file)
+        $method = New-PACRestMethod $functionPath $verb $query $file
         $method.Headers += $headers
         $method.Invoke($JiraContext)
     }

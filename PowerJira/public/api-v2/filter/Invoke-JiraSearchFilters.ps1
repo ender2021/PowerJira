@@ -52,14 +52,14 @@ function Invoke-JiraSearchFilters {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/filter/search"
         $verb = "GET"
 
-        $query = New-Object RestMethodQueryParams @{
+        $query = New-PACRestMethodQueryParams @{
             startAt = $StartAt
             maxResults = $MaxResults
             orderBy = $OrderBy
@@ -70,7 +70,7 @@ function Invoke-JiraSearchFilters {
         if($PSBoundParameters.ContainsKey("GroupName")){$query.Add("groupname",$GroupName)}
         if($PSBoundParameters.ContainsKey("ProjectId")){$query.Add("projectId",$ProjectId)}
 
-        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method = New-PACRestMethod $functionPath $verb $query
         $method.Invoke($JiraContext)
     }
 }

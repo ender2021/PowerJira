@@ -33,14 +33,14 @@ function Invoke-JiraGetAuditRecords {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/auditing/record"
         $verb = "GET"
 
-        $query = New-Object RestMethodQueryParams
+        $query = New-PACRestMethodQueryParams
         if($PSBoundParameters.ContainsKey("Filter")){$query.Add("filter",$Filter)}
         if($PSBoundParameters.ContainsKey("StartAt")){$query.Add("offset",$StartAt)}
         if($PSBoundParameters.ContainsKey("MaxResults")){$query.Add("limit",$MaxResults)}
@@ -49,7 +49,7 @@ function Invoke-JiraGetAuditRecords {
             $query.Add("to",([JiraDateTime]::SimpleFormat($To)))
         }
 
-        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method = New-PACRestMethod $functionPath $verb $query
         $method.Invoke($JiraContext)
     }
 }

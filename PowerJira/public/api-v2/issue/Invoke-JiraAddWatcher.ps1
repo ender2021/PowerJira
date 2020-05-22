@@ -19,7 +19,7 @@ function Invoke-JiraAddWatcher {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -30,10 +30,10 @@ function Invoke-JiraAddWatcher {
         $functionPath = "/rest/api/2/issue/$issueToken/watchers"
         $verb = "POST"
 
-        $body = New-Object RestMethodBody
+        $body = New-PACRestMethodBody
         if($PSBoundParameters.ContainsKey("AccountId")){$body.BodyString = """$AccountId"""}
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method = New-PACRestMethod $functionPath $verb $null $body
         $results += $method.Invoke($JiraContext)
     }
     end {

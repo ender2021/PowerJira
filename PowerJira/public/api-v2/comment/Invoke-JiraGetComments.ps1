@@ -39,7 +39,7 @@ function Invoke-JiraGetComments {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -50,14 +50,14 @@ function Invoke-JiraGetComments {
         $functionPath = "/rest/api/2/issue/$issueToken/comment"
         $verb = "GET"
 
-        $query = New-Object RestMethodQueryParams @{
+        $query = New-PACRestMethodQueryParams @{
             startAt = $StartAt
             maxResults = $MaxResults
         }
         if($PSBoundParameters.ContainsKey("OrderBy")){$query.Add("orderBy",$OrderBy)}
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method = New-PACRestMethod $functionPath $verb $query
         $return = $method.Invoke($JiraContext)
         if ($PSCmdlet.ParameterSetName -eq "Id") {
             $return.comments | Add-Member "IssueId" $Id

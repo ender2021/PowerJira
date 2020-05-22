@@ -15,7 +15,7 @@ function Invoke-JiraDeleteCommentProperty {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -27,7 +27,7 @@ function Invoke-JiraDeleteCommentProperty {
                 $functionPath = "/rest/api/2/comment/$Id/properties/$_"
                 $verb = "DELETE"
 
-                $method = New-Object RestMethod @($functionPath,$verb)
+                $method = New-PACRestMethod $functionPath $verb
                 $results += $method.Invoke($JiraContext)
             }
         }

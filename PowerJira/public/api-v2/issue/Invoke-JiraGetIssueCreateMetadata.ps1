@@ -36,7 +36,7 @@ function Invoke-JiraGetIssueCreateMetadata {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -55,14 +55,14 @@ function Invoke-JiraGetIssueCreateMetadata {
         $functionPath = "/rest/api/2/issue/createmeta"
         $verb = "GET"
         
-        $query = New-Object RestMethodQueryParams
+        $query = New-PACRestMethodQueryParams
         if($ProjectIds.Length -gt 0){$query.Add("projectIds",$ProjectIds -join ",")}
         if($ProjectKeys.Length -gt 0){$query.Add("projectKeys",$ProjectKeys -join ",")}
         if($AllTypeIds.Length -gt 0){$query.Add("issuetypeIds",$AllTypeIds -join ",")}
         if($AllTypeNames.Length -gt 0){$query.Add("issuetypeNames",$AllTypeNames  -join ",")}
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
 
-        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method = New-PACRestMethod $functionPath $verb $query
         $method.Invoke($JiraContext)
     }
 }

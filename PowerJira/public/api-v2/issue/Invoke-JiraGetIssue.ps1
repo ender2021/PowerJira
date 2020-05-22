@@ -22,7 +22,7 @@ function Invoke-JiraGetIssue {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -33,10 +33,10 @@ function Invoke-JiraGetIssue {
         $functionPath = "/rest/api/2/issue/$issueToken"
         $verb = "GET"
      
-        $query = New-Object RestMethodQueryParams
+        $query = New-PACRestMethodQueryParams
         if($PSBoundParameters.ContainsKey("Expand")){$query.Add("expand",$Expand -join ",")}
         
-        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method = New-PACRestMethod $functionPath $verb $query
         $results += $method.Invoke($JiraContext)
     }
     end {

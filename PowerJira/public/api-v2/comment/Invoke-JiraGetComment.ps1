@@ -23,7 +23,7 @@ function Invoke-JiraGetComment {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -33,7 +33,7 @@ function Invoke-JiraGetComment {
         $functionPath = "/rest/api/2/issue/$IssueKey/comment/$Id"
         $verb = "GET"
 
-        $method = New-Object RestMethod @($functionPath,$verb)
+        $method = New-PACRestMethod $functionPath $verb
         $results += $method.Invoke($JiraContext)
     }
     end {

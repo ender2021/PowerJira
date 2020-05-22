@@ -40,7 +40,7 @@ function Invoke-JiraCreateIssueLink {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
@@ -56,7 +56,7 @@ function Invoke-JiraCreateIssueLink {
         if($PSBoundParameters.ContainsKey("LinkTypeId")){$linkType.Add("id",$LinkTypeId)}
         if($PSBoundParameters.ContainsKey("LinkTypeName")){$linkType.Add("name",$LinkTypeName)}
         
-        $body = New-Object RestMethodJsonBody @{
+        $body = New-PACRestMethodJsonBody @{
             outwardIssue = $outwardIssue
             inwardIssue = $inwardIssue
             type = $linkType
@@ -64,7 +64,7 @@ function Invoke-JiraCreateIssueLink {
         if($PSBoundParameters.ContainsKey("Comment")){$body.Add("comment",@{body=$Comment})}
         if($PSBoundParameters.ContainsKey("CommentObject")){$body.Add("comment",$CommentObject)}
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$body)
+        $method = New-PACRestMethod $functionPath $verb $null $body
         $method.Invoke($JiraContext)
     }
 }

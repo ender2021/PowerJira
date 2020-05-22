@@ -12,7 +12,7 @@
 RootModule = 'PowerJira.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1.3'
+ModuleVersion = '2.0.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -51,7 +51,13 @@ PowerShellVersion = '6.1'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-# RequiredModules = @()
+RequiredModules = @(
+    @{
+        ModuleName = "PowerAtlassianCore"; 
+        ModuleVersion = "1.0.0"; 
+        Guid = "8c8e5bd1-90b8-4efb-9ca4-aeebb62aa527"
+    }
+)
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()

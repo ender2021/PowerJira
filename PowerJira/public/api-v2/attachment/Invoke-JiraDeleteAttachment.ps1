@@ -9,7 +9,7 @@ function Invoke-JiraDeleteAttachment {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -19,7 +19,7 @@ function Invoke-JiraDeleteAttachment {
         $functionPath = "/rest/api/2/attachment/$id"
         $verb = "DELETE"
 
-        $method = New-Object RestMethod @($functionPath,$verb)
+        $method = New-PACRestMethod $functionPath $verb
         $results += $method.Invoke($JiraContext)
     }
     end {

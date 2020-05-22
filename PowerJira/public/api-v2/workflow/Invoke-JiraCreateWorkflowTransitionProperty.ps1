@@ -29,24 +29,24 @@ function Invoke-JiraCreateWorkflowTransitionProperty {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/workflow/transitions/$TransitionId/properties"
         $verb = "POST"
 
-        $query = New-Object RestMethodQueryParams @{
+        $query = New-PACRestMethodQueryParams @{
             key = $PropertyKey
             workflowName = $WorkflowName
         }
         if($PSBoundParameters.ContainsKey("Draft")){$query.Add("workflowMode","draft")}
 
-        $body = New-Object RestMethodJsonBody @{
+        $body = New-PACRestMethodJsonBody @{
             value = $Value
         }
 
-        $method = New-Object BodyRestMethod @($functionPath,$verb,$query,$body)
+        $method = New-PACRestMethod $functionPath $verb $query $body
         $method.Invoke($JiraContext)
     }
 }

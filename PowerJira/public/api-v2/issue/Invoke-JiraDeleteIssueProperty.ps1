@@ -20,7 +20,7 @@ function Invoke-JiraDeleteIssueProperty {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     begin {
@@ -33,7 +33,7 @@ function Invoke-JiraDeleteIssueProperty {
                 $functionPath = "/rest/api/2/issue/$issueToken/properties/$_"
                 $verb = "DELETE"
 
-                $method = New-Object RestMethod @($functionPath,$verb)
+                $method = New-PACRestMethod $functionPath $verb
                 $results += $method.Invoke($JiraContext)
             }
         }

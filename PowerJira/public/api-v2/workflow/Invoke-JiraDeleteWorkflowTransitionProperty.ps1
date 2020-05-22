@@ -24,20 +24,20 @@ function Invoke-JiraDeleteWorkflowTransitionProperty {
 
         # The JiraContext object to use for the request
         [Parameter()]
-        [JiraContext]
+        [object]
         $JiraContext
     )
     process {
         $functionPath = "/rest/api/2/workflow/transitions/$TransitionId/properties"
         $verb = "DELETE"
 
-        $query = New-Object RestMethodQueryParams @{
+        $query = New-PACRestMethodQueryParams @{
             key = $PropertyKey
             workflowName = $WorkflowName
         }
         if($PSBoundParameters.ContainsKey("Draft")){$query.Add("workflowMode","draft")}
 
-        $method = New-Object RestMethod @($functionPath,$verb,$query)
+        $method = New-PACRestMethod $functionPath $verb $query
         $method.Invoke($JiraContext)
     }
 }
