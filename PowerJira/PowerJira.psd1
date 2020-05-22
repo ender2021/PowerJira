@@ -12,7 +12,7 @@
 RootModule = 'PowerJira.psm1'
 
 # Version number of this module.
-ModuleVersion = '2.0.0'
+ModuleVersion = '2.0.1'
 
 
 # Supported PSEditions
@@ -55,7 +55,7 @@ PowerShellVersion = '6.1'
 RequiredModules = @(
     @{
         ModuleName = "PowerAtlassianCore"; 
-        ModuleVersion = "1.0.0"; 
+        ModuleVersion = "1.0.1"; 
         Guid = "8c8e5bd1-90b8-4efb-9ca4-aeebb62aa527"
     }
 )

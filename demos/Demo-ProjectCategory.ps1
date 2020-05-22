@@ -1,5 +1,6 @@
 #import PowerJira
-Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira\PowerJira.psm1) -Force
+#Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \..\PowerJira\PowerJira.psm1) -Force
+Import-Module PowerJira
 
 #import the variable $JiraCredentials
 Import-Module (Join-Path -Path $PSScriptRoot -ChildPath \credentials\Credentials.psm1) -Force
@@ -10,7 +11,7 @@ $context = Open-JiraSession -UserName $JiraCredentials.UserName -Password $JiraC
 #do tests here
 
 #GET ALL PROJECT CATEGORIES
-#Invoke-JiraGetAllProjectCategories
+Invoke-JiraGetAllProjectCategories
 
 #CREATE PROJECT CATEGORY
 #Invoke-JiraCreateProjectCategory "new category" "this is a description"
