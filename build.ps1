@@ -53,4 +53,5 @@ Resolve-Module Psake, PSDeploy, Pester, BuildHelpers, PowerAtlassianCore
 Set-BuildEnvironment
 
 Invoke-psake .\psake.ps1
-exit ( [int]( -not $psake.build_success ) )
+
+$host.SetShouldExit([int]( -not $psake.build_success ))
