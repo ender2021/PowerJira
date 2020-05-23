@@ -55,7 +55,7 @@ PowerShellVersion = '6.1'
 RequiredModules = @(
     @{
         ModuleName = "PowerAtlassianCore"; 
-        ModuleVersion = "1.0.1"; 
+        ModuleVersion = "1.0.2"; 
         Guid = "8c8e5bd1-90b8-4efb-9ca4-aeebb62aa527"
     }
 )
