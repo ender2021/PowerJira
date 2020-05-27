@@ -65,7 +65,7 @@ function Resolve-Module
 # Grab nuget bits, install modules, set build variables, start build.
 Get-PackageProvider -Name NuGet -ForceBootstrap | Out-Null
 
-Resolve-Module -Name Psake, PSDeploy, Pester, BuildHelpers, PowerAtlassianCore -RequiredVersions @{Pester="3.4.0"}
+Resolve-Module -Name Psake, PSDeploy, Pester, BuildHelpers, PowerAtlassianCore -RequiredVersions @{Pester="4.9.0"}
 
 Set-BuildEnvironment
 
