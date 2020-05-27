@@ -4,7 +4,12 @@ function Resolve-Module
     param
     (
         [Parameter(Mandatory)]
-        [string[]]$Name
+        [string[]]$Name,
+
+        # Key/value pairs of module names and required versions
+        [Parameter()]
+        [hashtable]
+        $RequiredVersions
     )
 
     Process
@@ -18,16 +23,21 @@ function Resolve-Module
             {                
                 $Version = $Module | Measure-Object -Property Version -Maximum | Select-Object -ExpandProperty Maximum
                 $GalleryVersion = Find-Module -Name $ModuleName -Repository PSGallery | Measure-Object -Property Version -Maximum | Select-Object -ExpandProperty Maximum
-
-                if ($Version -lt $GalleryVersion)
+                
+                if ($Version -lt $GalleryVersion -or ($RequiredVersions.ContainsKey($ModuleName) -and $RequiredVersions[$ModuleName] -ne $Version))
                 {
+                    $expectedVersion = if ($RequiredVersions.ContainsKey($ModuleName)) {
+                        $RequiredVersions[$ModuleName]
+                    } else {
+                        $GalleryVersion
+                    }
                     
                     if ((Get-PSRepository -Name PSGallery).InstallationPolicy -ne 'Trusted') { Set-PSRepository -Name PSGallery -InstallationPolicy Trusted }
                     
-                    Write-Verbose -Message "$($ModuleName) Installed Version [$($Version.tostring())] is outdated. Installing Gallery Version [$($GalleryVersion.tostring())]"
+                    Write-Verbose -Message "$($ModuleName) Installed Version [$($Version.tostring())] is outdated or does not match required version. Installing Version [$($expectedVersion.tostring())]"
                     
-                    Install-Module -Name $ModuleName -Force
-                    Import-Module -Name $ModuleName -Force -RequiredVersion $GalleryVersion
+                    Install-Module -Name $ModuleName -Force -RequiredVersion $expectedVersion
+                    Import-Module -Name $ModuleName -Force -RequiredVersion $expectedVersion
                 }
                 else
                 {
@@ -38,8 +48,15 @@ function Resolve-Module
             else
             {
                 Write-Verbose -Message "$($ModuleName) Missing, installing Module"
-                Install-Module -Name $ModuleName -Force
-                Import-Module -Name $ModuleName -Force
+                $ModuleParams = @{
+                    Name = $ModuleName
+                    Force = $true
+                }
+                if ($RequiredVersions.ContainsKey($ModuleName)) {
+                    $ModuleParams.Add("RequiredVersion", $RequiredVersions[$ModuleName])
+                }
+                Install-Module @ModuleParams
+                Import-Module @ModuleParams
             }
         }
     }
@@ -48,7 +65,7 @@ function Resolve-Module
 # Grab nuget bits, install modules, set build variables, start build.
 Get-PackageProvider -Name NuGet -ForceBootstrap | Out-Null
 
-Resolve-Module Psake, PSDeploy, Pester, BuildHelpers, PowerAtlassianCore
+Resolve-Module -Name Psake, PSDeploy, Pester, BuildHelpers, PowerAtlassianCore -RequiredVersions @{Pester="3.4.0"}
 
 Set-BuildEnvironment
 
