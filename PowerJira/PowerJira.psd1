@@ -12,7 +12,7 @@
 RootModule = 'PowerJira.psm1'
 
 # Version number of this module.
-ModuleVersion = '2.0.2'
+ModuleVersion = '2.1.0'
 
 
 # Supported PSEditions
@@ -34,7 +34,7 @@ Copyright = '(c) Justin Mead. All rights reserved.'
 Description = 'PowerShell module to interact with the Jira API'
 
 # Minimum version of the PowerShell engine required by this module
-PowerShellVersion = '6.1'
+PowerShellVersion = '5.1'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
@@ -55,7 +55,7 @@ PowerShellVersion = '6.1'
 RequiredModules = @(
     @{
         ModuleName = "PowerAtlassianCore"; 
-        ModuleVersion = "1.0.2"; 
+        ModuleVersion = "1.1.0"; 
         Guid = "8c8e5bd1-90b8-4efb-9ca4-aeebb62aa527"
     }
 )
